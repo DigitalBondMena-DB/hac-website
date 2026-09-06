@@ -1,82 +1,84 @@
-@defer (on timer(1000)) {
-<app-navbar></app-navbar>
-}
-@placeholder {
-<nav class="fixed top-0 right-0 left-0 z-50 bg-white pt-[22px] pb-6">
-  <div class="container mx-auto">
-    <div class="flex items-center justify-between">
-      <a [routerLink]="['/', currentLang$ | async, '']" class="flex items-center" aria-label="Home">
-        <div class="w-[56px] h-[40px] bg-gray-200 animate-pulse rounded flex items-center justify-center">
-          <span class="sr-only">HAC Logo</span>
+<div [class.national-day-pattern]="isNationalDay">
+  @defer (on timer(1000)) {
+  <app-navbar></app-navbar>
+  }
+  @placeholder {
+  <nav class="fixed top-0 right-0 left-0 z-50 bg-white pt-[22px] pb-6">
+    <div class="container mx-auto">
+      <div class="flex items-center justify-between">
+        <a [routerLink]="['/', currentLang$ | async, '']" class="flex items-center" aria-label="Home">
+          <div class="w-[56px] h-[40px] bg-gray-200 animate-pulse rounded flex items-center justify-center">
+            <span class="sr-only">HAC Logo</span>
+          </div>
+        </a>
+
+        <div class="hidden xl:flex flex-grow justify-center space-x-8">
+          <a [routerLink]="['/', currentLang$ | async, '']" class="block py-2 px-3">
+            <div class="w-20 h-6 bg-gray-200 animate-pulse rounded flex items-center justify-center">
+              <span class="sr-only">Home</span>
+            </div>
+          </a>
+          <a [routerLink]="['/', currentLang$ | async, 'shopping']" class="block py-2 px-3">
+            <div class="w-24 h-6 bg-gray-200 animate-pulse rounded flex items-center justify-center">
+              <span class="sr-only">shopping</span>
+            </div>
+          </a>
+          <a [routerLink]="['/', currentLang$ | async, 'blogs']" class="block py-2 px-3">
+            <div class="w-16 h-6 bg-gray-200 animate-pulse rounded flex items-center justify-center">
+              <span class="sr-only">Articles</span>
+            </div>
+          </a>
+          <a [routerLink]="['/', currentLang$ | async, 'shopping']" class="block py-2 px-3">
+            <div class="w-28 h-6 bg-gray-200 animate-pulse rounded flex items-center justify-center">
+              <span class="sr-only">Shopping</span>
+            </div>
+          </a>
+          <a [routerLink]="['/', currentLang$ | async, 'about-us']" class="block py-2 px-3">
+            <div class="w-22 h-6 bg-gray-200 animate-pulse rounded flex items-center justify-center">
+              <span class="sr-only">About Us</span>
+            </div>
+          </a>
+          <a [routerLink]="['/', currentLang$ | async, 'contact-us']" class="block py-2 px-3">
+            <div class="w-24 h-6 bg-gray-200 animate-pulse rounded flex items-center justify-center">
+              <span class="sr-only">Contact Us</span>
+            </div>
+          </a>
         </div>
-      </a>
 
-      <div class="hidden xl:flex flex-grow justify-center space-x-8">
-        <a [routerLink]="['/', currentLang$ | async, '']" class="block py-2 px-3">
-          <div class="w-20 h-6 bg-gray-200 animate-pulse rounded flex items-center justify-center">
-            <span class="sr-only">Home</span>
-          </div>
-        </a>
-        <a [routerLink]="['/', currentLang$ | async, 'shopping']" class="block py-2 px-3">
-          <div class="w-24 h-6 bg-gray-200 animate-pulse rounded flex items-center justify-center">
-            <span class="sr-only">shopping</span>
-          </div>
-        </a>
-        <a [routerLink]="['/', currentLang$ | async, 'blogs']" class="block py-2 px-3">
-          <div class="w-16 h-6 bg-gray-200 animate-pulse rounded flex items-center justify-center">
-            <span class="sr-only">Articles</span>
-          </div>
-        </a>
-        <a [routerLink]="['/', currentLang$ | async, 'shopping']" class="block py-2 px-3">
-          <div class="w-28 h-6 bg-gray-200 animate-pulse rounded flex items-center justify-center">
-            <span class="sr-only">Shopping</span>
-          </div>
-        </a>
-        <a [routerLink]="['/', currentLang$ | async, 'about-us']" class="block py-2 px-3">
-          <div class="w-22 h-6 bg-gray-200 animate-pulse rounded flex items-center justify-center">
-            <span class="sr-only">About Us</span>
-          </div>
-        </a>
-        <a [routerLink]="['/', currentLang$ | async, 'contact-us']" class="block py-2 px-3">
-          <div class="w-24 h-6 bg-gray-200 animate-pulse rounded flex items-center justify-center">
-            <span class="sr-only">Contact Us</span>
-          </div>
-        </a>
-      </div>
-
-      <div class="hidden xl:flex items-center space-x-4">
-        <a [routerLink]="['/', currentLang$ | async, 'wishlist']" aria-label="Wishlist" class="block py-2 px-3">
-          <div class="w-[25px] h-[25px] bg-gray-200 animate-pulse rounded-full flex items-center justify-center">
-            <span class="sr-only">Wishlist</span>
-          </div>
-        </a>
-        <a [routerLink]="['/', currentLang$ | async, 'cart']" aria-label="Cart" class="block py-2 px-3">
-          <div class="w-[25px] h-[25px] bg-gray-200 animate-pulse rounded-full flex items-center justify-center">
-            <span class="sr-only">Cart</span>
-          </div>
-        </a>
-        <a [routerLink]="['/', currentLang$ | async, 'profile']" aria-label="Profile" class="block py-2 px-3">
-          <div class="w-[25px] h-[25px] bg-gray-200 animate-pulse rounded-full flex items-center justify-center">
-            <span class="sr-only">Profile</span>
-          </div>
-        </a>
-      </div>
-
-      <button class="xl:hidden p-2" aria-label="Toggle mobile menu">
-        <div class="w-[30px] h-[30px] bg-gray-200 animate-pulse rounded flex items-center justify-center">
-          <span class="sr-only">Menu</span>
+        <div class="hidden xl:flex items-center space-x-4">
+          <a [routerLink]="['/', currentLang$ | async, 'wishlist']" aria-label="Wishlist" class="block py-2 px-3">
+            <div class="w-[25px] h-[25px] bg-gray-200 animate-pulse rounded-full flex items-center justify-center">
+              <span class="sr-only">Wishlist</span>
+            </div>
+          </a>
+          <a [routerLink]="['/', currentLang$ | async, 'cart']" aria-label="Cart" class="block py-2 px-3">
+            <div class="w-[25px] h-[25px] bg-gray-200 animate-pulse rounded-full flex items-center justify-center">
+              <span class="sr-only">Cart</span>
+            </div>
+          </a>
+          <a [routerLink]="['/', currentLang$ | async, 'profile']" aria-label="Profile" class="block py-2 px-3">
+            <div class="w-[25px] h-[25px] bg-gray-200 animate-pulse rounded-full flex items-center justify-center">
+              <span class="sr-only">Profile</span>
+            </div>
+          </a>
         </div>
-      </button>
+
+        <button class="xl:hidden p-2" aria-label="Toggle mobile menu">
+          <div class="w-[30px] h-[30px] bg-gray-200 animate-pulse rounded flex items-center justify-center">
+            <span class="sr-only">Menu</span>
+          </div>
+        </button>
+      </div>
     </div>
-  </div>
-</nav>
-}
-@if (isRamadanMonth) {
-<app-ramadan-loader />
-}
-<ngx-spinner bdColor="rgba(0,0,0,0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
-</ngx-spinner>
-<router-outlet></router-outlet>
+  </nav>
+  }
+  @if (isRamadanMonth) {
+  <app-ramadan-loader />
+  }
+  <ngx-spinner bdColor="rgba(0,0,0,0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
+  </ngx-spinner>
+  <router-outlet></router-outlet>
+</div>
 <app-footer></app-footer>
 <app-alert></app-alert>
 <app-notification></app-notification>

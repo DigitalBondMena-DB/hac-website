@@ -1025,6 +1025,10 @@
     "wishlist": {
       "description": "View and manage your favorite products",
       "title": "My Wishlist | HAC"
+    },
+    "thankyou": {
+      "title": "Thank You - Order Registered | HAC",
+      "description": "Special order confirmation page at HAC"
     }
   },
   "payment-method": "payment method ",
@@ -1406,11 +1410,5 @@
     },
     "continue_shopping": "Continue Shopping",
     "back_to_home": "Back to Home"
-  },
-  "pages": {
-    "thankyou": {
-      "title": "Thank You - Order Registered | HAC",
-      "description": "Special order confirmation page at HAC"
-    }
   }
 }

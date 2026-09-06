@@ -1,4 +1,4 @@
-import { isRamadanMonth } from './core/services/conf/api.config';
+import { isNationalDay, isRamadanMonth } from './core/services/conf/api.config';
 import {
   AsyncPipe,
   CommonModule,
@@ -61,6 +61,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private renderer = inject(Renderer2);
   private langSubscription!: Subscription;
   private routerSubscription!: Subscription;
+  isNationalDay = isNationalDay;
 
   // Flag to ensure meta tags are only updated once per navigation
   private metaTagsUpdated = false;

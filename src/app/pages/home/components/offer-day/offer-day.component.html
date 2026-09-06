@@ -1,204 +1,145 @@
 @if (!isLoading && (randomProducts.length > 0 || lastOffer?.id)) {
-  <section class="px-4">
-    <div class="container mx-auto">
-      <!-- Product Section - only show if randomProducts exist -->
-      @if (randomProducts.length > 0) {
-        <p class="text-black text-subtitle-size mb-6 text-center">
-          {{ "offer-day.title" | translate }}
-        </p>
-        <h2 class="text-title-size font-bold mb-9 text-center">
-          @if (!isArabic) {
-            <span class="text-muted-rose">
-              {{ "offer-day.subtitle" | translate }}
-            </span>
-            {{ "offer-day.altTitle" | translate }}
-          } @else {
-            {{ "offer-day.altTitle" | translate }}
-            <span class="text-muted-rose">
-              {{ "offer-day.subtitle" | translate }}
-            </span>
-          }
-        </h2>
+<section class="px-4">
+  <div class="container mx-auto">
+    <!-- Product Section - only show if randomProducts exist -->
+    @if (randomProducts.length > 0) {
+    <p class="text-black text-subtitle-size mb-6 text-center">
+      {{ "offer-day.title" | translate }}
+    </p>
+    <h2 class="text-title-size font-bold mb-9 text-center">
+      @if (!isArabic) {
+      <span class="text-muted-rose">
+        {{ "offer-day.subtitle" | translate }}
+      </span>
+      {{ "offer-day.altTitle" | translate }}
+      } @else {
+      {{ "offer-day.altTitle" | translate }}
+      <span class="text-muted-rose">
+        {{ "offer-day.subtitle" | translate }}
+      </span>
+      }
+    </h2>
 
-        <!-- Cards Container -->
-        <div
-          class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 mb-[45px]"
-        >
-          @for (randomProduct of randomProducts; track $index) {
-            <!-- Card 1 -->
-            <div
-              class="flex flex-col md:flex-row bg-white rounded-2xl shadow-md overflow-hidden p-4 gap-4"
-            >
-              <!-- Image with discount badge -->
-              <div class="relative rounded-2xl overflow-hidden">
-                <a
-                  [routerLink]="[
+    <!-- Cards Container -->
+    <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 mb-[45px]">
+      @for (randomProduct of randomProducts; track $index) {
+      <!-- Card 1 -->
+      <div class="flex flex-col md:flex-row bg-white rounded-2xl shadow-md overflow-hidden p-4 gap-4">
+        <!-- Image with discount badge -->
+        <div class="relative rounded-2xl overflow-hidden">
+          <a [routerLink]="[
                     '/',
                     currentLang$ | async,
                     'product-details',
                     randomProduct | customTranslate: 'slug',
-                  ]"
-                  [attr.aria-label]="
+                  ]" [attr.aria-label]="
                     (randomProduct | customTranslate: 'name') +
                     ' ' +
                     ('shared.product_details' | translate)
-                  "
-                >
-                  <img
-                    loading="lazy"
-                    [appImageUrl]="randomProduct?.main_image || ''"
-                    [imageEndpoint]="'uploads/products'"
-                    [alt]="randomProduct | customTranslate: 'name'"
-                    class="w-full md:max-w-[220px] h-full"
-                  />
-                </a>
-                @if (randomProduct.sale_price) {
-                  <span
-                    class="absolute top-[7px] right-[7px] bg-[#434645] text-white py-4 px-8 rounded-full text-category-size"
-                  >
-                    {{ +randomProduct.sale_price / 100 | percent: "0.0" }}
-                  </span>
-                }
-              </div>
-
-              <!-- Content -->
-              <div class="flex flex-col justify-between flex-shrink-10">
-                <div>
-                  <!-- Category -->
-                  <p class="text-[#333] text-category-size mb-[15px]">
-                    العنايه بالبشره
-                  </p>
-                  <!-- Name -->
-                  <div class="text-[18px] font-bold mb-[15px]">
-                    {{ randomProduct | customTranslate: "name" }}
-                  </div>
-                  <!-- Price -->
-                  <div
-                    class="flex items-center text-subtitle-size gap-7 mb-[20px]"
-                  >
-                    @if (randomProduct.sale_price !== null) {
-                      <span class="text-muted-rose">
-                        {{ randomProduct.price_after_sale }}
-                        <span class="icon-saudi_riyal"></span
-                      ></span>
-                      <span class="line-through text-black">
-                        {{ randomProduct.price }}
-                        <span class="icon-saudi_riyal"></span
-                      ></span>
-                    } @else {
-                      <span class="text-muted-rose">
-                        {{ randomProduct.price }}
-                        <span class="icon-saudi_riyal"></span
-                      ></span>
-                    }
-                  </div>
-                  <!-- Description -->
-                  <div
-                    class="text-[#333] font-normal line-clamp-2 xl:text-justify mb-[16px]"
-                  >
-                    <app-safe-html
-                      [content]="randomProduct | customTranslate: 'description'"
-                    ></app-safe-html>
-                  </div>
-                </div>
-                <a
-                  [routerLink]="['/', currentLang$ | async, 'shopping']"
-                  class="text-muted-rose text-description-size font-bold flex items-center gap-[1px]"
-                  [attr.aria-label]="'shared.shopping_now' | translate"
-                >
-                  <span>
-                    {{ "shared.shopping_now" | translate }}
-                  </span>
-                  <figure>
-                    <img
-                      loading="lazy"
-                      class="w-[24px] h-[24px] ltr:rotate-180 rtl:rotate-0"
-                      src="/images/offer-day/4.webp"
-                      alt="{{ 'shared.arrow_icon' | translate }}"
-                    />
-                  </figure>
-                </a>
-              </div>
-            </div>
+                  ">
+            <img loading="lazy" [appImageUrl]="randomProduct?.main_image || ''" [imageEndpoint]="'uploads/products'"
+              [alt]="randomProduct | customTranslate: 'name'" class="w-full md:max-w-[220px] h-full" />
+          </a>
+          @if (randomProduct.sale_price) {
+          <span
+            class="absolute top-[7px] right-[7px] bg-[#434645] text-white py-4 px-8 rounded-full text-category-size">
+            {{ +randomProduct.sale_price / 100 | percent: "0.0" }}
+          </span>
           }
         </div>
-      }
 
-      <!-- offer-day Container - only show if lastOffer exists -->
-      @if (lastOffer?.id) {
-        <div
-          class="relative h-full bg-warm-tan rounded-xl z-10 overflow-hidden flex flex-col-reverse lg:flex-row-reverse items-stretch justify-between gap-8"
-        >
-          <!-- Image Section -->
-          <div class="w-full lg:w-1/2 relative z-10 ltr:rotate-y-180">
-            <!-- Foreground Image -->
-            <div class="relative z-10 h-full">
-              <figure class="h-full">
-                <img
-                  loading="lazy"
-                  [appImageUrl]="lastOffer?.main_image || ''"
-                  [imageEndpoint]="'uploads/offers'"
-                  [alt]="lastOffer | customTranslate: 'title'"
-                  class="w-full lg:max-w-[533px] h-full"
-                />
-              </figure>
+        <!-- Content -->
+        <div class="flex flex-col justify-between flex-shrink-10">
+          <div>
+            <!-- Category -->
+            <p class="text-[#333] text-category-size mb-[15px]">
+              العنايه بالبشره
+            </p>
+            <!-- Name -->
+            <div class="text-[18px] font-bold mb-[15px]">
+              {{ randomProduct | customTranslate: "name" }}
+            </div>
+            <!-- Price -->
+            <div class="flex items-center text-subtitle-size gap-7 mb-[20px]">
+              @if (randomProduct.sale_price !== null) {
+              <span class="text-muted-rose">
+                {{ randomProduct.price_after_sale }}
+                <span class="icon-saudi_riyal"></span></span>
+              <span class="line-through text-black">
+                {{ randomProduct.price }}
+                <span class="icon-saudi_riyal"></span></span>
+              } @else {
+              <span class="text-muted-rose">
+                {{ randomProduct.price }}
+                <span class="icon-saudi_riyal"></span></span>
+              }
+            </div>
+            <!-- Description -->
+            <div class="text-[#333] font-normal line-clamp-2 xl:text-justify mb-[16px]">
+              <app-safe-html [content]="randomProduct | customTranslate: 'description'"></app-safe-html>
             </div>
           </div>
-
-          <!-- Text Content Section -->
-          <div
-            class="w-full p-[15px] sm:p-[25px] md:p-[40px] text-start relative z-10"
-          >
-            <div
-              class="text-white font-semibold mb-[10px] md:mb-[23px] text-[28px]"
-            >
-              <app-safe-html
-                [content]="lastOffer | customTranslate: 'small_title'"
-              ></app-safe-html>
-            </div>
-
-            <h2
-              class="text-[23px] md:text-[37px] font-bold leading-snug mb-[10px] md:mb-[23px] line-clamp-2"
-            >
-              <div
-                class="inline-block"
-                [innerHTML]="
-                  formatRichText((lastOffer | customTranslate: 'title') || '')
-                "
-              ></div>
-            </h2>
-
-            <div
-              class="text-category-size md:text-[28px] text-white mb-[20px] md:mb-[35px]"
-              [innerHTML]="lastOffer | customTranslate: 'text'"
-            ></div>
-
-            <app-arrow-button
-              [gap]="'5px'"
-              [px]="'4'"
-              [py]="'2'"
-              [title]="'shared.shopping_now' | translate"
-              [type]="'button'"
-              [bg]="'white'"
-              [border]="'black'"
-              [color]="'black'"
-              [image]="'/images/navbar/9.webp'"
-              [pathLink]="'shopping'"
-            ></app-arrow-button>
-          </div>
-
-          <div
-            class="banner-container absolute top-0 left-0 w-full h-full bg-white"
-            [class.ramadan-bg]="isRamadanMonth"
-            [class.hac-bg]="!isRamadanMonth"
-          ></div>
+          <a [routerLink]="['/', currentLang$ | async, 'shopping']"
+            class="text-muted-rose text-description-size font-bold flex items-center gap-[1px]"
+            [attr.aria-label]="'shared.shopping_now' | translate">
+            <span>
+              {{ "shared.shopping_now" | translate }}
+            </span>
+            <figure>
+              <img loading="lazy" class="w-[24px] h-[24px] ltr:rotate-180 rtl:rotate-0" src="/images/offer-day/4.webp"
+                alt="{{ 'shared.arrow_icon' | translate }}" />
+            </figure>
+          </a>
         </div>
+      </div>
       }
     </div>
-  </section>
+    }
+
+    <!-- offer-day Container - only show if lastOffer exists -->
+    @if (lastOffer?.id) {
+    <div
+      class="relative h-full bg-warm-tan rounded-xl z-10 overflow-hidden flex flex-col-reverse lg:flex-row-reverse items-stretch justify-between gap-8">
+      <!-- Image Section -->
+      <div class="w-full lg:w-1/2 relative z-10 ltr:rotate-y-180">
+        <!-- Foreground Image -->
+        <div class="relative z-10 h-full">
+          <figure class="h-full">
+            <img loading="lazy" [appImageUrl]="lastOffer?.main_image || ''" [imageEndpoint]="'uploads/offers'"
+              [alt]="lastOffer | customTranslate: 'title'" class="w-full lg:max-w-[533px] h-full" />
+          </figure>
+        </div>
+      </div>
+
+      <!-- Text Content Section -->
+      <div class="w-full p-[15px] sm:p-[25px] md:p-[40px] text-start relative z-10">
+        <div class="text-white font-semibold mb-[10px] md:mb-[23px] text-[28px]">
+          <app-safe-html [content]="lastOffer | customTranslate: 'small_title'"></app-safe-html>
+        </div>
+
+        <h2 class="text-[23px] md:text-[37px] font-bold leading-snug mb-[10px] md:mb-[23px] line-clamp-2">
+          <div class="inline-block" [innerHTML]="
+                  formatRichText((lastOffer | customTranslate: 'title') || '')
+                "></div>
+        </h2>
+
+        <div class="text-category-size md:text-[28px] text-white mb-[20px] md:mb-[35px]"
+          [innerHTML]="lastOffer | customTranslate: 'text'"></div>
+
+        <app-arrow-button [gap]="'5px'" [px]="'4'" [py]="'2'" [title]="'shared.shopping_now' | translate"
+          [type]="'button'" [bg]="'white'" [border]="'black'" [color]="'black'" [image]="'/images/navbar/9.webp'"
+          [pathLink]="'shopping'"></app-arrow-button>
+      </div>
+
+      <div class="banner-container absolute top-0 left-0 w-full h-full bg-white" [class.ramadan-bg]="isRamadanMonth"
+        [class.hac-bg]="!isRamadanMonth && !isNationalDay" [class.natinoal-day-bg]="isNationalDay"></div>
+    </div>
+    }
+  </div>
+</section>
 } @else {
-  <!-- Show skeleton only while loading and hide when no data is found -->
-  @if (isLoading) {
-    <app-offer-day-skeleton />
-  }
+<!-- Show skeleton only while loading and hide when no data is found -->
+@if (isLoading) {
+<app-offer-day-skeleton />
+}
 }

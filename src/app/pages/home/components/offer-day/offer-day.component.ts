@@ -1,4 +1,4 @@
-import { isRamadanMonth } from './../../../../core/services/conf/api.config';
+import { isNationalDay, isRamadanMonth } from './../../../../core/services/conf/api.config';
 import { AsyncPipe, PercentPipe } from '@angular/common';
 import { Component, inject, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
@@ -30,6 +30,7 @@ import { Offer, RandomProduct } from '../../res/home.interfaces';
 })
 export class OfferDayComponent {
   isRamadanMonth = isRamadanMonth;
+  isNationalDay = isNationalDay;
   _languageService = inject(LanguageService);
 
   currentLang$ = this._languageService.getLanguage();

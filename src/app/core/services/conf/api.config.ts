@@ -88,3 +88,4 @@ export const API_CONFIG = {
   },
 };
 export const isRamadanMonth = false;
+export const isNationalDay = true;
