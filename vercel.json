@@ -1,10 +1,11 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "cleanUrls": true,
+  "version": 2,
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/HAC-ECO/browser",
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/index.html"
+      "destination": "/api/server"
     }
   ]
 }
