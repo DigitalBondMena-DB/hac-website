@@ -1,0 +1,22 @@
+<div class="hidden h-full lg:block rounded-[30px] overflow-hidden">
+  <div class="talent-image w-full h-full bg-white relative">
+    <figure
+      class="main_Image_Animation h-full rounded-[30px] overflow-hidden relative"
+    >
+      @if (isRamadanMonth) {
+        <img
+          src="/images/ramadan-theme/ramadan-v-bg.png"
+          class="absolute inset-0 block z-10 size-full"
+          alt=""
+          role="presentation"
+        />
+      }
+      <img
+        loading="lazy"
+        [src]="imagePath"
+        alt="Talent Image"
+        class="w-full h-full object-cover"
+      />
+    </figure>
+  </div>
+</div>

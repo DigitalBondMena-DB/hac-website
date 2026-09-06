@@ -1,0 +1,12 @@
+footer {
+  background-image: url(/images/common/bg.webp);
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-origin: padding-box;
+}
+
+.img-footer {
+  left: 0;
+  bottom: -65px;
+}

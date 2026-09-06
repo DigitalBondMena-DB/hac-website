@@ -1,0 +1,82 @@
+@import "tailwindcss";
+@plugin 'tailwind-scrollbar';
+@theme {
+  --color-black: #000000;
+  --color-dark-brown: #7a7066;
+  --color-muted-rose: #a48374;
+  --color-warm-tan: #cbac8d;
+  --color-white: #ffffff;
+  --color-light-gray: #f5f5f5;
+  --color-footer-color: #505050;
+  --text-title-size: calc(2.1875rem * 1); /* 35px */
+  --text-subtitle-size: calc(1.4375rem * 1); /* 23px */
+  --text-category-size: calc(1rem * 1); /* 16px */
+  --text-description-size: calc(1.125rem * 1); /* 18px */
+  --text-price-size: calc(1.4375rem * 1); /* 23px */
+  --text-start-size: calc(1.875rem * 1); /* 30px */
+}
+
+@layer utilities {
+  @media (min-width: 1278px) and (max-width: 1440px) {
+    .container {
+      width: 95%;
+    }
+  }
+
+  @media (max-width: 660px) {
+    .container {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+  body {
+    font-weight: 400;
+    line-height: 1.5;
+    padding-top: 78px;
+  }
+  @media (min-width: 1530px) {
+    .container {
+      width: 88rem !important;
+      padding-left: 4rem;
+      padding-right: 4rem;
+    }
+  }
+}
+
+.direction-aware-rotate {
+  @apply ltr:rotate-180 rtl:rotate-0;
+}
+
+@layer base {
+  :root {
+    font-size: 16px;
+  }
+
+  @media (max-width: 499px) {
+    :root {
+      font-size: 13px;
+    }
+  }
+}
+
+/* Global styles */
+html,
+body {
+  font-family: "Almarai", Arial, sans-serif;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+div,
+a,
+button,
+label {
+  text-transform: capitalize;
+}

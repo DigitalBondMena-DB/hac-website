@@ -1,0 +1,68 @@
+.checkout-address-container {
+  margin-bottom: 2rem;
+}
+
+.selected-address {
+  box-shadow: 0 0 0 2px #cbac8d;
+}
+
+.text-muted-rose {
+  color: #cbac8d;
+}
+
+/* Fix the after element content for required fields */
+.required-label::after {
+  content: "*";
+  color: #cbac8d;
+  font-weight: bold;
+  font-size: 30px;
+  position: absolute;
+  top: -6px;
+  right: 0;
+}
+
+[dir="rtl"] .required-label::after {
+  right: auto;
+  left: 0;
+}
+
+/* Enhance focus styles */
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #cbac8d;
+  box-shadow: 0 0 0 2px rgba(203, 172, 141, 0.2);
+}
+
+/* Better hover styles for address cards */
+.address-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.address-list-container {
+  scrollbar-width: thin;
+  scrollbar-color: #cbac8d #f1f1f1;
+}
+
+.address-list-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.address-list-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.address-list-container::-webkit-scrollbar-thumb {
+  background: #cbac8d;
+  border-radius: 10px;
+}
+
+.address-list-container::-webkit-scrollbar-thumb:hover {
+  background: #a48374;
+}
+
+.address-item {
+  transition: all 0.2s ease-in-out;
+}

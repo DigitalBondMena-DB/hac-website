@@ -1,0 +1,138 @@
+<form [formGroup]="loginForm" (ngSubmit)="submition()">
+  <figure class="mb-[30px] block">
+    <img
+      width="63px"
+      height="63px"
+      loading="lazy"
+      src="/images/common/username.webp"
+      alt=""
+    />
+  </figure>
+
+  <!-- Full Name  -->
+  <div class="flex justify-between items-center gap-x-[23px] mb-[42px]">
+    <!-- First Name  -->
+    <div class="flex-grow-1">
+      <label
+        for="firstName"
+        class="block relative text-subtitle-size font-bold mb-[23px] after:absolute after:content-['*'] after:-top-[6px] ltr:after:right-0 rtl:after:left-0 w-fit after:text-muted-rose after:transform after:translate-x-full rtl:after:-translate-x-full after:font-bold after:text-[30px]"
+      >
+        {{ "contact-us.form.first-name" | translate }}
+      </label>
+      <input
+        type="text"
+        formControlName="firstName"
+        class="bg-white capo border border-[#8D8D8D] rounded-[15px] capitalize rtl:pr-4 ltr:pl-4 py-[18px] w-full"
+        [placeholder]="'contact-us.form.placeholder-first-name' | translate"
+      />
+      @if (loginForm.get('firstName')?.invalid &&
+      loginForm.get('firstName')?.touched) {
+      <div class="mt-2 text-muted-rose">
+        @if (loginForm.get('firstName')?.errors?.['required']) {
+        <p>{{ "validation.name-required" | translate }}</p>
+        }
+      </div>
+      }
+    </div>
+    <!-- Last Name  -->
+    <div class="flex-grow-1">
+      <label
+        for="last-name"
+        class="block relative text-subtitle-size font-bold mb-[23px] after:absolute after:content-['*'] after:-top-[6px] ltr:after:right-0 rtl:after:left-0 w-fit after:text-muted-rose after:transform after:translate-x-full rtl:after:-translate-x-full after:font-bold after:text-[30px]"
+      >
+        {{ "contact-us.form.last-name" | translate }}
+      </label>
+      <input
+        type="text"
+        formControlName="lastName"
+        id="last-name"
+        class="bg-white border border-[#8D8D8D] rounded-[15px] rtl:pr-4 ltr:pl-4 py-[18px] w-full"
+        [placeholder]="'contact-us.form.placeholder-last-name' | translate"
+      />
+      @if (loginForm.get('lastName')?.invalid &&
+      loginForm.get('lastName')?.touched) {
+      <div class="mt-2 text-muted-rose">
+        @if (loginForm.get('lastName')?.errors?.['required']) {
+        <p>{{ "validation.name-required" | translate }}</p>
+        }
+      </div>
+      }
+    </div>
+  </div>
+
+  <!-- Phone Number -->
+  <div class="mb-[41px]">
+    <label
+      for="phone-number"
+      class="block relative text-subtitle-size font-bold mb-[23px] after:absolute after:content-['*'] after:-top-[6px] ltr:after:right-0 rtl:after:left-0 w-fit after:text-muted-rose after:transform after:translate-x-full rtl:after:-translate-x-full after:font-bold after:text-[30px]"
+    >
+      {{ "contact-us.form.phone-number" | translate }}
+    </label>
+
+    <!-- Container with prefix and input -->
+    <div
+      class="flex items-center border border-[#8D8D8D] rounded-[15px] overflow-hidden"
+    >
+      <span
+        class="bg-[#eee] text-[#333] px-3 py-[19px] text-description-size ltr:-order-1 rtl:order-1"
+        >+966</span
+      >
+      <input
+        type="text"
+        formControlName="phone"
+        id="phone-number"
+        class="flex-1 bg-white py-[18px] rtl:pr-4 ltr:pl-4 w-full rtl:text-right ltr:text-left focus:outline-none"
+        [placeholder]="'contact-us.form.placeholder-phone-number' | translate"
+      />
+    </div>
+
+    <!-- Validation messages -->
+    @if (loginForm.get('phone')?.invalid && loginForm.get('phone')?.touched) {
+    <div class="mt-2 text-muted-rose">
+      @if (loginForm.get('phone')?.errors?.['required']) {
+      <p>{{ "validation.phone-required" | translate }}</p>
+      } @if (loginForm.get('phone')?.errors?.['pattern']) {
+      <p>{{ "validation.phone-pattern-example" | translate }}</p>
+      }
+    </div>
+    }
+  </div>
+
+  <!-- Email -->
+  <div class="mb-[41px]">
+    <label
+      for="email"
+      class="block relative text-subtitle-size font-bold mb-[23px] after:absolute after:content-['*'] after:-top-[6px] ltr:after:right-0 rtl:after:left-0 w-fit after:text-muted-rose after:transform after:translate-x-full rtl:after:-translate-x-full after:font-bold after:text-[30px]"
+    >
+      {{ "contact-us.form.email" | translate }}
+    </label>
+    <input
+      type="email"
+      formControlName="email"
+      id="email"
+      class="bg-white border border-[#8D8D8D] rounded-[15px] rtl:pr-4 ltr:pl-4 py-[18px] w-full"
+      [placeholder]="'contact-us.form.placeholder-email' | translate"
+    />
+    @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+    <div class="mt-2 text-muted-rose">
+      @if (loginForm.get('email')?.errors?.['required']) {
+      <p>{{ "validation.email-required" | translate }}</p>
+      } @if (loginForm.get('email')?.errors?.['email']) {
+      <p>{{ "validation.email-format" | translate }}</p>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="flex justify-between items-center">
+    <app-button
+      class="cursor-pointer"
+      [px]="'px-[58px]'"
+      [py]="'py-[9px]'"
+      [title]="'save_changes' | translate"
+      [isLoading]="loading()"
+      type="submit"
+    >
+    </app-button>
+  </div>
+</form>

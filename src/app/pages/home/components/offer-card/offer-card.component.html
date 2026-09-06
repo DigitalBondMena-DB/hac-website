@@ -1,0 +1,18 @@
+<div class="container mx-auto px-4 mb-[109px]">
+  <div class="flex flex-wrap lg:flex-nowrap gap-x-6 gap-y-12 justify-between">
+    @if (offers.length > 0) {
+      @for (offer of offers.slice(0, 2); track offer.id) {
+        <app-big-card-offer
+          class="flex-grow-1 cursor-pointer"
+          [routerLink]="['/', currentLang$ | async, 'shopping']"
+          [imgPath]="offer.main_image"
+          [mainColor]="$even"
+          [alt]="offer | customTranslate: 'title'"
+          [title]="offer | customTranslate: 'title'"
+          [subtitle]="offer | customTranslate: 'small_title'"
+          [description]="offer | customTranslate: 'text'"
+        ></app-big-card-offer>
+      }
+    }
+  </div>
+</div>

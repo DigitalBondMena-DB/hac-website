@@ -1,0 +1,399 @@
+.description * {
+  color: #000;
+  text-align: right;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 26px; /* 144.444% */
+}
+
+[dir="rtl"] .description * {
+  text-align: right;
+}
+
+[dir="ltr"] .description * {
+  text-align: left;
+}
+
+::placeholder {
+  color: #8e8e8e;
+}
+
+.main_Image_Animation img {
+  transform: scale(0.5);
+  opacity: 0;
+  animation: 0.5s 0.5s forwards main_image_animation;
+  transform-origin: bottom left;
+}
+
+@keyframes main_image_animation {
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 11px;
+  max-height: 31px;
+}
+
+::-webkit-scrollbar-track {
+  background: #eee2e2;
+  border-radius: 5px;
+  height: 31px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-muted-rose);
+  border-radius: 5px;
+}
+/* Owl Carousel Custom Styles */
+::ng-deep .owl-carousel {
+  width: 100%;
+  position: relative;
+}
+
+::ng-deep .owl-stage-outer {
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+::ng-deep .owl-stage {
+  display: flex;
+  transition: all 0.5s ease !important;
+}
+
+::ng-deep .owl-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease-in-out !important;
+}
+
+/* Navigation Arrows */
+::ng-deep .owl-nav {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  padding: 0 15px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+::ng-deep .owl-prev,
+::ng-deep .owl-next {
+  background-color: rgba(203, 172, 141, 0.6) !important;
+  width: 40px;
+  height: 40px;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  pointer-events: auto;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+::ng-deep .owl-prev:hover,
+::ng-deep .owl-next:hover {
+  background-color: rgba(203, 172, 141, 0.9) !important;
+  transform: scale(1.1);
+}
+
+/* Fix for Font Awesome icons */
+::ng-deep .owl-prev i,
+::ng-deep .owl-next i {
+  color: white;
+  font-size: 18px;
+}
+
+/* Remove default arrow text if any exists */
+::ng-deep .owl-prev span,
+::ng-deep .owl-next span {
+  display: none;
+}
+
+/* Thumbnail gallery styles */
+.thumbnail-gallery ::ng-deep .owl-stage {
+  display: flex;
+  gap: 10px;
+}
+
+.thumbnail-item {
+  height: 70px;
+  width: 100%;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.thumbnail-active {
+  border: 2px solid #cbac8d !important;
+}
+
+/* Product image styles */
+.product-images img {
+  max-height: 500px;
+  object-fit: contain;
+}
+
+/* Size buttons */
+.size-btn {
+  transition: all 0.3s ease;
+}
+
+.size-btn:hover:not(.bg-\[\#CBAC8D\]) {
+  background-color: #f9f9f9;
+}
+
+/* Quantity selector */
+.quantity-selector {
+  min-width: 120px;
+}
+
+/* Make all transitions smoother */
+::ng-deep .owl-carousel * {
+  transition-timing-function: ease-in-out !important;
+}
+
+/* Fix for RTL layout */
+:host-context([dir="rtl"]) ::ng-deep .owl-prev i:before {
+  content: "\f054"; /* fa-chevron-right */
+}
+
+:host-context([dir="rtl"]) ::ng-deep .owl-next i:before {
+  content: "\f053"; /* fa-chevron-left */
+}
+
+/* Add Font Awesome */
+section::before {
+  content: "";
+  display: block;
+  height: 0;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .product-images {
+    margin-bottom: 30px;
+  }
+
+  .thumbnail-item {
+    height: 60px;
+  }
+
+  ::ng-deep .owl-prev,
+  ::ng-deep .owl-next {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+/* Add these styles for the thumbnail gallery */
+.thumbnail-gallery.rtl .owl-stage-outer {
+  direction: rtl;
+}
+
+.thumbnail-gallery.rtl .owl-stage {
+  direction: rtl;
+}
+
+/* Make sure navigation arrows are positioned correctly in RTL mode */
+.thumbnail-gallery.rtl ::ng-deep .owl-nav {
+  direction: ltr;
+}
+
+.thumbnail-gallery .thumbnail-item {
+  transition: all 0.3s ease;
+  height: 122px;
+  overflow: hidden;
+}
+
+.thumbnail-gallery .thumbnail-active {
+  border-color: #cbac8d !important;
+}
+
+/* Additional RTL fix for main carousel */
+::ng-deep [dir="rtl"] .owl-carousel .owl-nav .owl-prev i::before {
+  content: "\f054"; /* fa-chevron-right */
+}
+
+::ng-deep [dir="rtl"] .owl-carousel .owl-nav .owl-next i::before {
+  content: "\f053"; /* fa-chevron-left */
+}
+
+/* RTL styles for main carousel */
+.carousel-wrapper.rtl ::ng-deep .owl-stage-outer {
+  direction: rtl;
+}
+
+.carousel-wrapper.rtl ::ng-deep .owl-stage {
+  direction: rtl;
+}
+
+/* Make sure navigation arrows are positioned correctly in RTL mode */
+.carousel-wrapper.rtl ::ng-deep .owl-nav {
+  direction: ltr;
+}
+
+/* Thumbnail gallery styles */
+.thumbnail-gallery ::ng-deep .owl-stage {
+  display: flex;
+  gap: 10px;
+}
+
+/* Style for the refresh trick */
+::ng-deep .owl-carousel.owl-refresh {
+  opacity: 0.1;
+  transition: opacity 0.1s;
+}
+
+/* Owl Carousel Navigation Styling */
+::ng-deep .owl-nav {
+  button.owl-prev,
+  button.owl-next {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.7) !important;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  button.owl-prev:hover,
+  button.owl-next:hover {
+    background: rgba(255, 255, 255, 0.9) !important;
+  }
+
+  button.owl-prev svg,
+  button.owl-next svg {
+    stroke: #666;
+  }
+
+  button.owl-prev:hover svg,
+  button.owl-next:hover svg {
+    stroke: #333;
+  }
+
+  .owl-prev {
+    left: 10px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .owl-next {
+    right: 10px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+/* Responsive adjustments for the carousel */
+@media (max-width: 768px) {
+  ::ng-deep .owl-nav {
+    button.owl-prev,
+    button.owl-next {
+      width: 35px;
+      height: 35px;
+    }
+  }
+}
+
+/* Custom Owl Carousel Navigation Styles */
+:host ::ng-deep .owl-nav {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  margin-top: -25px;
+}
+
+:host ::ng-deep .owl-nav button.owl-prev,
+:host ::ng-deep .owl-nav button.owl-next {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  color: #000 !important;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+:host ::ng-deep .owl-nav button.owl-prev {
+  left: 10px;
+}
+
+:host ::ng-deep .owl-nav button.owl-next {
+  right: 10px;
+}
+
+/* RTL-specific overrides */
+:host.rtl ::ng-deep .owl-nav button.owl-prev {
+  left: auto;
+  right: 10px;
+}
+
+:host.rtl ::ng-deep .owl-nav button.owl-next {
+  right: auto;
+  left: 10px;
+}
+
+/* Also add specific CSS for the rtl-carousel class */
+.rtl-carousel ::ng-deep .owl-nav button.owl-prev {
+  left: auto !important;
+  right: 10px !important;
+}
+
+.rtl-carousel ::ng-deep .owl-nav button.owl-next {
+  right: auto !important;
+  left: 10px !important;
+}
+
+/* Saudi Riyal Icon Responsive Sizing */
+.icon-saudi_riyal::before {
+  font-size: 25px;
+}
+
+@media (max-width: 600px) {
+  .icon-saudi_riyal::before {
+    font-size: 15px;
+  }
+}
+
+.phone-input-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.country-code {
+  background: #eee;
+  padding: 0 8px;
+  font-size: 14px;
+  color: #333;
+}
+
+.phone-input-container input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 8px;
+}

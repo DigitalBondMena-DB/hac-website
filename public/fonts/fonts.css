@@ -1,0 +1,76 @@
+/* Saudi Riyal Font - Local Implementation */
+@font-face {
+  font-family: "saudi_riyal";
+  src: url("./riyal/saudi_riyal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "saudi_riyal";
+  src: url("./riyal/saudi_riyal.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "saudi_riyal";
+  src: url("./riyal/saudi_riyal.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Saudi Riyal Icon Class */
+.icon-saudi_riyal {
+  font-family: "saudi_riyal", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-saudi_riyal::before {
+  content: "\E900"; /* Unicode Private Use Area for Saudi Riyal symbol */
+}
+
+/* Almarai Regular - 400 */
+@font-face {
+  font-family: "Almarai";
+  src: url("./Almarai/Almarai-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Almarai Light - 300 */
+@font-face {
+  font-family: "Almarai";
+  src: url("./Almarai/Almarai-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Almarai Bold - 700 */
+@font-face {
+  font-family: "Almarai";
+  src: url("./Almarai/Almarai-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Almarai ExtraBold - 800 */
+@font-face {
+  font-family: "Almarai";
+  src: url("./Almarai/Almarai-ExtraBold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}

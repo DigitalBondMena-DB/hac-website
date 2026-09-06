@@ -1,0 +1,313 @@
+/* Style for range inputs - Webkit (Chrome, Safari, newer Edge) */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border: 2px solid #8d8d8d;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Style for range inputs - Firefox */
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border: 2px solid #8d8d8d;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Ensure the second range slider thumb appears above the track */
+input[type="range"]:nth-child(2) {
+  background: none;
+}
+
+input[type="range"]:nth-child(2)::-webkit-slider-thumb {
+  position: relative;
+  z-index: 1;
+}
+
+input[type="range"]:nth-child(2)::-moz-range-thumb {
+  position: relative;
+  z-index: 1;
+}
+
+.price-range-slider {
+  height: 5px;
+  position: relative;
+  background-color: #d9d9d9;
+  border-radius: 5px;
+}
+
+.range-min,
+.range-max {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: none;
+  pointer-events: none;
+}
+
+/* Style for range inputs - Webkit (Chrome, Safari, newer Edge) */
+.range-min::-webkit-slider-thumb,
+.range-max::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #000000;
+  border-radius: 50%;
+  cursor: pointer;
+  pointer-events: auto;
+  margin-top: -5px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Style for range inputs - Firefox */
+.range-min::-moz-range-thumb,
+.range-max::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #000000;
+  border-radius: 50%;
+  cursor: pointer;
+  pointer-events: auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* Style for the track - Webkit */
+.range-min::-webkit-slider-runnable-track,
+.range-max::-webkit-slider-runnable-track {
+  height: 5px;
+  background: transparent;
+}
+
+/* Style for the track - Firefox */
+.range-min::-moz-range-track,
+.range-max::-moz-range-track {
+  height: 5px;
+  background: transparent;
+}
+
+/* Style for the selected range track */
+.range-min::-webkit-slider-runnable-track,
+.range-max::-webkit-slider-runnable-track {
+  background: transparent;
+  height: 5px;
+}
+
+.range-min::-moz-range-track,
+.range-max::-moz-range-track {
+  background: transparent;
+  height: 5px;
+}
+
+/* Style for radio buttons */
+input[type="radio"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #000000;
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="radio"]:checked {
+  background-color: #000000;
+  border: 2px solid #000000;
+}
+
+/* The black line between handles */
+.price-range-slider::before {
+  content: "";
+  position: absolute;
+  height: 5px;
+  background: #000000;
+  left: var(--left-percent, 0%);
+  right: var(--right-percent, 0%);
+  z-index: 1;
+}
+
+/* Remove focus styles */
+.range-min:focus,
+.range-max:focus {
+  outline: none;
+}
+
+/* Optional: Hover state for the thumbs */
+.range-min::-webkit-slider-thumb:hover,
+.range-max::-webkit-slider-thumb:hover,
+.range-min::-moz-range-thumb:hover,
+.range-max::-moz-range-thumb:hover {
+  background: #333333;
+}
+
+/* Section animation styles */
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInSection 0.6s forwards;
+  animation-delay: 0.1s;
+}
+
+@keyframes fadeInSection {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Filter box animation */
+.filter-box {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Badge animation */
+.badge-animation {
+  transition: all 0.3s ease;
+}
+
+/* .badge-animation:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+} */
+
+/* Checkbox pulse animation */
+.checkbox-pulse {
+  animation: checkboxPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes checkboxPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Product card animations */
+.product-card {
+  transition: all 0.3s ease;
+  will-change: transform, box-shadow;
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Product image hover effect */
+.product-image-container {
+  overflow: hidden;
+}
+
+.product-image-container img {
+  transition: transform 0.5s ease;
+}
+
+.product-image-container:hover img {
+  transform: scale(1.08);
+}
+
+/* Shimmer effect for loading states */
+.shimmer-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-effect::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  to {
+    left: 100%;
+  }
+}
+
+/* Pagination button animations */
+.pagination-button {
+  transition: all 0.3s ease;
+}
+
+.pagination-button:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Bounce animation for added to cart */
+.bounce-animation {
+  animation: bounce 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Staggered card entrance animation */
+.staggered-entrance {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: staggeredEntrance 0.5s forwards;
+}
+
+@keyframes staggeredEntrance {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Rotating loading spinner */
+.loading-spinner {
+  animation: spin 1.2s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

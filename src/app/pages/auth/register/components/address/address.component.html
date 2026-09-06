@@ -1,0 +1,185 @@
+<form [formGroup]="addressForm" (ngSubmit)="submition()">
+  <!-- Full Name  -->
+  <div class="flex justify-between items-center gap-x-[23px] mb-[44px]">
+    <!-- First Name  -->
+    <div class="flex-grow-1">
+      <label
+        for="firstName"
+        class="block relative text-subtitle-size font-bold mb-[23px] after:absolute after:content-['*'] after:-top-[6px] ltr:after:right-0 rtl:after:left-0 w-fit after:text-muted-rose after:transform after:translate-x-full rtl:after:-translate-x-full after:font-bold after:text-[30px]"
+      >
+        {{
+          "auth.register.register-form.address.fields.firstName.label"
+            | translate
+        }}
+      </label>
+      <input
+        type="text"
+        id="firstName"
+        class="bg-white border border-[#8D8D8D] rounded-[15px] pr-4 py-[18px] w-full"
+        [placeholder]="
+          'auth.register.register-form.address.fields.firstName.placeholder'
+            | translate
+        "
+      />
+    </div>
+
+    <!-- Last Name  -->
+    <div class="flex-grow-1">
+      <label
+        for="last-name"
+        class="block relative text-subtitle-size font-bold mb-[23px] after:absolute after:content-['*'] after:-top-[6px] ltr:after:right-0 rtl:after:left-0 w-fit after:text-muted-rose after:transform after:translate-x-full rtl:after:-translate-x-full after:font-bold after:text-[30px]"
+      >
+        {{
+          "auth.register.register-form.address.fields.lastName.label"
+            | translate
+        }}
+      </label>
+      <input
+        type="text"
+        id="last-name"
+        class="bg-white border border-[#8D8D8D] rounded-[15px] pr-4 py-[18px] w-full"
+        [placeholder]="
+          'auth.register.register-form.address.fields.lastName.placeholder'
+            | translate
+        "
+      />
+    </div>
+  </div>
+
+  <!-- it will be drop down 🔻🔻🔻🔻🔻🔻🔻🔻🔻 -->
+
+  <!-- country -->
+  <div class="mb-[41px]">
+    <label
+      for="country"
+      class="block relative text-subtitle-size font-bold mb-[23px] after:absolute after:content-['*'] after:-top-[6px] ltr:after:right-0 rtl:after:left-0 w-fit after:text-muted-rose after:transform after:translate-x-full rtl:after:-translate-x-full after:font-bold after:text-[30px]"
+    >
+      {{
+        "auth.register.register-form.address.fields.country.label" | translate
+      }}
+    </label>
+    <input
+      type="text"
+      id="country"
+      class="bg-white border border-[#8D8D8D] rounded-[15px] pr-4 py-[18px] w-full rtl:text-right ltr:text-left"
+      [placeholder]="
+        'auth.register.register-form.address.fields.country.placeholder'
+          | translate
+      "
+    />
+  </div>
+
+  <!-- address -->
+  <div class="mb-[41px]">
+    <label
+      for="address"
+      class="block relative text-subtitle-size font-bold mb-[23px] after:absolute after:content-['*'] after:-top-[6px] ltr:after:right-0 rtl:after:left-0 w-fit after:text-muted-rose after:transform after:translate-x-full rtl:after:-translate-x-full after:font-bold after:text-[30px]"
+    >
+      {{
+        "auth.register.register-form.address.fields.address.label" | translate
+      }}
+    </label>
+    <input
+      type="text"
+      id="address"
+      class="bg-white border border-[#8D8D8D] rounded-[15px] pr-4 py-[18px] w-full"
+      [placeholder]="
+        'auth.register.register-form.address.fields.address.placeholder'
+          | translate
+      "
+    />
+  </div>
+
+  <!-- it will be drop down 🔻🔻🔻🔻🔻🔻🔻🔻🔻 -->
+
+  <!-- City -->
+  <div class="mb-[41px]">
+    <label
+      for="city"
+      class="block relative text-subtitle-size font-bold mb-[23px] after:absolute after:content-['*'] after:-top-[6px] ltr:after:right-0 rtl:after:left-0 w-fit after:text-muted-rose after:transform after:translate-x-full rtl:after:-translate-x-full after:font-bold after:text-[30px]"
+    >
+      {{ "auth.register.register-form.address.fields.city.label" | translate }}
+    </label>
+    <input
+      type="text"
+      id="city"
+      class="bg-white border border-[#8D8D8D] rounded-[15px] pr-4 py-[18px] w-full"
+      [placeholder]="
+        'auth.register.register-form.address.fields.city.placeholder'
+          | translate
+      "
+    />
+  </div>
+
+  <!-- PostalCode -->
+  <div class="mb-[41px]">
+    <label
+      for="postalCode"
+      class="block relative text-subtitle-size font-bold mb-[23px] after:absolute after:content-['*'] after:-top-[6px] ltr:after:right-0 rtl:after:left-0 w-fit after:text-muted-rose after:transform after:translate-x-full rtl:after:-translate-x-full after:font-bold after:text-[30px]"
+    >
+      {{
+        "auth.register.register-form.address.fields.postalCode.label"
+          | translate
+      }}
+    </label>
+    <input
+      type="text"
+      id="postalCode"
+      class="bg-white border border-[#8D8D8D] rounded-[15px] pr-4 py-[18px] w-full"
+      [placeholder]="
+        'auth.register.register-form.address.fields.postalCode.placeholder'
+          | translate
+      "
+    />
+  </div>
+
+  <!-- PhoneNumber -->
+  <div class="mb-[41px]">
+    <label
+      for="postalCode"
+      class="block relative text-subtitle-size font-bold mb-[23px] after:absolute after:content-['*'] after:-top-[6px] ltr:after:right-0 rtl:after:left-0 w-fit after:text-muted-rose after:transform after:translate-x-full rtl:after:-translate-x-full after:font-bold after:text-[30px]"
+    >
+      {{
+        "auth.register.register-form.address.fields.phoneNumber.label"
+          | translate
+      }}
+    </label>
+    <input
+      type="text"
+      id="phoneNumber"
+      class="bg-white border border-[#8D8D8D] rounded-[15px] pr-4 py-[18px] w-full"
+      [placeholder]="
+        'auth.register.register-form.address.fields.phoneNumber.placeholder'
+          | translate
+      "
+    />
+  </div>
+  <!-- Email -->
+  <div class="mb-[41px]">
+    <label
+      for="email"
+      class="block relative text-subtitle-size font-bold mb-[23px] after:absolute after:content-['*'] after:-top-[6px] ltr:after:right-0 rtl:after:left-0 w-fit after:text-muted-rose after:transform after:translate-x-full rtl:after:-translate-x-full after:font-bold after:text-[30px]"
+    >
+      {{ "auth.register.register-form.address.fields.email.label" | translate }}
+    </label>
+    <input
+      type="email"
+      id="email"
+      class="bg-white border border-[#8D8D8D] rounded-[15px] pr-4 py-[18px] w-full"
+      [placeholder]="
+        'auth.register.register-form.address.fields.email.placeholder'
+          | translate
+      "
+    />
+  </div>
+
+  <div class="flex justify-between items-center">
+    <app-button
+      [px]="'px-[84px]'"
+      [py]="'py-[9px]'"
+      [title]="'routes.register' | translate"
+      type="'submit'"
+    >
+    </app-button>
+  </div>
+</form>

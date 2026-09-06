@@ -1,0 +1,119 @@
+@if (!relatedBlogs.length) {
+<app-related-blogs-skeleton [lightLabel]="lightLabel" />
+} @else {
+<section class="container mx-auto my-[60px]">
+  <!-- Section Header -->
+  @if (lightLabel) {
+  <div class="flex items-center justify-between mb-[35px] font-bold">
+    <h4 class="w-[50%] sm:w-fit text-price-size md:text-title-size font-light">
+      {{ "news-articles.main-title" | translate }}
+
+      <span class="text-muted-rose">
+        {{ "news-articles.title" | translate }}
+      </span>
+    </h4>
+
+    <a
+      [routerLink]="['/', currentLang$ | async, 'blogs']"
+      class="font-normal text-[16px] md:text-price-size text-white bg-warm-tan rounded-full p-3 md:py-[15px] md:px-[59px] transition-all hover:bg-[#b99979] focus:outline-none focus:ring-2 focus:ring-[#cbac8d]"
+    >
+      {{ "news-articles.subtitle" | translate }}
+    </a>
+  </div>
+  } @else {
+  <div class="mb-6 text-center">
+    <p class="text-black mb-[18px] text-subtitle-size font-light">
+      {{ "related-blog.title" | translate }}
+    </p>
+    <h2 class="text-title-size font-light mb-[35px]">
+      {{ "news-articles.main-title" | translate }}
+
+      <span class="text-muted-rose">
+        {{ "related-blog.subtitle" | translate }}
+      </span>
+    </h2>
+  </div>
+  }
+
+  <!-- Responsive Grid -->
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 related-blogs-grid"
+  >
+    @if (relatedBlogs && relatedBlogs.length > 0) { @for (blog of
+    relatedBlogs.slice(0, 3); track blog.id) {
+    <div class="bg-white">
+      <a
+        [routerLink]="[
+          '/',
+          currentLang$ | async,
+          'blog',
+          blog | customTranslate : 'slug'
+        ]"
+        class="block"
+      >
+        <figure
+          class="mb-[15px] rounded-[15px] overflow-hidden cursor-pointer h-[200px] sm:h-[220px] md:h-[250px]"
+        >
+          <img
+            loading="lazy"
+            [appImageUrl]="blog.main_image"
+            [imageEndpoint]="'uploads/blogs'"
+            alt="article"
+            class="w-full h-full"
+          />
+        </figure>
+      </a>
+      <div>
+        <!-- ArticleDate -->
+        <div class="px-4">
+          <div
+            class="built text-[14px] text-[#333] mb-[15px] sm:mb-[13px] relative"
+          >
+            <div class="text-[#333]">
+              {{ blog.blog_date | date : "M/d/yyyy" }}
+            </div>
+            <div
+              class="circle rtl:right-[-4px] rtl:translate-x-full -translate-y-1/2 transform ltr:left-[-4px] ltr:-translate-x-full"
+            ></div>
+          </div>
+        </div>
+
+        <!-- title -->
+        <!-- <h5
+        [routerLink]="[
+        '/',
+        currentLang$ | async,
+        'blog',
+        blog | customTranslate : 'slug'
+      ]"
+          class="text-price-size font-medium pb-[23px] text-[#000] line-clamp-1"
+        >
+          {{ blog | customTranslate : "blog_title" }}
+        </h5> -->
+
+        <div
+          class="line-clamp-2 sm:line-clamp-1 whitespace-normal leading-relaxed tracking-normal text-description-size font-normal mb-[10px]"
+        >
+          <app-safe-html
+            [content]="blog | customTranslate : 'blog_text'"
+          ></app-safe-html>
+        </div>
+
+        <!-- Read More -->
+        <a
+          [routerLink]="[
+            '/',
+            currentLang$ | async,
+            'blog',
+            blog | customTranslate : 'slug'
+          ]"
+          class="text-[#A48374] text-[12px] sm:text-[14px] font-bold underline hover:text-[#b99979] transition-colors mt-auto"
+        >
+          {{ "shared.readMore" | translate }}
+        </a>
+      </div>
+    </div>
+    } }
+  </div>
+</section>
+}

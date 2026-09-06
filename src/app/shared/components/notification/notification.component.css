@@ -1,0 +1,138 @@
+.notifications-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1050;
+  width: 320px;
+  max-width: calc(100vw - 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.notification {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 12px 15px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: slide-in 0.3s ease-out;
+  background-color: #fff;
+  border-left: 4px solid;
+}
+
+.notification-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  flex: 1;
+}
+
+.notification-icon {
+  font-size: 18px;
+  margin-top: 2px;
+}
+
+.notification-message {
+  flex: 1;
+}
+
+.notification-title {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.notification-message p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.notification-close {
+  background: transparent;
+  border: none;
+  color: #666;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0 5px;
+  margin-left: 10px;
+  outline: none;
+}
+
+.notification-close:hover {
+  color: #333;
+}
+
+/* Types of notifications */
+.notification-success {
+  border-color: #4caf50;
+}
+
+.notification-success .notification-icon {
+  color: #4caf50;
+}
+
+.notification-error {
+  border-color: #f44336;
+}
+
+.notification-error .notification-icon {
+  color: #f44336;
+}
+
+.notification-warning {
+  border-color: #ff9800;
+}
+
+.notification-warning .notification-icon {
+  color: #ff9800;
+}
+
+.notification-info {
+  border-color: #2196f3;
+}
+
+.notification-info .notification-icon {
+  color: #2196f3;
+}
+
+/* Animation */
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* RTL Support */
+[dir="rtl"] .notifications-container {
+  left: 20px;
+  right: auto;
+}
+
+[dir="rtl"] .notification {
+  border-left: none;
+  border-right: 4px solid;
+}
+
+[dir="rtl"] .notification-close {
+  margin-left: 0;
+  margin-right: 10px;
+}
+
+@keyframes slide-in-rtl {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

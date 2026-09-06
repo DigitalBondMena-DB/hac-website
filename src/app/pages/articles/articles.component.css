@@ -1,0 +1,163 @@
+/* Reset styles to override user agent styles */
+:host {
+  display: block;
+  font-family: inherit;
+}
+
+/* CLS Prevention - Layout Stability */
+.articles-container {
+  contain: layout style;
+}
+
+/* Smooth transitions to prevent jarring layout changes */
+.smooth-transition {
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+/* Ensure images don't cause layout shifts */
+img {
+  height: auto;
+  max-width: 100%;
+}
+
+/* Skeleton animation improvements */
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Prevent layout shifts during content loading */
+.content-container {
+  min-height: fit-content;
+  contain: layout;
+}
+
+/* Sidebar stability */
+.sidebar-section {
+  contain: layout style;
+}
+
+/* Fixed dimensions for popular articles */
+.popular-article-item {
+  min-height: 56px;
+  contain: layout;
+}
+
+/* Latest products container stability */
+.latest-products-item {
+  min-height: 99px;
+  contain: layout;
+}
+
+/* Section card styles */
+.all-sections .section-card {
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  border-radius: 15px;
+  border: 1px solid #e0e0e0;
+  color: #474747;
+  background-color: #fff;
+}
+
+/* New products card styles */
+.new-product-card {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.new-product-image {
+  width: 99px;
+  height: auto;
+}
+
+.new-product-title {
+  margin-bottom: 0.25rem;
+  color: #333;
+}
+
+.new-product-description {
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+  color: #000;
+}
+
+.new-product-date {
+  text-decoration: underline;
+  color: var(--muted-rose);
+  font-weight: 600;
+}
+
+/* Loading state */
+.loading-container {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.loading-text {
+  color: #6b7280;
+}
+
+/* Custom pagination styles for Arabic UI */
+.custom-pagination {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.pagination-button {
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.pagination-number {
+  font-weight: 500;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.pagination-number[class*="bg-"] {
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* RTL support for pagination */
+[dir="rtl"] .custom-pagination {
+  flex-direction: row-reverse;
+}
+
+/* Loading spinner styles */
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid #e5697a;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

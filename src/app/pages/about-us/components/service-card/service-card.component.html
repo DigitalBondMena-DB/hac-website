@@ -1,0 +1,19 @@
+<div class="flex flex-col p-4 text-center lg:ltr:text-left lg:rtl:text-right">
+  <figure class="mb-[23px] w-full">
+    <img
+      loading="lazy"
+      class="max-w-[80px] h-auto mx-auto lg:mx-0"
+      [appImageUrl]="cardImagePath"
+      [imageEndpoint]="''"
+      [alt]="cardTitle"
+    />
+  </figure>
+  <h3 class="text-black text-[16px] font-bold mb-[10px] line-clamp-1">
+    {{ cardTitle }}
+  </h3>
+  <div
+    class="text-description text-[#333] text-[14px] font-normal w-full line-clamp-1"
+  >
+    <app-safe-html [content]="cardDescription"></app-safe-html>
+  </div>
+</div>

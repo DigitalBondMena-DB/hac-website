@@ -1,0 +1,83 @@
+<section class="mx-auto p-6 mb-[60px]">
+  <div class="container mx-auto">
+    <!-- Title -->
+    <h5 class="text-black text-title-size text-center mb-6">
+      {{ "FAQ.title" | translate }}
+    </h5>
+    <h2 class="text-center text-[45px] text-black mb-9">
+      {{ "FAQ.main-title" | translate }}
+      <span class="text-muted-rose">
+        {{ "FAQ.alt-title" | translate }}
+      </span>
+    </h2>
+
+    <!-- Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+      <!-- Right Card -->
+      <div class="md:col-span-2">
+        <div
+          [ngClass]="{ 'max-h-[290px] overflow-y-auto': faqs.length > 3 }"
+          class="custom-scrollbar px-4"
+        >
+          <flowbite-accordion>
+            @for (faq of faqs; track faq.id) {
+            <flowbite-accordion-panel [isOpen]="false">
+              <flowbite-accordion-title
+                class="py-[22px] px-[23px] mb-[17px] rounded-[15px] border border-[rgba(141,141,141,0.00)] bg-white shadow-md shadow-[rgba(0,0,0,0.25)]"
+              >
+                <div class="flex items-center justify-between w-full">
+                  <div class="text-black text-subtitle-size font-medium">
+                    <app-safe-html
+                      [content]="faq | customTranslate : 'title'"
+                    ></app-safe-html>
+                  </div>
+                </div>
+              </flowbite-accordion-title>
+              <flowbite-accordion-content class="border-t-0">
+                <div class="mb-2 text-gray-500">
+                  <app-safe-html
+                    [content]="faq | customTranslate : 'text'"
+                  ></app-safe-html>
+                </div>
+              </flowbite-accordion-content>
+            </flowbite-accordion-panel>
+            }
+          </flowbite-accordion>
+        </div>
+      </div>
+
+      <!-- Left Card -->
+      <div
+        class="bg-[#C9A888] rounded-[15px] md:col-span-1 pt-[23px] pb-[26px] px-[23px] flex flex-col justify-between items-center"
+      >
+        <figure class="mb-[15px]">
+          <img
+            class="max-w-[45px] max-h-[45px]"
+            loading="lazy"
+            src="/images/whoWeAre/10.webp"
+            alt="FAQ section icon"
+          />
+        </figure>
+        <h3 class="text-black text-subtitle-size mb-[15px] text-center">
+          {{ "FAQ.card.title" | translate }}
+        </h3>
+        <p class="text-[#333] text-category-size mb-[15px]">
+          {{ "FAQ.card.description" | translate }}
+        </p>
+        <app-arrow-button
+          [pathLink]="'contact-us'"
+          [gap]="'5px'"
+          [px]="'4'"
+          [py]="'2'"
+          [title]="'navbar.pages_Title.contact_Us.title' | translate"
+          [type]="'button'"
+          [bg]="'[#C9A888]'"
+          [border]="'white'"
+          [color]="'white'"
+          [image]="'/images/common/white-arrow.webp'"
+        >
+        </app-arrow-button>
+      </div>
+    </div>
+  </div>
+</section>

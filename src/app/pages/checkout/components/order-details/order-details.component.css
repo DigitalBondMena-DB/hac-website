@@ -1,0 +1,15 @@
+.header {
+  background-image: url(/images/common/bgimage.webp);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #cbac8d;
+}
+.bg-image-order {
+  background-image: url(/images/common/layer.webp);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

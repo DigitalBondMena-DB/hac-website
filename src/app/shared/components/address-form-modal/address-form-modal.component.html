@@ -1,0 +1,333 @@
+<!-- Modal Backdrop -->
+<div
+  *ngIf="isOpen"
+  class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center overflow-y-auto"
+  (click)="closeModal()"
+>
+  <!-- Modal Content -->
+  <div
+    class="relative bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 my-8 max-h-[90vh] overflow-y-auto"
+    (click)="stopPropagation($event)"
+  >
+    <!-- Modal Header -->
+    <div
+      class="flex items-center justify-between p-4 md:p-6 border-b rounded-t"
+    >
+      <h3 class="text-xl font-semibold text-gray-900">
+        {{ "checkout.shipping_address" | translate }}
+      </h3>
+      <button
+        type="button"
+        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+        (click)="closeModal()"
+      >
+        <svg
+          class="w-5 h-5"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+        <span class="sr-only">Close modal</span>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="p-4 md:p-6">
+      <form [formGroup]="addressForm" (ngSubmit)="submitAddress()">
+        <!-- First Name & Last Name -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label
+              for="first_name"
+              class="block text-sm font-medium text-gray-700 mb-1"
+            >
+              {{
+                "auth.register.register-form.address.fields.first_name.label"
+                  | translate
+              }}
+              *
+            </label>
+            <input
+              type="text"
+              id="first_name"
+              formControlName="first_name"
+              [ngClass]="{ 'border-red-500': isFieldInvalid('first_name') }"
+              class="bg-white border border-[#8D8D8D] rounded-[15px] px-4 py-2 w-full"
+              [placeholder]="
+                'auth.register.register-form.address.fields.first_name.placeholder'
+                  | translate
+              "
+            />
+            <div
+              *ngIf="isFieldInvalid('first_name')"
+              class="text-red-500 text-xs mt-1"
+            >
+              {{ getErrorMessage("first_name") }}
+            </div>
+          </div>
+
+          <div>
+            <label
+              for="last_name"
+              class="block text-sm font-medium text-gray-700 mb-1"
+            >
+              {{
+                "auth.register.register-form.address.fields.last_name.label"
+                  | translate
+              }}
+              *
+            </label>
+            <input
+              type="text"
+              id="last_name"
+              formControlName="last_name"
+              [ngClass]="{ 'border-red-500': isFieldInvalid('last_name') }"
+              class="bg-white border border-[#8D8D8D] rounded-[15px] px-4 py-2 w-full"
+              [placeholder]="
+                'auth.register.register-form.address.fields.last_name.placeholder'
+                  | translate
+              "
+            />
+            <div
+              *ngIf="isFieldInvalid('last_name')"
+              class="text-red-500 text-xs mt-1"
+            >
+              {{ getErrorMessage("last_name") }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Location -->
+        <div class="mb-4">
+          <label
+            for="location_id"
+            class="block text-sm font-medium text-gray-700 mb-1"
+          >
+            {{
+              "auth.register.register-form.address.fields.location.label"
+                | translate
+            }}
+            *
+          </label>
+          <div class="relative">
+            <select
+              id="location_id"
+              formControlName="location_id"
+              [ngClass]="{ 'border-red-500': isFieldInvalid('location_id') }"
+              class="appearance-none bg-white border border-[#8D8D8D] rounded-[15px] px-4 py-2 w-full"
+            >
+              <option value="" disabled selected>
+                <ng-container *ngIf="isLocationsLoading()">
+                  {{ "common.loading" | translate }}
+                </ng-container>
+                <ng-container
+                  *ngIf="!isLocationsLoading() && locations().length === 0"
+                >
+                  {{ "common.no_locations_available" | translate }}
+                </ng-container>
+                <ng-container
+                  *ngIf="!isLocationsLoading() && locations().length > 0"
+                >
+                  {{
+                    "auth.register.register-form.address.fields.location.placeholder"
+                      | translate
+                  }}
+                </ng-container>
+              </option>
+              <option
+                *ngFor="let location of locations()"
+                [value]="location.id"
+              >
+                {{ location.ar_name }}
+              </option>
+            </select>
+
+            <div
+              class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+            >
+              <ng-container *ngIf="isLocationsLoading()">
+                <div
+                  class="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"
+                ></div>
+              </ng-container>
+              <ng-container *ngIf="!isLocationsLoading()">
+                <svg
+                  class="h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </ng-container>
+            </div>
+          </div>
+          <div
+            *ngIf="isFieldInvalid('location_id')"
+            class="text-red-500 text-xs mt-1"
+          >
+            {{ getErrorMessage("location_id") }}
+          </div>
+        </div>
+
+        <!-- Address -->
+        <div class="mb-4">
+          <label
+            for="address"
+            class="block text-sm font-medium text-gray-700 mb-1"
+          >
+            {{
+              "auth.register.register-form.address.fields.address.label"
+                | translate
+            }}
+            *
+          </label>
+          <input
+            type="text"
+            id="address"
+            formControlName="address"
+            [ngClass]="{ 'border-red-500': isFieldInvalid('address') }"
+            class="bg-white border border-[#8D8D8D] rounded-[15px] px-4 py-2 w-full"
+            [placeholder]="
+              'auth.register.register-form.address.fields.address.placeholder'
+                | translate
+            "
+          />
+          <div
+            *ngIf="isFieldInvalid('address')"
+            class="text-red-500 text-xs mt-1"
+          >
+            {{ getErrorMessage("address") }}
+          </div>
+        </div>
+
+        <!-- City -->
+        <div class="mb-4">
+          <label
+            for="city"
+            class="block text-sm font-medium text-gray-700 mb-1"
+          >
+            {{
+              "auth.register.register-form.address.fields.city.label"
+                | translate
+            }}
+            *
+          </label>
+          <input
+            type="text"
+            id="city"
+            formControlName="city"
+            [ngClass]="{ 'border-red-500': isFieldInvalid('city') }"
+            class="bg-white border border-[#8D8D8D] rounded-[15px] px-4 py-2 w-full"
+            [placeholder]="
+              'auth.register.register-form.address.fields.city.placeholder'
+                | translate
+            "
+          />
+          <div *ngIf="isFieldInvalid('city')" class="text-red-500 text-xs mt-1">
+            {{ getErrorMessage("city") }}
+          </div>
+        </div>
+
+        <!-- Phone -->
+        <div class="mb-4">
+          <label
+            for="phone"
+            class="block text-sm font-medium text-gray-700 mb-1"
+          >
+            {{
+              "auth.register.register-form.address.fields.phone.label"
+                | translate
+            }}
+            *
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            formControlName="phone"
+            [ngClass]="{ 'border-red-500': isFieldInvalid('phone') }"
+            class="bg-white border border-[#8D8D8D] rounded-[15px] px-4 py-2 w-full"
+            [placeholder]="
+              'auth.register.register-form.address.fields.phone.placeholder'
+                | translate
+            "
+          />
+          <div
+            *ngIf="isFieldInvalid('phone')"
+            class="text-red-500 text-xs mt-1"
+          >
+            {{ getErrorMessage("phone") }}
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="mb-4">
+          <label
+            for="email"
+            class="block text-sm font-medium text-gray-700 mb-1"
+          >
+            {{
+              "auth.register.register-form.address.fields.email.label"
+                | translate
+            }}
+            *
+          </label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            [ngClass]="{ 'border-red-500': isFieldInvalid('email') }"
+            class="bg-white border border-[#8D8D8D] rounded-[15px] px-4 py-2 w-full"
+            [placeholder]="
+              'auth.register.register-form.address.fields.email.placeholder'
+                | translate
+            "
+          />
+          <div
+            *ngIf="isFieldInvalid('email')"
+            class="text-red-500 text-xs mt-1"
+          >
+            {{ getErrorMessage("email") }}
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div
+          class="flex flex-col sm:flex-row justify-between items-center gap-4 mt-6"
+        >
+          <button
+            type="submit"
+            [disabled]="isFormSubmitting()"
+            class="cursor-pointer text-white rounded-[50px] border border-[(#164, 131, 116, 0.00)] bg-warm-tan capitalize w-full sm:w-auto py-2 px-6"
+          >
+            <span
+              *ngIf="isFormSubmitting()"
+              class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"
+            ></span>
+            {{ "summary.complete-the-order" | translate }}
+          </button>
+
+          <div class="flex gap-2 w-full sm:w-auto">
+            <button
+              type="button"
+              (click)="resetAddressForm()"
+              class="cursor-pointer text-gray-700 hover:text-gray-900 font-medium py-2 px-4 rounded-[50px] border border-gray-300 w-full sm:w-auto"
+            >
+              {{ "reset.form" | translate }}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

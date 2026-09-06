@@ -1,0 +1,14 @@
+.talent-image::after {
+  content: "";
+  border-radius: 30px;
+  border: 1px solid #fff;
+  position: absolute;
+  inset: 0;
+  margin: 13px 14px;
+}
+.title {
+  color: #383838;
+  text-align: justify;
+  font-size: 18px;
+  line-height: 35px;
+}

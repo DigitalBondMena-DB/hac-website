@@ -1,0 +1,1416 @@
+{
+  "Complete_order": "Complete the application",
+  "OTO": "OTO",
+  "FAQ": {
+    "Accordions": {
+      "Accordion-1": "What departments do you offer?",
+      "Accordion-2": "Are there any offers?",
+      "Accordion-3": "What are the payment methods?"
+    },
+    "alt-title": "with us",
+    "card": {
+      "description": "You can contact us and write any question you want and we will definitely contact you.",
+      "title": "Do you have any other questions?"
+    },
+    "main-title": "follow along",
+    "title": "do you have any questions !?"
+  },
+  "Limit_Exeeds": "Limit Exeeds",
+  "Loading": "loading",
+  "Login_failed": "Login failed",
+  "Login_successful": "login successfull",
+  "No_articles": "لا يوجد مقالات",
+  "Password_characters": "Password must be at least 6 characters",
+  "Password_required": "Password is required",
+  "PaymentMethodAr_ap": "Apple pay",
+  "PaymentMethodAr_md": "mada",
+  "PaymentMethodAr_stc": "STC Pay",
+  "PaymentMethodAr_vm": "VISA/MASTER",
+  "PaymentMethodAr_tm": "Tamara",
+  "Registration_successful": "Registration successful",
+  "Select_Location": "select your location",
+  "about-us": {
+    "cards": {
+      "card-1": {
+        "description": "To be the leading brand in the cosmetics field by offering high-quality products that enhance natural beauty and meet the needs of all skin types, with a commitment to sustainability and continuous innovation.",
+        "title": "Our Vision"
+      },
+      "card-2": {
+        "description": "We aim to provide safe and effective beauty products using the finest natural ingredients and modern technologies. We believe in diverse and inclusive beauty and strive to empower our customers to express themselves confidently through products that meet their aspirations.",
+        "title": "Our Mission"
+      }
+    },
+    "service-card": {
+      "card-1": {
+        "description": "We guarantee the protection of products from damage or harm, ensuring their complete preservation.",
+        "title": "24x7 Support"
+      },
+      "card-2": {
+        "description": "We guarantee the protection of products from damage or harm, ensuring their complete preservation.",
+        "title": "Product Protection"
+      },
+      "card-3": {
+        "description": "We guarantee the protection of products from damage or harm, ensuring their complete preservation.",
+        "title": "Fast Delivery"
+      }
+    },
+    "slogan-text": "Shine with confidence, shop with care and safety"
+  },
+  "account_management": {
+    "alerts": {
+      "cancel": "Cancel",
+      "deactivate": {
+        "confirm": "Deactivate",
+        "message": "Are you sure you want to deactivate your account? You can reactivate it later.",
+        "title": "Deactivate Account"
+      },
+      "deactivate_error": {
+        "message": "Error deactivating account. Please try again."
+      },
+      "deactivate_success": {
+        "message": "Your account has been deactivated successfully. You will be logged out now.",
+        "title": "Account Deactivated"
+      },
+      "delete": {
+        "confirm": "Delete",
+        "message": "Are you absolutely sure you want to delete your account? This action cannot be undone.",
+        "title": "Delete Account"
+      },
+      "delete_error": {
+        "message": "Error deleting account. Please try again."
+      },
+      "delete_success": {
+        "message": "Your account has been permanently deleted. You will be logged out now.",
+        "title": "Account Deleted"
+      },
+      "error": {
+        "title": "Error"
+      },
+      "ok": "OK"
+    },
+    "deactivate_button": "Deactivate Account",
+    "deactivate_description": "Temporarily disable your account. You can reactivate it later by logging in again.",
+    "deactivate_title": "Deactivate Account",
+    "delete_button": "Delete Account",
+    "delete_description": "Permanently delete your account and all associated data. This action cannot be undone.",
+    "delete_title": "Delete Account",
+    "title": "Account Management"
+  },
+  "add": {
+    "address": "add address",
+    "new": {
+      "address": "Add New Address"
+    }
+  },
+  "add_to_cart": "add to cart",
+  "add_to_wishlist": "add to wishlist",
+  "alerts": {
+    "cart": {
+      "add_success": {
+        "title": "Product added to cart successfully"
+      },
+      "error": {
+        "message": "An error occurred while processing your request. Please try again",
+        "title": "Cart Error"
+      },
+      "remove_confirm": {
+        "cancel": "cancel",
+        "message": "remove this product?",
+        "title": "remove product from cart",
+        "yes": "yes"
+      },
+      "remove_error": {
+        "message": "failed to remove product from cart",
+        "title": "error"
+      },
+      "remove_success": {
+        "title": "Product removed from cart successfully"
+      },
+      "update_success": {
+        "title": "cart updated successfully"
+      }
+    },
+    "wishlist": {
+      "add_success": {
+        "title": "Product added to wishlist successfully"
+      },
+      "remove_all_confirm": {
+        "message": "Are you sure you want to remove all products from your wishlist?",
+        "title": "Remove all products from wishlist"
+      },
+      "remove_all_success": {
+        "title": "All products removed from wishlist successfully"
+      },
+      "remove_confirm": {
+        "cancel": "cancel",
+        "message": "remove this product from your wishlist",
+        "title": "remove product from wishlist",
+        "yes": "yes"
+      },
+      "remove_error": {
+        "message": "failed to remove product from wishlist",
+        "title": "error"
+      },
+      "remove_success": {
+        "title": "Product removed from wishlist successfully"
+      }
+    }
+  },
+  "all-total-price": "all total price",
+  "articles": {
+    "blogs": {
+      "blog-1": {
+        "descriptions": "Skin care is an important and essential thing to keep it healthy, fresh, and full of vitality and beauty over the years. Not taking care of it causes many problems.",
+        "title": "Top 10 Skin Care Products to Look After Over the Years"
+      },
+      "blog-2": {
+        "descriptions": "It is a wide range of products that are taken to support health and supplement the diet. It is not considered a substitute for food or a substitute for medications, but it helps reduce the risk of ...",
+        "title": "the right nutritional supplements and the most important basic rules..."
+      },
+      "blog-3": {
+        "descriptions": "Dry skin needs extra care because of the problems it can actually face if it is not moisturized and cared for specifically.",
+        "title": "The basic daily routine for dry skin that the skin needs to maintain its ..."
+      },
+      "blog-4": {
+        "descriptions": "A term that describes preparations that fall between topical medications and cosmetics. There are formulations to improve the appearance of skin affected by sun rays.",
+        "title": "What are cosmeceuticals?"
+      },
+      "blog-5": {
+        "descriptions": "Having good-looking hair isn't enough! Our goal is to have beautiful, attractive hair, so we're always looking for the best hair care tips ever to achieve healthy, great-looking hair..",
+        "title": "Very important steps and tips for hair care?"
+      }
+    },
+    "header": {
+      "subtitle": "our latest news and articles",
+      "title": "News & blogs"
+    },
+    "sidebar": {
+      "new-products": "best selling",
+      "new-products-title": "new-products",
+      "newProducts": {
+        "product-1": {
+          "dates": "23 , jan 2025",
+          "description": "Hair Care Set",
+          "title": "Hair Care"
+        },
+        "product-2": {
+          "dates": "23 , jan 2025",
+          "description": "Vitamin C Facial Serum",
+          "title": "hair care"
+        },
+        "product-3": {
+          "dates": "23 , jan 2025",
+          "description": "Moisturizing body lotion",
+          "title": "skin care"
+        }
+      },
+      "popular-articles": [
+        "Hair Care",
+        "Hair Styling",
+        "Perfumes",
+        "Skin Care",
+        "nutritional supplements"
+      ],
+      "popular-section": "read more"
+    }
+  },
+  "auth": {
+    "login": {
+      "description": "Sign in to your account",
+      "header": {
+        "subtitle": "login with us easily",
+        "title": "profile"
+      },
+      "login-form": {
+        "haveAccount": "don't have an account !?",
+        "password": "password",
+        "password-placeholder": "type your password",
+        "phone-number": "phone number or e-mail",
+        "phone-number-placeholder": "please enter your phone number or e-mail address correctly"
+      },
+      "title": "Login | HAC"
+    },
+    "register": {
+      "as-business": "Register as Business",
+      "as-user": "Register as User",
+      "description": "Create your account",
+      "register-form": {
+        "address": {
+          "description": "Create your account - Step 3: Add Address",
+          "fields": {
+            "address": {
+              "label": "Address ",
+              "placeholder": "Write Your Address Carefully And Correctly"
+            },
+            "city": {
+              "label": "City ",
+              "placeholder": "Choose Your City"
+            },
+            "country": {
+              "label": "State ",
+              "placeholder": "Choose Your State"
+            },
+            "email": {
+              "label": "E-Mail ",
+              "placeholder": "Write Your E-Mail"
+            },
+            "first_name": {
+              "label": "First Name ",
+              "placeholder": "Write Your First Name"
+            },
+            "last_name": {
+              "label": "Last Name ",
+              "placeholder": "Write Your Last Name"
+            },
+            "location": {
+              "label": "Location ",
+              "placeholder": "Select Your Location"
+            },
+            "phone": {
+              "label": "Phone Number ",
+              "placeholder": "You Must Enter The Correct Phone Number"
+            },
+            "postalCode": {
+              "label": "Zip Code ",
+              "placeholder": "Enter Your Country's Postal Code"
+            }
+          },
+          "title": "Register - Address | HAC",
+          "validation": {
+            "address": {
+              "required": "Address is required"
+            },
+            "city": {
+              "required": "City is required"
+            },
+            "country": {
+              "required": "Country is required"
+            },
+            "email": {
+              "invalid": "Please enter a valid email address",
+              "required": "Email is required"
+            },
+            "first_name": {
+              "required": "First name is required"
+            },
+            "last_name": {
+              "required": "Last name is required"
+            },
+            "location_id": {
+              "required": "Location is required"
+            },
+            "phone": {
+              "pattern": "Phone number must be 05XXXXXXXX",
+              "required": "Phone number is required"
+            },
+            "postalCode": {
+              "pattern": "Please enter a valid postal code",
+              "required": "Postal code is required"
+            },
+            "state": {
+              "required": "State is required"
+            }
+          }
+        },
+        "password": {
+          "button": "add password",
+          "confirmPassword": {
+            "label": "confirmation password ",
+            "placeholder": "confirmation your password"
+          },
+          "description": "Create your account - Step 2: Set Password",
+          "newPassword": {
+            "label": "password",
+            "placeholder": "write password "
+          },
+          "title": "Register - Password | HAC"
+        },
+        "personal": {
+          "business": {
+            "commercial-file": {
+              "label": "Commercial Registration File",
+              "placeholder": "Upload your commercial registration file",
+              "required": "Commercial registration file is required"
+            },
+            "national-address": {
+              "label": "National Address",
+              "placeholder": "Enter your business national address",
+              "required": "National address is required"
+            },
+            "trade-name": {
+              "label": "Trade Name",
+              "placeholder": "Enter your business trade name",
+              "required": "Trade name is required"
+            },
+            "vat-file": {
+              "label": "VAT Registration File",
+              "placeholder": "Upload your VAT registration file",
+              "required": "VAT registration file is required"
+            }
+          },
+          "business-info": "Business Information",
+          "description": "Create your account - Step 1: Personal Information",
+          "genders": {
+            "female": "female",
+            "gender": "gender",
+            "haveAccount": "do you already have an account!?",
+            "male": "male"
+          },
+          "title": "Register - Personal Info | HAC"
+        }
+      },
+      "title": "Register | HAC"
+    },
+    "taps": {
+      "address": "Address",
+      "password": "Password",
+      "personal": "information"
+    }
+  },
+  "availability": "Available Products",
+  "banner": {
+    "banner-about-us-1": "We believe that beauty begins with care, which is why we offer products designed to enhance your natural glow with confidence.",
+    "banner-about-us-2": "Because your beauty is unique, we provide cosmetics that combine luxury and quality to give you lasting radiance.",
+    "banner-about-us-3": "Pamper your skin with natural ingredients and innovative products, because true beauty starts with proper care.",
+    "banner-contact-us-4": "We believe that beauty begins with care, which is why we offer products designed to enhance your natural radiance with confidence.",
+    "title-1": "We believe that beauty begins with care, which is why we offer you products designed to enhance your natural glow with confidence.",
+    "title-2": "Because your beauty is unique, we provide you with cosmetics that combine luxury and quality to give you lasting radiance.",
+    "title-3": "Pamper your skin with natural ingredients and innovative products, because true beauty starts with proper care.",
+    "title-4": "Give your skin the shine and radiance it deserves, with cosmetics designed to suit your lifestyle."
+  },
+  "bestSelling": {
+    "bestSelling": "selling products",
+    "descriptions": [
+      "Collagen face glow cream",
+      "Floral perfume for women with rose and musk scent",
+      "Hair care set",
+      "Hand moisturizer rich in vitamins",
+      "Moisturizing body lotion",
+      "Vitamin C serum suitable for dry skin"
+    ],
+    "heading": "Skin Care",
+    "title": "our best",
+    "viewAllProducts": "View All Products"
+  },
+  "blogs": {
+    "description": "Latest news and articles about beauty, skincare, and wellness",
+    "title": "Blog & Articles | HAC"
+  },
+  "cancel-order": "cancel order",
+  "cart": {
+    "cart-footer": {
+      "active-the-code": "active the code",
+      "delete-all": "delete all items",
+      "discount-code": "discount code"
+    },
+    "cart_cleared": "Cart cleared successfully",
+    "description": "View and manage your shopping cart items",
+    "discount_applied_second_item": "🎉 Discount applied! Second item is {{discount}}% off",
+
+    "full_price_single_item": "Single item at full price",
+    "empty": {
+      "message": "Looks like you haven't added any items to your cart yet",
+      "shop-now": "Shop Now",
+      "title": "Your Cart is Empty"
+    },
+    "error": {
+      "add_failed": "Failed to add item to cart. Please try again.",
+      "clear_failed": "Failed to clear cart. Please try again.",
+      "remove_failed": "Failed to remove item from cart. Please try again.",
+      "update_failed": "Failed to update quantity. Please try again."
+    },
+    "header": {
+      "subtitle": "view all the products you need and would like to order and complete your order with us",
+      "title": "shopping cart"
+    },
+    "item_removed": "Item removed from cart successfully",
+    "notifications": {
+      "empty_cart_checkout": {
+        "message": "Please add items to your cart before proceeding to checkout",
+        "title": "Cart is Empty"
+      }
+    },
+    "promo-code": {
+      "enter-valid-code": "Please enter a valid promo code",
+      "error-applying": "Error applying promo code. Please try again.",
+      "invalid-code": "Invalid promo code. Please check and try again.",
+      "success": "Promo code applied successfully!"
+    },
+    "title": "Shopping Cart | HAC"
+  },
+  "change": {
+    "address": "change address",
+    "password": "change password"
+  },
+  "checkout": {
+    "add_another_address": "another location",
+    "add_new_address": "add new address",
+    "address": {
+      "address_added_success": "New address added successfully",
+      "address_error": "Error adding new address",
+      "address_selected_success": "Address selected and order updated successfully",
+      "description": "Enter your shipping details for order delivery",
+      "error_title": "Error",
+      "form_reset": "Form has been reset",
+      "info_title": "Information",
+      "invalid_address": "Invalid address selection",
+      "loading_addresses": "Loading addresses...",
+      "loading_locations": "Loading locations...",
+      "locations_error": "Error fetching locations",
+      "no_address_selected": "Please select an address to continue",
+      "no_locations": "No delivery locations available",
+      "processing_address": "Processing address...",
+      "processing_order": "Processing order...",
+      "refresh_error": "Error refreshing addresses",
+      "success_title": "Success",
+      "title": "Shipping Address | HAC",
+      "user_info_error": "Error fetching user information",
+      "warning_title": "Warning"
+    },
+    "form": {
+      "validation": {
+        "address": {
+          "required": "Address is required"
+        },
+        "city": {
+          "required": "City is required"
+        },
+        "email": {
+          "invalid": "Please enter a valid email",
+          "required": "Email is required"
+        },
+        "first_name": {
+          "required": "First name is required"
+        },
+        "last_name": {
+          "required": "Last name is required"
+        },
+        "location_id": {
+          "required": "Please select a location"
+        },
+        "phone": {
+          "pattern": "Phone number must be 05XXXXXXXX",
+          "required": "Phone number is required"
+        }
+      }
+    },
+    "header": {
+      "subtitle": "Complete your application and fill out all the required information",
+      "title": "checkout track"
+    },
+    "next_step": "next step",
+    "payment": {
+      "card_name": "Name on Card",
+      "card_name_placeholder": "John Smith",
+      "card_number": "Card Number",
+      "card_number_placeholder": "1234 5678 9012 3456",
+      "cash_on_delivery_description": "Pay in cash when your order is delivered",
+      "cash_on_delivery_note": "Your order will be delivered to your address and you can pay directly to the courier",
+      "choices": "choose payment method",
+      "cvv": "CVV",
+      "cvv_placeholder": "123",
+      "description": "Complete your purchase with secure payment",
+      "error": "Payment Error",
+      "expiry_date": "Expiry Date",
+      "expiry_date_placeholder": "MM/YY",
+      "loading_payment": "Loading payment options...",
+      "method": "Payment Method",
+      "COD": "An extra 20 {{currency}} will be added when choosing Cash on Delivery",
+      "COD-fees": "+20{{currency}}: Additional fee for Cash on Delivery",
+      "COD-track": "Cash on Delivery Fee",
+      "methods": {
+        "cash_on_delivery": "Cash on Delivery",
+        "credit_card": "Credit Card",
+        "paypal": "PayPal"
+      },
+      "no_address_selected": "No shipping address selected",
+      "no_order": "No active order",
+      "note": "Note",
+      "order_placed_error": "Error processing your order",
+      "order_placed_success": "Your order has been placed successfully",
+      "place_order": "Place Order",
+      "processing_payment": "Processing payment...",
+      "success": "Success",
+      "title": "Payment | HAC",
+      "validating_payment": "Validating payment information..."
+    },
+    "select_shipping_address": "select address",
+    "shipping_address": "invoice details",
+    "success": {
+      "description": "Your order has been successfully placed",
+      "title": "Order Confirmation | HAC"
+    },
+    "track": {
+      "description": "Track the status of your order",
+      "title": "Track Order | HAC"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "no_locations_available": "No locations available",
+    "no_locations_available_message": "Please contact support if you need assistance with locations"
+  },
+  "contact-us": {
+    "cards": {
+      "call-card": {
+        "subTitle": "+966 984858584949949",
+        "title": "phone number"
+      },
+      "maps-card": {
+        "subTitle": "riyadh 12244. saudi arabia 256777, riyadh as sulaymaniyah",
+        "title": "address"
+      },
+      "msg-card": {
+        "subTitle": "example@gmail.com",
+        "title": "e-mail"
+      }
+    },
+    "form": {
+      "email": "E-Mail",
+      "first-name": "First Name",
+      "last-name": "Last Name",
+      "phone-number": "Phone Number",
+      "placeholder-email": "write your e-mail",
+      "placeholder-first-name": "write your first name",
+      "placeholder-last-name": "write your last name",
+      "placeholder-phone-number": "you must enter the correct phone number",
+      "placeholder-your-msg": "write your message here...",
+      "submission": {
+        "error_message": "Failed to submit form. Please try again",
+        "error_title": "Error",
+        "success_message": "Your message has been sent successfully",
+        "success_title": "Thank You"
+      },
+      "submit": "Submit",
+      "validation": {
+        "error_title": "Validation Error",
+        "fields_required": "Please complete all required fields correctly"
+      },
+      "your-msg": "Your Message"
+    },
+    "heading": "Contact Us",
+    "contact-image-alt":"contact us"
+  },
+  "deleted-address": "delete address",
+  "footer": {
+    "by": "DIGITAL BOND",
+    "contact": {
+      "address": "Address:",
+      "phone": "Phone Number:",
+      "title": "Contact Us"
+    },
+    "description": "Enjoy cosmetic products curated for you across various categories, including skincare, haircare, dietary supplements, and everything related to beauty, health, and skin vitality.",
+    "info": {
+      "items": {
+        "about_us": "About Us",
+        "news_articles": "News and Articles",
+        "privacy_policy": "Privacy Policy"
+      },
+      "title": "Our Information"
+    },
+    "rights": "All rights reserved © 2025",
+    "sections": {
+      "items": {
+        "beauty_accessories": "Beauty Accessories",
+        "beauty_devices": "Beauty Devices",
+        "dental_care": "Dental Care",
+        "hair_styling": "Hair Styling",
+        "haircare": "Haircare",
+        "makeup": "Makeup",
+        "mens_care": "Men's Care",
+        "perfumes": "Perfumes",
+        "skincare": "Skincare",
+        "supplements": "Dietary Supplements",
+        "womens-equipment": "Women's Equipment",
+        "womens_care": "Women's Care"
+      },
+      "title": "Quick Links"
+    },
+    "pages_Title": {
+      "articles": {
+        "title": "Articles"
+      },
+      "contact_Us": {
+        "title": "Contact Us"
+      },
+      "home": {
+        "title": "Home"
+      },
+      "products": {
+        "title": "Products"
+      },
+      "shopping_now": {
+        "title": "Shop Now"
+      },
+      "who_we_are": {
+        "title": "about us"
+      },
+      "privacy":{
+        "title":"Privacy Policy"
+      }
+    },
+    "skin":{
+      "title":"Skin Care"
+      
+    }
+  },
+  "form": {
+    "send": "send"
+  },
+  "hero": {
+    "about-us": {
+      "description": "Your unique journey in the world of beauty and distinction, expressing your personality through products that care for you with refined touches. It's more than just appearance; it's an experience that reflects your confidence and beauty in a renewed and distinctive style.",
+      "elegance": "Elegance",
+      "journey": "Your journey to",
+      "slogan": "Beauty begins with an idea",
+      "stats": {
+        "clients": "Clients",
+        "partners": "Partners",
+        "products": "Products"
+      },
+      "stats-values": {
+        "clients": "300+",
+        "partners": "4000+",
+        "products": "1200+"
+      },
+      "title": "Who We Are"
+    },
+    "anchorTag-go": "View All Products",
+    "description": "Welcome to COSMETICS, your number one destination for everything related to beauty and skincare! We offer you the latest cosmetics from the best global brands, along with exclusive tips for skincare and makeup.",
+    "heading": "Your ultimate destination for beauty and cosmetics",
+    "title": "Beauty begins with an idea",
+    "title-btn": "Shop Now"
+  },
+  "in_stock": "in stock",
+  "invoice": "invoice",
+  "maps-subtitle": "riyadh 12244, saudi arabia 2567777, riyadh as aulaymaniyah",
+  "mega_menu": {
+    "beauty_accessories": {
+      "items": {
+        "artificial_nails": "Artificial Nails",
+        "eyelashes_adhesive": "Eyelashes Adhesive",
+        "false_eyelashes": "False Eyelashes"
+      },
+      "title": "Beauty Accessories"
+    },
+    "beauty_devices": {
+      "items": {
+        "body_hair_removal": "Body Hair Removal",
+        "facial_hair_removal": "Facial Hair Removal",
+        "nail_art": "Nail Art"
+      },
+      "title": "Beauty Devices"
+    },
+    "dental_care": {
+      "items": {
+        "breath_freshners": "Breath Freshners",
+        "dental_care_accessories": "Dental Care Accessories",
+        "tooth_brushes": "Tooth Brushes"
+      },
+      "title": "Dental Care"
+    },
+    "dietary_supplements": {
+      "items": {
+        "hair_supplements": "vitamins and dietary supplements for hair",
+        "skin_supplements": "vitamins and dietary supplements for skin"
+      },
+      "title": "Dietary Supplements"
+    },
+    "hair_care": {
+      "items": {
+        "antidandruff": "Antidandruff",
+        "antihair_loss": "Antihair Loss",
+        "antilice": "Antilice"
+      },
+      "title": "Hair Care"
+    },
+    "hair_styling": {
+      "items": {
+        "hair_colors": "Hair Colors",
+        "hair_frizing": "Hair Frizing",
+        "hair_straightening": "Hair Straightening"
+      },
+      "title": "Hair Styling"
+    },
+    "makeup": {
+      "items": {
+        "face_makeup": "Face Makeup",
+        "foundations": "Foundations",
+        "primers": "Primers"
+      },
+      "title": "Makeup"
+    },
+    "medical_equipments": {
+      "items": {
+        "face_masks": "Face Masks",
+        "hand_sanitizers": "Hand Sanitizers"
+      },
+      "title": "Medical Equipments"
+    },
+    "men_care": {
+      "items": {
+        "condoms": "Condoms",
+        "lubricants": "Lubricants",
+        "men_special_care": "Men Special Care"
+      },
+      "title": "Men Care"
+    },
+    "perfumes": {
+      "items": {
+        "eau_de_perfume": "Eau De Perfume",
+        "eau_de_toilette": "Eau De Toilette",
+        "perfume": "Perfume"
+      },
+      "title": "Perfumes"
+    },
+    "skin_care": {
+      "items": {
+        "facial_moisturisation": "Facial Moisturisation",
+        "facial_whitening": "Facial Whitening",
+        "sunscreens": "Sunscreens"
+      },
+      "title": "Skin Care"
+    },
+    "women_care": {
+      "items": {
+        "hair_removal": "Hair Removal",
+        "vaginal_washes": "Vaginal Washes",
+        "women_special_care": "Women Special Care"
+      },
+      "title": "Women Care"
+    }
+  },
+  "my": {
+    "requests": "my requests"
+  },
+  "navbar": {
+    "cart": "Cart",
+    "languages": {
+      "ar": "Arabic",
+      "en": "English",
+      "lang": "Language"
+    },
+    "logout": "Logout",
+    "mobile_search_hint": "Search for products by name, category, or description",
+    "pages_Title": {
+      "articles": {
+        "title": "Articles"
+      },
+      "contact_Us": {
+        "title": "Contact Us"
+      },
+      "home": {
+        "title": "Home"
+      },
+      "products": {
+        "title": "Products"
+      },
+      "shopping_now": {
+        "title": "Shop Now"
+      },
+      "who_we_are": {
+        "title": "about us"
+      }
+    },
+    "profile": "Profile",
+    "search": "Search",
+    "search_placeholder": "Search for products...",
+    "toggle_menu": "mega menu",
+    "wishlist": "Wishlist"
+  },
+  "newProducts": {
+    "alt-description": "Radiant skin and exceptional freshness.",
+    "description": "Enjoy with us the new products that care for your skin's freshness and health, and help you achieve",
+    "title": "New Products"
+  },
+  "news-articles": {
+    "card-1": {
+      "date": "March 19, 2025",
+      "title": "The Essential Daily Skincare Routine Your Skin Needs for Freshness and Preventing Excessive Dryness"
+    },
+    "main-title": "Latest",
+    "subtitle": "show All News",
+    "title": "News and Articles"
+  },
+  "no-last-order-message": "You don't have any recent orders to display.",
+  "no-last-order-title": "No Recent Order",
+  "no-orders-message": "You haven't placed any orders yet. Start shopping to see your orders here.",
+  "no-orders-title": "No Orders Found",
+  "of": "of",
+  "offer-day": {
+    "altTitle": "Special Offers",
+    "card-1": {
+      "description": "Serum and moisturizing body lotion with shea butter, glycerin, and vitamins that hydrate and brighten the skin",
+      "title": "Vitamin C-rich Face Serum"
+    },
+    "card-2": {
+      "description": "Serum and moisturizing body lotion with shea butter, glycerin, and vitamins that hydrate and brighten the skin",
+      "title": "Moisturizing Body Lotion"
+    },
+    "subtitle": "today's",
+    "text-content": {
+      "altDesc": "For Women's Care",
+      "description": "Essential Cosmetics",
+      "paragraph": "Get amazing offers that suit your daily use.",
+      "title": "Amazing Savings"
+    },
+    "title": "Today's Offers"
+  },
+  "offers": {
+    "bigCard": [
+      {
+        "imgDescription": "Enjoy with us very special offers for hair care and discounts up to 25%.",
+        "imgSubtitle": "Skincare",
+        "imgTitle": "Save Big With"
+      },
+      {
+        "imgDescription": "Enjoy with us very special offers for hair care and discounts up to 25%.",
+        "imgSubtitle": "For Haircare",
+        "imgTitle": "Special Offers"
+      }
+    ]
+  },
+  "order": {
+    "date": {
+      "code": "order code",
+      "date": "order request date",
+      "payment_method": "Payment Method ",
+      "value": "20 march, 2025"
+    },
+    "delivered": "the order has been delivered",
+    "detail": "order detail",
+    "details": {
+      "subtitle": "thank you, Your request has been completed successfully",
+      "title": "Your request has been completed successfully"
+    },
+    "request-accepted": " the request has been accepted",
+    "status": {
+      "cancelled": "Cancelled",
+      "confirmed": "Confirmed",
+      "delivered": "Delivered",
+      "on_the_way": "On The Way",
+      "processing": "Processing",
+      "unknown": "Unknown"
+    },
+    "substitle": "products",
+    "track": {
+      "back": "review all orders",
+      "start_new_order": "Start New Order",
+      "subtitle": "thank you, your request has been received successfully",
+      "title": "your request has been comleted successfully"
+    },
+    "track-order": "track order",
+    "tracking": {
+      "approved": "Approved",
+      "delivered": "Delivered",
+      "estimated": "Estimated",
+      "order": "track order",
+      "preparation": "In Preparation",
+      "progress": "Order Progress",
+      "progress_percentage": "Progress: {{percentage}}%",
+      "progress_steps": "Step {{current}} of {{total}}",
+      "status_active": "Current Status",
+      "status_completed": "Completed",
+      "status_pending": "Pending",
+      "submitted": "Order Submitted",
+      "way": "On The Way"
+    }
+  },
+  "order-number": "order number",
+  "order-number-value": "#5DGTIOPLKNBFD",
+  "order-status": {
+    "order-status": "order status",
+    "value": "pending"
+  },
+  "orderDetailsTitle": "your order reviced seccess",
+  "out_of_stock": "out of stock",
+  "page": "Page",
+  "pages": {
+    "about": {
+      "description": "Hac cosmetics is a skincare and medical beauty brand powered by expertise and technology We help you understand and care for your skin safely and scientifically",
+      "title": "About Us | Hac cosmetics Your Journey to Elegance"
+    },
+    "auth": {
+      "login": {
+        "description": "Sign in to your account",
+        "title": "Login | HAC"
+      },
+      "register": {
+        "address": {
+          "description": "Create your account - Step 3: Add Address",
+          "title": "Register - Address | HAC"
+        },
+        "password": {
+          "description": "Create your account - Step 2: Set Password",
+          "title": "Register - Password | HAC"
+        },
+        "personal": {
+          "description": "Create your account - Step 1: Personal Information",
+          "title": "Register - Personal Info | HAC"
+        }
+      }
+    },
+    "blog": {
+      "description": "Read our detailed articles about beauty and wellness",
+      "title": "Blog Details | HAC"
+    },
+    "blogs": {
+      "description": "Explore expert-written articles on skincare, aesthetic treatments, and active ingredients. Clear, science-based content to help you care for your skin",
+      "title": "HAC Articles | Your Guide to Skincare & Aesthetic Science"
+    },
+    "cart": {
+      "description": "View and manage your shopping cart items",
+      "title": "Shopping Cart | HAC"
+    },
+    "checkout": {
+      "address": {
+        "description": "Enter your shipping details for order delivery",
+        "title": "Shipping Address | HAC"
+      },
+      "payment": {
+        "description": "Complete your purchase with secure payment",
+        "title": "Payment | HAC"
+      },
+      "success": {
+        "description": "Your order has been successfully placed",
+        "title": "Order Confirmation | HAC"
+      },
+      "track": {
+        "description": "Track the status of your order",
+        "title": "Track Order | HAC"
+      }
+    },
+    "contact": {
+      "description": "Have a question or need support? Get in touch with the Hac cosmetics team—we’re here to help with fast friendly and professional assistance.",
+      "title": "Contact Us | HAC cosmetics "
+    },
+    "home": {
+      "description": "Hac cosmetics is a Saudi skincare brand offering high-performance solutions Hac cosmetics combines advanced technology with science for healthy, radiant skin",
+      "title": "Hac cosmetics | High-Performance Skincare Solutions"
+    },
+    "privacy": {
+      "description": "Read our privacy policy and data protection guidelines",
+      "title": "Privacy Policy | HAC"
+    },
+    "product": {
+      "description": "View detailed product information and specifications",
+      "title": "Product Details | HAC"
+    },
+    "profile": {
+      "account": {
+        "description": "Manage your account settings and preferences",
+        "title": "Account Management | HAC"
+      },
+      "address": {
+        "description": "Manage your shipping and billing addresses",
+        "title": "My Addresses | HAC"
+      },
+      "orders": {
+        "description": "View and track your order history",
+        "title": "My Orders | HAC"
+      },
+      "password": {
+        "description": "Update your account password",
+        "title": "Change Password | HAC"
+      },
+      "personal": {
+        "description": "Manage your personal information and preferences",
+        "title": "Personal Details | HAC"
+      }
+    },
+    "shopping": {
+      "description": "Browse a curated selection of HAC products designed for safety, effectiveness, and supported by advanced medical technology for all skin types.",
+      "title": "Shop best Products by HAC | Effective & Safe Skincare"
+    },
+    "wishlist": {
+      "description": "View and manage your favorite products",
+      "title": "My Wishlist | HAC"
+    }
+  },
+  "payment-method": "payment method ",
+  "privacy": {
+    "description": "Read our privacy policy and data protection guidelines",
+    "title": "Privacy Policy | HAC"
+  },
+  "product_code": "product code ",
+  "product_details": {
+    "how_to_use": "how  to use",
+    "ingredient": "ingredient",
+    "more_information": "more information",
+    "size": "size",
+    "tabs": {
+      "description": "addition information",
+      "how_to_use": "how to use",
+      "ingredient": "ingredient",
+      "more_information": "more information"
+    }
+  },
+  "profile": {
+    "address": {
+      "address_added_success": "Address added successfully",
+      "address_error": "Error adding address",
+      "description": "Manage your shipping and billing addresses",
+      "error_title": "Error",
+      "form_invalid": "Please fill all required fields correctly",
+      "form_reset": "Form has been reset",
+      "info_title": "Information",
+      "locations_error": "Error fetching locations",
+      "success_title": "Success",
+      "title": "My Addresses | HAC",
+      "user_info_error": "Error fetching user information",
+      "validation_title": "Validation Error"
+    },
+    "password": {
+      "confirm-password": "Confirm Password",
+      "current-password": "Current Password",
+      "description": "Update your account password",
+      "new-password": "New Password",
+      "placeholder-confirm-password": "Confirm your new password",
+      "placeholder-current-password": "Enter your current password",
+      "placeholder-new-password": "Enter your new password",
+      "title": "Change Password | HAC",
+      "update": "Update Password"
+    },
+    "subtitle": "follow your profile and register your data",
+    "tabs": {
+      "account": "Account Management | HAC",
+      "address": "Manage Addresses",
+      "orders": {
+        "description": "View and track your order history",
+        "title": "My Orders | HAC"
+      },
+      "personal": {
+        "description": "Manage your personal information and preferences",
+        "title": "Personal Details | HAC"
+      },
+      "profile": "Personal Details"
+    },
+    "title": "My Profile"
+  },
+  "profile.orders": {
+    "date": "Date",
+    "items": "Items",
+    "no_orders": {
+      "message": "You haven't placed any orders yet",
+      "title": "No Orders Yet"
+    },
+    "order_number": "Order Number",
+    "payment_method": "Payment Method",
+    "start_shopping": "Start Shopping",
+    "title": "My Orders",
+    "total": "Total",
+    "view_details": "View Details"
+  },
+  "related-blog": {
+    "subtitle": "News & Articles",
+    "title": "News & Related Articles"
+  },
+  "related-products": {
+    "explore": "explore",
+    "title": "related products"
+  },
+  "remove_from_cart": "remove from cart",
+  "reorder": "reorder",
+  "reset": {
+    "form": "Reset Form"
+  },
+  "routes": {
+    "about": "about",
+    "blog": "blog",
+    "cart": "cart",
+    "contact": "contact",
+    "home": "Home",
+    "login": "Login",
+    "register": "Register",
+    "shopping": "shopping",
+    "wishlist": "wishlist"
+  },
+  "saudi_arabia": "saudi arabia",
+  "save_changes": "save changes",
+  "section": {
+    "heading": {
+      "subtitle": "Shop by Brand",
+      "title": "Sections"
+    },
+    "titles": [
+      "Beauty Accessories",
+      "Beauty Devices",
+      "Dental Care",
+      "Dietary Supplements",
+      "Hair Styling",
+      "Haircare",
+      "Makeup",
+      "Medical Equipment",
+      "Men's Care",
+      "Perfumes",
+      "Skincare",
+      "Women's Care"
+    ]
+  },
+  "share": "share",
+  "shared": {
+    "add_to_cart": "Add to cart",
+    "add_to_cart_shooping": "add to cart ",
+    "added_to_cart_success": "Item added to cart successfully",
+    "adding": "Adding...",
+    "buttons": {
+      "loading": "Loading...",
+      "processing": "Processing...",
+      "saving": "Saving...",
+      "submitting": "Submitting..."
+    },
+    "buy_now": "Buy Now",
+    "continue_shopping": "Continue Shopping",
+    "currency": "SAR",
+    "go_to_cart": "Go to Cart",
+    "loading": "Loading",
+    "next": "next",
+    "offer": "25% Discount",
+    "previous": "prev",
+    "price_varies": "Price varies based on options",
+    "processing": "Processing...",
+    "readMore": "Read More",
+    "shopping_now": "shopping now",
+    "show-products": "show product ",
+    "success": "Success",
+    "update_cart": "update product quantity",
+    "update_cart_quantity": "Update cart quantity",
+    "updating": "Updating...",
+    "wait_response": "Please wait..."
+  },
+  "shipping": {
+    "costs": {
+      "copon": "copon",
+      "s": "shipping costs",
+      "tax": "tax"
+    }
+  },
+  "shopping": {
+    "description": "Browse our collection of beauty and cosmetic products",
+    "filter": {
+      "active": "active",
+      "category": "Category",
+      "filter-type": {
+        "clear-all": "clear all"
+      },
+      "items": "items",
+      "price": {
+        "currency": "USD",
+        "reset": "Reset prices",
+        "title": "price"
+      },
+      "products-counts": "Products Count",
+      "selected-filter": "selected filters",
+      "subcategory": "Subcategory",
+      "view-all-products": "View All Products"
+    },
+    "filter-box": {
+      "title": "categories"
+    },
+    "grid": {
+      "newest": "Newest",
+      "popularity": "Popularity",
+      "price-high-low": "Price: High to Low",
+      "price-low-high": "Price: Low to High",
+      "sort-by": "Sort by"
+    },
+    "header": {
+      "subtitle": "Shop the most recent products",
+      "title": "All products"
+    },
+    "no-products": {
+      "button": "Clear filters",
+      "description": "Try clearing some filters or try a different search term",
+      "title": "No products found"
+    },
+    "pagination": {
+      "next": "Next",
+      "of": "of",
+      "page": "Page",
+      "previous": "Previous"
+    },
+    "search": {
+      "button": "Search",
+      "hint": "Looking for something specific?",
+      "no-results": "No products found",
+      "placeholder": "Search for products",
+      "suggestions": "Try different keywords"
+    },
+    "title": "Shop | HAC",
+    "view-category": "View category",
+    "view-options": {
+      "grid": "Grid view",
+      "list": "List view"
+    }
+  },
+  "show": {
+    "product": "show product"
+  },
+  "signOut": "sign Out",
+  "submit-button-aria-label": "submit button",
+  "summary": {
+    "complete-the-order": "complete the order",
+    "delivery": "delivery",
+    "discount-coupon": "discount coupon",
+    "items": "items",
+    "subtotal": "subtotal",
+    "summary": "summary",
+    "tax": "tax",
+    "total": "total"
+  },
+  "total-price": {
+    "total-price": "total price",
+    "value": "2000 SAR"
+  },
+  "track-order": " track order",
+  "unauth": "You need to be logged in",
+  "unavailability": "Unavailable Products",
+  "update_password_success": "update password success",
+  "update_profile_success": "personal information hase been changed",
+  "validation": {
+    "email-format": "Email or phone must be a valid email address",
+    "email-required": "Email or phone is required",
+    "name-min-length": "Name must be at least 3 characters long",
+    "name-required": "Name is required",
+    "password-min-length": "Password must be at least 6 characters long",
+    "password-mismatch": "Passwords do not match",
+    "password-required": "Password is required",
+    "phone-format": "Phone must be a valid number",
+    "phone-min-length": "Phone number must be at least 9 digits",
+    "phone-pattern-example": "Phone number must be 05XXXXXXXX",
+    "phone-required": "Phone is required",
+    "your-msg-min-length": "Your message must be at least 10 characters long",
+    "your-msg-required": "Your message is required"
+  },
+  "wishlist": {
+    "auth": {
+      "message": "You need to be logged in to view and manage your wishlist items.",
+      "title": "Please Login to Access Your Wishlist"
+    },
+    "description": "View and manage your favorite products",
+    "empty": {
+      "message": "Looks like you haven't added any items to your wishlist yet",
+      "shop-now": "Start Shopping",
+      "title": "Your Wishlist is Empty"
+    },
+    "header": {
+      "subtitle": "show your favorite products",
+      "title": "favourite"
+    },
+    "orderList": {
+      "addToCart": "add to cart",
+      "price": "Price",
+      "product": "Product",
+      "quantity": "Quantity"
+    },
+    "productsItem": {
+      "commonItems": [
+        "facial freshness cream...",
+        "hand moisturizing cream...",
+        "hand moisturizing cream...",
+        "moisturizing body lotion",
+        "vitamin c serum..."
+      ],
+      "item-1": {
+        "price": "SAR",
+        "subtitle": "skin care"
+      }
+    },
+    "title": "My Wishlist | HAC",
+    "wishlist-footer": {
+      "add-all": "add all",
+      "add-new": "do you want to put all in cart !?",
+      "delete-all": "delete all items"
+    }
+  },
+  "product-not-found": {
+    "title": "Product Not Available",
+    "message": "You are not authorized to access this page",
+    "continue-shopping": "Continue Shopping",
+    "contact-us": "Contact Us"
+  },
+  "special_order": {
+    "button": "Register Your Order",
+    "modal_title": "Register Your Order",
+    "modal_subtitle": "Please fill in the following details to register your order and our team will contact you shortly",
+    "product_label": "Selected Product",
+    "special_product": "Special Product",
+    "quantity": "Quantity",
+    "fields": {
+      "name": {
+        "label": "Full Name",
+        "placeholder": "Enter your full name"
+      },
+      "email": {
+        "label": "Email Address",
+        "placeholder": "example@domain.com"
+      },
+      "phone": {
+        "label": "Phone Number",
+        "placeholder": "05xxxxxxxx"
+      },
+      "address": {
+        "label": "Detailed Address",
+        "placeholder": "City, District, Street name, Building number"
+      }
+    },
+    "validation": {
+      "name": {
+        "required": "Full name is required",
+        "minlength": "Name must be at least 3 characters"
+      },
+      "email": {
+        "required": "Email address is required",
+        "invalid": "Please enter a valid email address"
+      },
+      "phone": {
+        "required": "Phone number is required",
+        "pattern": "Phone number must start with 05 and contain 10 digits"
+      },
+      "address": {
+        "required": "Detailed address is required",
+        "minlength": "Address must be at least 5 characters"
+      }
+    },
+    "submit_button": "Confirm Order Registration",
+    "submitting": "Registering order...",
+    "cancel": "Cancel",
+    "success": {
+      "title": "Order Registered Successfully",
+      "message": "Thank you! Your special order has been received and our team will contact you soon."
+    },
+    "error": {
+      "title": "Registration Failed",
+      "message": "An error occurred while registering your order. Please try again."
+    }
+  },
+  "thank_you": {
+    "title": "Thank You! Your Order Has Been Placed Successfully",
+    "subtitle": "We are delighted to serve you. Your order details have been received and our team will contact you shortly to confirm delivery details.",
+    "status_badge": "Order Under Review & Processing",
+    "response_time": "You will be contacted during business hours",
+    "order_details_title": "Order Summary Details",
+    "product_name": "Product Name",
+    "quantity": "Quantity Requested",
+    "customer_name": "Customer Name",
+    "phone": "Phone Number",
+    "delivery_address": "Delivery Address",
+    "timeline": {
+      "title": "What Happens Next?",
+      "step1_title": "Order Received",
+      "step1_desc": "Your order has been registered in our system and assigned to a customer service specialist.",
+      "step2_title": "Confirmation Call",
+      "step2_desc": "We will reach out via phone or WhatsApp to verify delivery details and timing.",
+      "step3_title": "Preparation & Delivery",
+      "step3_desc": "Your product will be carefully packed and delivered straight to your doorstep promptly."
+    },
+    "continue_shopping": "Continue Shopping",
+    "back_to_home": "Back to Home"
+  },
+  "pages": {
+    "thankyou": {
+      "title": "Thank You - Order Registered | HAC",
+      "description": "Special order confirmation page at HAC"
+    }
+  }
+}

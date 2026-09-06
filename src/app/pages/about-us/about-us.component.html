@@ -1,0 +1,119 @@
+<app-about-shared
+  [showBgImage]="false"
+  [sloganText]="'about-us.slogan-text' | translate"
+  [showSloganText]="true"
+  [aboutUs]="aboutUsOne().aboutUs"
+  [counters]="aboutUsOne().counters"
+  aria-label="About our company section"
+></app-about-shared>
+
+<!-- Big Offer Card  -->
+<div class="container mx-auto">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 p-4">
+    <!-- Static -->
+    <app-card
+      [cardImagePath]="'/images/whoWeAre/6.webp'"
+      [cardDescription]="
+        aboutUsTwo().aboutdata | customTranslate : 'vision_text'
+      "
+      [cardTitle]="'about-us.cards.card-1.title' | translate"
+    ></app-card>
+    <app-card
+      [cardImagePath]="'/images/whoWeAre/5.webp'"
+      [cardDescription]="
+        aboutUsTwo().aboutdata | customTranslate : 'mission_text'
+      "
+      [cardTitle]="'about-us.cards.card-2.title' | translate"
+    ></app-card>
+  </div>
+</div>
+
+<!-- Banner_1 -->
+<app-banner
+  [showLeftSideImage]="true"
+  [bgBanner]="false"
+  [showRightSideImage]="true"
+  [bannerText]="
+    aboutUsOne().breaks && aboutUsOne().breaks.length > 0
+      ? (aboutUsOne().breaks[0] | customTranslate : 'name')
+      : ''
+  "
+  aria-label="Banner quote"
+>
+</app-banner>
+
+<!-- Card Service  -->
+@if (aboutUsTwo().features.length > 0) {
+<section aria-label="Our services">
+  <div class="container mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6">
+      @for (feature of aboutUsTwo().features | customTranslate; track
+      feature.id) {
+      <app-service-card
+        [cardDescription]="feature.text"
+        [cardImagePath]="feature.icon_image"
+        [cardTitle]="feature.title"
+        [isCenter]="false"
+      ></app-service-card>
+      }
+    </div>
+  </div>
+</section>
+}
+<!-- Banner_2 -->
+<app-banner
+  [bgBanner]="false"
+  [bannerText]="
+    aboutUsOne().breaks && aboutUsOne().breaks.length > 1
+      ? (aboutUsOne().breaks[1] | customTranslate : 'name')
+      : ''
+  "
+  [showLeftSideImage]="false"
+  [showRightSideImage]="true"
+  aria-label="Banner quote"
+></app-banner>
+
+<!-- Big Card Offer -->
+<section
+  aria-label="Special offers"
+  class="container mx-auto pt-9 px-4 mb-[109px] overflow-x-hidden"
+>
+  <div
+    class="flex flex-wrap md:flex-nowrap gap-x-6 gap-y-[20px] xl:gap-y-6 justify-center"
+  >
+    @if(aboutUsOne().offers.length > 0) { @for (offer of
+    aboutUsOne().offers.slice(0,2) ; track offer.id) {
+    <app-big-card-offer
+      class="flex-grow-1 cursor-pointer"
+      [routerLink]="['/', currentLang$ | async, 'shopping']"
+      [mainColor]="$even"
+      [imgPath]="offer.main_image"
+      [alt]="offer | customTranslate : 'title'"
+      [title]="offer | customTranslate : 'title'"
+      [subtitle]="offer | customTranslate : 'small_title'"
+      [description]="offer | customTranslate : 'text'"
+    ></app-big-card-offer>
+    } }
+  </div>
+</section>
+
+<!-- Banner_3 -->
+<app-banner
+  [bgBanner]="false"
+  [bannerText]="
+    aboutUsOne().breaks && aboutUsOne().breaks.length > 0
+      ? (aboutUsOne().breaks[aboutUsOne().breaks.length - 1]
+        | customTranslate : 'name')
+      : ''
+  "
+  [showLeftSideImage]="true"
+  [showRightSideImage]="false"
+  aria-label="Banner quote"
+></app-banner>
+
+<!-- FAQ -->
+@if (aboutUsTwo().faqs.length > 0) {
+<app-faq [faqs]="aboutUsTwo().faqs"></app-faq>
+} @if (isLoading()) {
+<app-about-skeleton></app-about-skeleton>
+}

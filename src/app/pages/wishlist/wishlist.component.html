@@ -1,0 +1,256 @@
+<app-articles-header
+  [title]="'wishlist.header.title' | translate"
+  [subTitle]="'wishlist.header.subtitle' | translate"
+  [showRotateImage]="false"
+  [marginBottom]="'15'"
+></app-articles-header>
+
+<!-- Login screen when not authenticated -->
+@if (!isAuthenticated()) {
+<section class="mb-[64px] overflow-hidden">
+  <div class="container mx-auto">
+    <div
+      class="flex flex-col items-center justify-center min-h-[60vh] w-full bg-white rounded-[15px] mx-auto transition-all duration-300 ease-out"
+    >
+      <div class="text-center py-12 max-w-[500px]">
+        <svg
+          class="mx-auto mb-6 w-[80px] h-[80px] text-warm-tan"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+          />
+        </svg>
+        <h3 class="text-2xl font-bold text-[#333] mb-4">
+          {{ "wishlist.auth.title" | translate }}
+        </h3>
+        <p class="text-[#666] mb-6">
+          {{ "wishlist.auth.message" | translate }}
+        </p>
+        <div class="flex gap-4 justify-center">
+          <a
+            [routerLink]="['/', currentLang$ | async, 'login']"
+            class="bg-warm-tan text-white px-8 py-3 rounded-full hover:opacity-90 transition-opacity"
+          >
+            {{ "routes.login" | translate }}
+          </a>
+          <a
+            [routerLink]="['/', currentLang$ | async, 'register']"
+            class="bg-white border border-warm-tan text-warm-tan px-8 py-3 rounded-full hover:opacity-90 transition-opacity"
+          >
+            {{ "routes.register" | translate }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+} @else { @if (isLoading) {
+<app-wishlist-skeleton />
+} @else {
+<!-- Items  -->
+<section class="mb-[30px] overflow-hidden">
+  <div class="container mx-auto">
+    <div class="grid grid-cols-15">
+      <div class="col-span-15 lg:col-span-11">
+        <!-- Wishlist Items Header - Show only when items exist -->
+        @if (wishlistItem.length > 0) {
+        <div
+          class="header hidden md:flex items-center justify-between rounded-[15px] bg-warm-tan py-6 px-12 text-white text-description-size"
+        >
+          <span class="capitalize">
+            {{ "wishlist.orderList.product" | translate }}
+          </span>
+          <span class="capitalize">
+            {{ "wishlist.orderList.price" | translate }}
+          </span>
+
+          <span class="capitalize">
+            {{ "wishlist.orderList.addToCart" | translate }}
+          </span>
+        </div>
+
+        <!-- Wishlist Items -->
+        <div class="max-h-[555px] overflow-y-auto px-4">
+          @for (item of wishlistItem; track $index) {
+          <div
+            [@itemAnimation]
+            class="block md:flex items-center justify-between flex-wrap pt-[27px] pb-[30px] px-[23px] border-b-1 border-[#8D8D8D]"
+          >
+            <!-- Image && Product Name -->
+            <div
+              class="flex justify-start md:ltr:pr-15 md:rtl:pl-15 items-center capitalize gap-[10px] mb-5 md:mb-0 flex-grow-1"
+            >
+              <!-- Remove Item -->
+              <div
+                class="close cursor-pointer"
+                (click)="removeItem(item.id, $index)"
+              >
+                <figure class="mx-0 remove-icon">
+                  <img
+                    width="23px"
+                    height="23px"
+                    loading="lazy"
+                    src="/images/wishlist/remove.webp"
+                    alt="remove item"
+                  />
+                </figure>
+              </div>
+
+              <a
+                [routerLink]="[
+                  '/',
+                  currentLang$ | async,
+                  'product-details',
+                  item.product | customTranslate : 'slug'
+                ]"
+                class="max-w-[80px] relative rounded-[15px] overflow-hidden"
+              >
+                <img
+                  loading="lazy"
+                  class="w-full"
+                  [alt]="item.product | customTranslate : 'name'"
+                  [appImageUrl]="item.product.main_image"
+                  [imageEndpoint]="''"
+                />
+                <!-- Cart Animation Icon -->
+                @if (cartAnimationStates[$index]) {
+
+                <img
+                  loading="lazy"
+                  src="/images/common/cart.webp"
+                  class="absolute top-0 left-0 w-full h-full animate-cart"
+                  alt="cart"
+                />
+                }
+              </a>
+              <div class="details">
+                <h3
+                  [title]="item.product | customTranslate : 'slug'"
+                  class="text-category-size text-black font-bold mb-[15px] line-clamp-1"
+                >
+                  {{ item.product | customTranslate : "slug" }}
+                </h3>
+                <p class="text-[#333] text-[14px]">
+                  {{ item.product | customTranslate : "name" }}
+                </p>
+              </div>
+            </div>
+            <!-- Price  -->
+            <div
+              class="flex justify-between items-center flex-row-reverse md:flex-row mb-5 md:mb-0 flex-grow-1"
+            >
+              @if (+item.product.price === 0) {
+              <!-- Price is 0, show message about product with choices -->
+              <div
+                class="text-muted-rose text-category-size font-medium flex-grow-1"
+              >
+                {{ "shared.price_varies" | translate }}
+              </div>
+              } @else if (item.product.price_after_sale &&
+              +item.product.price_after_sale !== 0) {
+              <!-- Price After Sale -->
+              <div class="text-[#333] text-category-size font-bold flex-grow-1">
+                <span class="icon-saudi_riyal"></span>
+                {{ item.product.price_after_sale }}
+              </div>
+              } @else {
+              <!-- Regular Price -->
+              <div class="text-[#333] text-category-size font-bold flex-grow-1">
+                <span class="icon-saudi_riyal"></span> {{ item.product.price }}
+              </div>
+              }
+            </div>
+            <!-- Add To Cart -->
+            <button
+              type="button"
+              class="cursor-pointer text-white block md:inline bg-warm-tan font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none capitalize"
+              (click)="toggleCart(item.product, $index)"
+              [disabled]="isAddingToCart(item.product.id || 0)"
+            >
+              {{
+                isInCart(item.product.id || 0)
+                  ? ("remove_from_cart" | translate)
+                  : ("add_to_cart" | translate)
+              }}
+            </button>
+          </div>
+          }
+        </div>
+
+        <!-- Wishlist Items Footer -->
+        <div class="flex items-center justify-between pt-[27px] pb-[30px]">
+          <button
+            (click)="removeAllItems()"
+            class="cursor-pointer text-muted-rose text-description-size font-bold capitalize underline"
+          >
+            {{ "wishlist.wishlist-footer.delete-all" | translate }}
+          </button>
+        </div>
+        }
+      </div>
+      <!-- this acts as an offset -->
+      <div class="hidden lg:block lg:col-span-1"></div>
+      @if (wishlistItem.length > 0) {
+      <div class="hidden max-h-[1000px] lg:block lg:col-span-3">
+        <app-talent-image-card
+          class="items-stretch"
+          [imagePath]="'/images/wishlist/wishlist-talent.webp'"
+        ></app-talent-image-card>
+      </div>
+      }
+    </div>
+
+    <!-- Empty Wishlist State - Show only when authenticated but no items -->
+    @if(wishlistItem.length < 1) {
+    <div
+      class="flex items-center justify-center min-h-[60vh] w-full bg-white rounded-[15px] mx-auto transition-all duration-300 ease-out"
+      [@emptyWishlistAnimation]
+    >
+      <div class="text-center py-12">
+        <svg
+          class="mx-auto mb-6 w-[200px] h-[200px]"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M2 3H4.5L6.5 17H17M17 17C15.8954 17 15 17.8954 15 19C15 20.1046 15.8954 21 17 21C18.1046 21 19 20.1046 19 19C19 17.8954 18.1046 17 17 17ZM6.07142 14H18L21 5H4.78571M11 19C11 20.1046 10.1046 21 9 21C7.89543 21 7 20.1046 7 19C7 17.8954 7.89543 17 9 17C10.1046 17 11 17.8954 11 19Z"
+            stroke="#A4907C"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <circle cx="9" cy="19" r="2" fill="#A4907C" opacity="0.3" />
+          <circle cx="17" cy="19" r="2" fill="#A4907C" opacity="0.3" />
+          <path d="M4 5H21L18 14H6.07142L4 5Z" fill="#A4907C" opacity="0.3" />
+          <path
+            d="M7 8L8 12M11 8L11.5 12M15 8L14 12"
+            stroke="white"
+            stroke-linecap="round"
+          />
+        </svg>
+        <h3 class="text-2xl font-bold text-[#333] mb-4">
+          {{ "wishlist.empty.title" | translate }}
+        </h3>
+        <p class="text-[#666] mb-6">
+          {{ "wishlist.empty.message" | translate }}
+        </p>
+        <a
+          [routerLink]="['/', currentLang$ | async, 'shopping']"
+          class="bg-warm-tan text-white px-8 py-3 rounded-full hover:opacity-90 transition-opacity"
+        >
+          {{ "wishlist.empty.shop-now" | translate }}
+        </a>
+      </div>
+    </div>
+    }
+  </div>
+</section>
+} }

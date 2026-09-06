@@ -1,0 +1,30 @@
+<div class="notifications-container">
+  @for(notification of notifications(); track $index) {
+  <div
+    class="notification"
+    [ngClass]="getNotificationClasses(notification)"
+    role="alert"
+  >
+    <div class="notification-content">
+      <i
+        class="notification-icon fas"
+        [ngClass]="getIconClass(notification.type)"
+      ></i>
+      <div class="notification-message">
+        @if(notification.title) {
+        <h4 class="notification-title">{{ notification.title }}</h4>
+        }
+        <p>{{ notification.message }}</p>
+      </div>
+    </div>
+    <button
+      type="button"
+      class="notification-close"
+      (click)="closeNotification(notification.id)"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  }
+</div>

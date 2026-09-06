@@ -1,0 +1,14 @@
+<div
+  [ngClass]="{ ' bg-[#d6bea6] p-5 rounded-full': haveBg }"
+  class="flex items-center justify-center rtl:justify-end ltr:justify-start gap-[10px] mb-4 w-fit"
+>
+  <figure>
+    <img
+      class="max-w-[30px] max-h-[30px]"
+      loading="lazy"
+      [src]="sloganImage"
+      alt="sloganImage"
+    />
+  </figure>
+  <span class="text-black text-[15px] lg:text-[23px]">{{ sloganTitle }}</span>
+</div>

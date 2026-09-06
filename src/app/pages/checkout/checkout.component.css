@@ -1,0 +1,152 @@
+.checkout-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.page-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: #333;
+  text-align: center;
+}
+
+/* Checkout Steps Styling */
+.checkout-steps {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.step-number {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #eee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #777;
+  transition: all 0.3s ease;
+}
+
+.step.active .step-number {
+  background-color: #c12a2a;
+  color: white;
+}
+
+.step-label {
+  font-size: 0.9rem;
+  color: #777;
+  transition: all 0.3s ease;
+}
+
+.step.active .step-label {
+  color: #c12a2a;
+  font-weight: 600;
+}
+
+.step-line {
+  width: 80px;
+  height: 2px;
+  background-color: #eee;
+  margin: 0 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .step-line {
+    width: 40px;
+  }
+
+  .step-number {
+    width: 30px;
+    height: 30px;
+    font-size: 0.9rem;
+  }
+
+  .step-label {
+    font-size: 0.8rem;
+  }
+}
+
+.checkout-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.checkout-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.checkout-sidebar {
+  width: 100%;
+}
+
+.checkout-section {
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.back-link {
+  margin-top: 2rem;
+}
+
+.back-link a {
+  display: inline-flex;
+  align-items: center;
+  color: #c12a2a;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.back-link a:hover {
+  color: #9e2121;
+  text-decoration: underline;
+}
+
+/* RTL Support */
+[dir="rtl"] .step-line {
+  transform: scaleX(-1);
+}
+
+/* Responsive styles */
+@media (min-width: 768px) {
+  .checkout-content {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .checkout-main {
+    flex: 2;
+  }
+
+  .checkout-sidebar {
+    flex: 1;
+    max-width: 380px;
+    position: sticky;
+    top: 2rem;
+  }
+}

@@ -1,0 +1,57 @@
+@if (categories.length === 0) {
+<app-categories-skeleton></app-categories-skeleton>
+} @else {
+<section class="text-center">
+  <div class="container mx-auto">
+    <h3 class="text-title-size font-bold mb-6">
+      {{ "section.heading.title" | translate }}
+    </h3>
+    <p class="text-[#333] text-subtitle-size mb-8">
+      {{ "section.heading.subtitle" | translate }}
+    </p>
+    <!-- !Draft Code for Categories -->
+    <!-- <div class="flex flex-wrap justify-center gap-4">
+      @for (category of categories; track $index) {
+      <div class="w-full sm:w-1/3 md:w-1/4 lg:w-1/5 flex-grow-1">
+        <app-card
+          [imgPath]="category.main_image"
+          [title]="category | customTranslate : 'name'"
+          [categoryId]="category.id"
+          [alt]="category | customTranslate : 'slug'"
+          class="cursor-pointer"
+        ></app-card>
+      </div>
+      }
+    </div> -->
+
+    <!--  this code is static for SubCategories not For Categories -->
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center"
+    >
+      @for (item of categories; track item.id) {
+
+      <a
+        class="group relative rounded-xl overflow-hidden transition-all duration-300 block"
+        [routerLink]="['/', currentLang, 'shopping']"
+        [queryParams]="{ subcategoryId: item.id }"
+      >
+        <figure class="overflow-hidden mb-0 rounded-xl aspect-[4/3]">
+          <img
+            [appImageUrl]="item.image || ''"
+            [imageEndpoint]="''"
+            loading="lazy"
+            alt="{{
+              currentLang === 'en' ? item.en_name : item.ar_name
+            }} shopping category"
+            class="w-full h-full rounded-xl mb-0 object-cover transform transition-transform duration-300 group-hover:scale-110"
+          />
+        </figure>
+        <p class="text-subtitle-size font-bold my-3">
+          {{ currentLang === "en" ? item.en_name : item.ar_name }}
+        </p>
+      </a>
+      }
+    </div>
+  </div>
+</section>
+}

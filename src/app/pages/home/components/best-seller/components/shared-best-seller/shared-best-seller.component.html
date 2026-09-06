@@ -1,0 +1,217 @@
+<div
+  class="card-wrapper h-full bg-white border border-gray-200 overflow-hidden relative"
+>
+  <div class="btns absolute top-[30px] right-[25px] z-1 flex flex-col">
+    <button
+      class="mb-[10px] cursor-pointer relative"
+      (click)="toggleWishlist()"
+      [disabled]="isAddingToWishlist()"
+      [class.opacity-50]="isAddingToWishlist()"
+      [attr.aria-label]="
+        isInWishlist() ? 'Remove from wishlist' : 'Add to wishlist'
+      "
+    >
+      <figure>
+        @if (isAddingToWishlist()) {
+
+        <svg
+          class="animate-spin h-5 w-5 text-muted-rose"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+        } @else if (isInWishlist()) {
+
+        <svg
+          class="h-9 w-9 text-muted-rose"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path
+            d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-5.201-3.893 10.989 10.989 0 01-2.49-4.831 6.95 6.95 0 01.945-5.205C5.93 5.38 7.553 4.5 9.31 4.5c1.355 0 2.618.607 3.476 1.577L12 6.39l-.214-.314A4.731 4.731 0 0114.69 4.5c1.757 0 3.38.879 4.44 2.466a6.95 6.95 0 01.945 5.205 10.989 10.989 0 01-2.49 4.831 15.247 15.247 0 01-5.201 3.893l-.022.012-.007.003-.001.001-.001-.001z"
+          />
+        </svg>
+        } @else {
+        <img
+          width="35px"
+          height="35px"
+          loading="lazy"
+          src="/images/common/wishlist-icon.webp"
+          alt="add in wishlist"
+        />
+        }
+      </figure>
+    </button>
+    <button
+      class="cursor-pointer relative"
+      (click)="toggleCart()"
+      [disabled]="isAddingToCart()"
+      [class.opacity-50]="isAddingToCart()"
+      [attr.aria-label]="
+        isAddingToCart()
+          ? ('shared.loading' | translate)
+          : isInCart()
+          ? ('shared.remove_from_cart' | translate)
+          : ('shared.add_to_cart' | translate)
+      "
+    >
+      <figure>
+        @if (isAddingToCart()) {
+        <svg
+          class="animate-spin h-5 w-5 text-warm-tan"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+        } @else if (isInCart()) {
+        <!-- Cart icon with check mark to indicate product is in cart (clickable to remove) -->
+        <svg
+          class="h-9 w-9 text-warm-tan hover:text-muted-rose transition-colors"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path
+            d="M2.25 2.25a.75.75 0 000 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 00-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 000-1.5H5.378A2.25 2.25 0 017.5 15h11.218a.75.75 0 00.674-.421 60.358 60.358 0 002.96-7.228.75.75 0 00-.525-.965A60.864 60.864 0 005.68 4.509l-.232-.867A1.875 1.875 0 003.636 2.25H2.25zM3.75 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM16.5 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z"
+          />
+          <circle cx="19" cy="5" r="4" fill="#10B981" />
+          <path
+            d="M17.5 5.5l1 1 2-2"
+            stroke="white"
+            stroke-width="1"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        } @else {
+        <img loading="lazy" src="/images/common/cart.webp" alt="add to cart" />
+        }
+      </figure>
+    </button>
+  </div>
+  <div
+    class="img relative cursor-pointer"
+    [routerLink]="[
+      '/',
+      currentLang$ | async,
+      'product-details',
+      productData | customTranslate : 'slug'
+    ]"
+  >
+    <a
+      [routerLink]="[
+        '/',
+        currentLang$ | async,
+        'product-details',
+        productData | customTranslate : 'slug'
+      ]"
+    >
+      <figure class="overflow-hidden rounded-xl">
+        <img
+          class="w-full h-full"
+          [appImageUrl]="productData.main_image"
+          [imageEndpoint]="'uploads/products'"
+          [alt]="productData | customTranslate : 'name'"
+        />
+      </figure>
+    </a>
+    <!-- Offer Title -->
+    @if (productData.sale_price) {
+    <div
+      class="absolute top-3 left-3 bg-[#000000b3] text-white py-4 px-8 rounded-full text-category-size font-bold"
+    >
+      {{ +productData.sale_price / 100 | percent : "0.0" }}
+    </div>
+    }
+  </div>
+  <div
+    class="flex flex-row rtl:flex-row-reverse justify-between items-center mt-[26px] mb-4"
+  >
+    <a
+      [routerLink]="[
+        '/',
+        currentLang$ | async,
+        'product-details',
+        productData | customTranslate : 'slug'
+      ]"
+      class="text-muted-rose hover:underline text-category-size underline font-bold"
+    >
+      {{ "shared.show-products" | translate }}
+    </a>
+
+    <a
+      [routerLink]="[
+        '/',
+        currentLang$ | async,
+        'product-details',
+        productData | customTranslate : 'slug'
+      ]"
+      class="text-black mb-3 text-category-size"
+    >
+      {{ productData | customTranslate : "name" }}
+    </a>
+  </div>
+  <div class="text-description-size font-bold text-black mb-8 line-clamp-1">
+    <app-safe-html [content]="productData | customTranslate : 'description'">
+    </app-safe-html>
+  </div>
+
+  <div class="text-description-size md:text-subtitle-size mb-[13px]">
+    @if (+productData.price === 0) {
+    <!-- Price is zero, show choice price -->
+    <p class="flex items-center gap-x-2 text-muted-rose font-medium">
+      <span> {{ productData.first_choice?.cuurent_value }} </span>
+      <span class="icon-saudi_riyal"></span>
+    </p>
+    } @else if (productData.price_after_sale && +productData.price_after_sale
+    !== 0) {
+    <!-- There is a sale, show sale price and crossed-out price -->
+    <div class="flex items-center justify-between">
+      <p class="flex items-center gap-x-2 text-warm-tan font-semibold">
+        <span> {{ productData.price_after_sale }} </span>
+        <span class="icon-saudi_riyal"></span>
+      </p>
+      <span class="line-through text-black">
+        {{ productData.price }}
+        <span class="icon-saudi_riyal"></span>
+      </span>
+    </div>
+    } @else {
+    <!-- Regular price, no sale -->
+    <p class="flex items-center gap-x-2 text-warm-tan font-semibold">
+      <span> {{ productData.price }} </span>
+      <span class="icon-saudi_riyal"></span>
+    </p>
+    }
+  </div>
+</div>

@@ -1,0 +1,87 @@
+@if (aboutUs.main_image) {
+<section
+  [ngClass]="{ showBgImage: showBgImage }"
+  class="container mx-auto px-4 pt-[60px] mb-[60px] relative"
+>
+  <div
+    class="flex flex-col lg:flex-row items-start justify-between relative z-10 gap-x-[59px]"
+  >
+    <div class="hidden xl:block xl:w-[45%] self-stretch">
+      <figure class="">
+        <img
+          class="max-w-full about_image"
+          loading="eager"
+          [appImageUrl]="aboutUs.main_image"
+          [imageEndpoint]="''"
+          alt="About us main image"
+        />
+      </figure>
+    </div>
+
+    <!-- Text Column -->
+    <div class="w-full xl:w-[55%] space-y-6">
+      <h1 class="text-black font-bold text-title-size mb-6 mt-8">
+        {{ "hero.about-us.title" | translate }}
+      </h1>
+      <h2 class="text-[2.8125rem] font-medium text-black mb-[35px]">
+        {{ getMainTitleWithoutLastWord() }}
+        <span class="text-muted-rose">
+          {{ getLastWordOfMainTitle() }}
+        </span>
+      </h2>
+      <h3
+        class="text-[#474747] text-description-size leading-relaxed mb-[50px] line-clamp-4 xl:text-justify"
+      >
+        {{ aboutUs | customTranslate : "main_text" }}
+      </h3>
+      <!-- Stats -->
+      <div
+        class="flex flex-col sm:flex-row justify-evenly items-center gap-4 bg-warm-tan rounded-2xl py-[19px] text-white mb-[54px]"
+      >
+        @for (counter of counters; track counter.id) {
+
+        <div class="text-center">
+          <div class="text-black mb-[10px] text-[24px] font-normal">
+            @if (currentLang == 'ar') {
+            <span>+</span>
+            {{ counter.counter_value }}
+            } @else if (currentLang == 'en') {
+            <span>+</span>
+            {{ counter.counter_value }}
+            }
+          </div>
+
+          <div class="text-sm text-white text-[18px] font-light">
+            {{ counter | customTranslate : "name" }}
+          </div>
+        </div>
+        @if ($index < counters.length - 1) {
+        <span
+          class="hidden sm:inline-block min-h-[74px] border-l border-[#D7D7D7] rtl:border-r rtl:border-l-0"
+        ></span>
+        } }
+      </div>
+      <!-- Slogan -->
+      @if (showSloganText) {
+      <app-slogan
+        [haveBg]="false"
+        [sloganImage]="'/images/navbar/8.webp'"
+        [sloganTitle]="sloganText"
+      ></app-slogan>
+      } @else {
+      <a
+        [routerLink]="['/', currentLang$ | async, 'about-us']"
+        class="text-muted-rose text-description-size underline"
+        [attr.aria-label]="'shared.readMore' | translate"
+      >
+        {{ "shared.readMore" | translate }}
+      </a>
+      }
+    </div>
+  </div>
+  <div class="absolute top-0 left-0 w-full h-full bg-white opacity-95"></div>
+</section>
+
+} @else {
+<app-about-skeleton></app-about-skeleton>
+}

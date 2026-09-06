@@ -1,0 +1,179 @@
+<footer class="bg-white relative border-t border-gray-200 pb-[65px]">
+  <div class="container mx-auto px-4 pt-8 sm:px-6 lg:px-8 relative z-10">
+    <div class="grid lg:grid-cols-5 gap-8 ltr:text-left rtl:text-right">
+      <!-- Column 1: Logo + Description -->
+      <div class="space-y-4">
+        <img src="/images/navbar/2.webp" alt="logo" class="h-8 mx-auto md:mx-0" />
+        <div class="text-sm text-footer-color leading-relaxed">
+          <app-safe-html [content]="footerTitle | customTranslate : 'footer_for_text'"></app-safe-html>
+        </div>
+      </div>
+
+      <!-- Column 2: لينكات سريعه (Now spans 2 columns) -->
+      <div>
+        <h3 class="mb-4 text-sm font-bold text-black">
+          {{ "footer.sections.title" | translate }}
+        </h3>
+        <div class="links flex justify-between">
+          <!-- First column of categories -->
+          <ul class="space-y-2 text-sm text-footer-color flex-grow-2">
+            @for (navItem of navItems; track $index) {
+            <li>
+              <a [routerLink]="
+                  navItem.routLink
+                    ? ['/', currentLang$ | async, navItem.routLink]
+                    : ['/', currentLang$ | async]
+                " class="block py-2 px-2 text-black font-bold rounded-sm xl:p-0" class="hover:underline">
+                {{ `footer.pages_Title.${navItem.translateWord}.title` | translate }}
+              </a>
+            </li>
+            }
+          </ul>
+          <!-- Second column of categories -->
+          <ul class="space-y-2 text-sm text-footer-color flex-grow-2">
+            @for (category of categories() ?? []; track category.id; ) { @if ($index
+            >= categories().length / 2) {
+            <li>
+              <a [routerLink]="['/', currentLang$ | async, 'shopping']" [queryParams]="{ categoryId: category.id }"
+                class="hover:underline">
+                {{ category | customTranslate : "name" }}
+              </a>
+            </li>
+            } }
+          </ul>
+        </div>
+      </div>
+      <!-- Column 3: العنايه بالبشرة -->
+      <div>
+        <h3 class="mb-4 text-sm font-bold text-black">
+          {{ "footer.skin.title" | translate }}
+        </h3>
+        <div class="links flex justify-between">
+          <!-- First column of categories -->
+          <ul class="space-y-2 text-sm text-footer-color flex-grow-2">
+            @for (category of categories() ?? []; track category.id) { @if (category
+            && category.subcategories && category.subcategories.length > 0) {
+            @for (subCategory of category.subcategories; track subCategory.id) {
+            <li>
+              <a [routerLink]="['/', currentLang$ | async, 'shopping']"
+                [queryParams]="{ subcategoryId: subCategory.id }"
+                class="block py-2 px-2 text-black font-bold rounded-sm xl:p-0" class="hover:underline">
+                <span>{{ subCategory | customTranslate : "name" }}</span>
+              </a>
+            </li>
+            } } }
+          </ul>
+          <!-- Second column of categories -->
+          <ul class="space-y-2 text-sm text-footer-color flex-grow-2">
+            @for (category of categories() ?? []; track category.id; ) { @if ($index
+            >= categories().length / 2) {
+            <li>
+              <a [routerLink]="['/', currentLang$ | async, 'shopping']" [queryParams]="{ categoryId: category.id }"
+                class="hover:underline">
+                {{ category | customTranslate : "name" }}
+              </a>
+            </li>
+            } }
+          </ul>
+        </div>
+      </div>
+
+      <!-- Column 4: تواصل معنا -->
+      <div class="md:col-span-2">
+        <h3 class="mb-4 text-sm font-bold text-black">
+          {{ "footer.contact.title" | translate }}
+        </h3>
+        <div class="space-y-2 text-sm text-footer-color">
+          @if (contactUs() && contactUs()?.phone && (contactUs()?.phone?.length ?? 0) > 2)
+          {
+          <div class="flex items-center">
+            <a [href]="
+                'https://api.whatsapp.com/send?phone=' + contactUs()?.phone
+              " target="_blank" rel="noopener noreferrer"
+              class="text-footer-color hover:underline cursor-pointer flex items-center w-full"
+              [attr.aria-label]="'footer.contact.whatsapp_chat' | translate">
+              <span class="mx-1">{{ contactUs()?.phone }}</span>
+            </a>
+          </div>
+          } @if (contactUs() ?? false) {
+          <div class="flex items-center gap-2">
+            <a [href]="'https://maps.app.goo.gl/BascAyvEfYLbsNXL7'" target="_blank" rel="noopener noreferrer"
+              class="text-footer-color hover:underline cursor-pointer flex items-center w-full gap-x-1"
+              [attr.aria-label]="contactUs() ?? '' | customTranslate : 'address'">
+              <span class="line-clamp-2">
+                {{ contactUs() ?? '' | customTranslate : "address" }}
+              </span>
+            </a>
+          </div>
+          }
+
+          <!-- Social Media Links -->
+          <nav aria-label="Social media links" class="py-5">
+            <ul class="flex items-center gap-7" role="list">
+              <li>
+                <a [href]="this.contactUs()?.facebook" target="_blank" rel="noopener noreferrer"
+                  class="text-warm-tan hover:text-warm-tan/80 transition-colors duration-300 flex items-center gap-2"
+                  aria-label="Visit our Facebook page">
+                  <i class="fa-brands fa-facebook-f fa-lg" aria-hidden="true"></i>
+                  <span class="sr-only">Facebook</span>
+                </a>
+              </li>
+
+              <li>
+                <a [href]="this.contactUs()?.instagram" target="_blank" rel="noopener noreferrer"
+                  class="text-warm-tan hover:text-warm-tan/80 transition-colors duration-300 flex items-center gap-2"
+                  aria-label="Visit our Instagram page">
+                  <i class="fa-brands fa-instagram fa-lg" aria-hidden="true"></i>
+                  <span class="sr-only">Instagram</span>
+                </a>
+              </li>
+
+              <li>
+                <a [href]="this.contactUs()?.linkedin" target="_blank" rel="noopener noreferrer"
+                  class="text-warm-tan hover:text-warm-tan/80 transition-colors duration-300 flex items-center gap-2"
+                  aria-label="Visit our snapchat page">
+                  <i class="fa-brands fa-snapchat fa-lg" aria-hidden="true"></i>
+                  <span class="sr-only">snapchat</span>
+                </a>
+              </li>
+
+              <li>
+                <a [href]="this.contactUs()?.twitter" target="_blank" rel="noopener noreferrer"
+                  class="text-warm-tan hover:text-warm-tan/80 transition-colors duration-300 flex items-center gap-2"
+                  aria-label="Visit our tiktok page">
+                  <i class="fa-brands fa-tiktok fa-lg" aria-hidden="true"></i>
+                  <span class="sr-only">tiktok</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+          <!-- Payment Methods -->
+          <div class="py-5">
+            <figure class="w-full h-full">
+              <img class="w-full" src="/images/footer/Payment.png" alt="Available payment methods" />
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer bottom -->
+    <div class="flex items-center justify-center mt-[69px] text-center relative">
+      <a href="https://digitalbondmena.com/" class="font-bold text-black">DIGITAL BOND</a>
+      <a class="mx-[3px] max-w-[35px]" href="https://digitalbondmena.com/">
+        <img src="/images/navbar/lOGO.webp" alt="DIGITAL BOND Logo" />
+      </a>
+      <span>
+        {{ "footer.rights" | translate }}
+      </span>
+      <div class="img-footer absolute -z-1">
+        <figure>
+          <img loading="lazy" src="/images/footer/1.webp" alt="footer" />
+        </figure>
+      </div>
+    </div>
+  </div>
+
+  <div class="absolute top-0 left-0 w-full h-full bg-white opacity-97"></div>
+</footer>

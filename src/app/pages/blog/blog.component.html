@@ -1,0 +1,120 @@
+<section class="overflow-x-hidden blog-content">
+  <div class="hidden">
+    <app-safe-html
+      [content]="blog | customTranslate : 'script_text'"
+    ></app-safe-html>
+  </div>
+  <div class="container mx-auto">
+    @if (blog) {
+    <!-- Image container with fixed aspect ratio -->
+    <figure
+      class="relative w-full mb-15 my-5 rounded-xl overflow-hidden max-h-[650px]"
+    >
+      <img
+        [appImageUrl]="blog.main_image"
+        [imageEndpoint]="''"
+        class="w-full h-[650px] object-cover object-top"
+        [alt]="blog | customTranslate : 'blog_title'"
+        loading="eager"
+      />
+      <a
+        class="cursor-pointer"
+        aria-label="Back to blogs"
+        href="#"
+        [routerLink]="['/', currentLanguage$ | async, 'blogs']"
+      >
+        <img
+          class="direction-aware-rotate w-[24px] h-[24px] absolute top-[30px] rtl:left-[30px] ltr:right-[30px]"
+          src="/images/common/back.webp"
+          alt="Back to blogs"
+        />
+      </a>
+    </figure>
+
+    <!-- Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-11 items-start">
+      <!-- Main content column with min-height to prevent layout shift -->
+      <div class="lg:col-span-8 xl:text-justify min-h-[400px]">
+        <!-- Date -->
+        <div
+          class="built ltr:left-[16px] rtl:right-[16px] text-[12px] sm:text-[14px] text-[#333] mb-[15px] sm:mb-[13px] relative"
+        >
+          <div class="text-[16px] text-[#333]">
+            {{ blog.blog_date | date : "M/d/yyyy" }}
+          </div>
+          <div
+            class="circle rtl:right-[-4px] rtl:translate-x-full -translate-y-1/2 transform ltr:left-[-4px] ltr:-translate-x-full"
+          ></div>
+        </div>
+
+        <div class="mb-6 xl:text-justify">
+          <!-- Title with min-height to prevent layout shift -->
+          <h1
+            class="text-price-size font-bold pb-[23px] text-[#000] min-h-[40px]"
+          >
+            {{ blog | customTranslate : "blog_title" }}
+          </h1>
+
+          <!-- Content container with min-height -->
+
+          @if (_translate.currentLang == 'ar') {
+          <div
+            [innerHTML]="blog.ar_blog_text"
+            class="mb-[35px] text-[#333] min-h-[200px]"
+          ></div>
+          } @else if (_translate.currentLang == 'en') {
+          <div
+            [innerHTML]="blog.en_blog_text"
+            class="mb-[35px] text-[#333] min-h-[200px]"
+          ></div>
+          }
+        </div>
+      </div>
+
+      <div class="lg:col-span-1"></div>
+      <!-- Sidebar with min-height to prevent layout shift -->
+      <div class="lg:col-span-3 min-h-[300px]">
+        <app-section-heading
+          class="mb-3"
+          [sectionName]="'articles.sidebar.popular-section' | translate"
+        ></app-section-heading>
+
+        <!-- Popular Section -->
+        <div class="all-sections mb-9">
+          @for (blog of relatedBlogs.slice(0, 4); track $index) {
+          <a
+            class="cursor-pointer"
+            href="#"
+            [routerLink]="[
+              '/',
+              currentLanguage$ | async,
+              'blog',
+              blog | customTranslate : 'slug'
+            ]"
+          >
+            <div
+              class="p-3 mb-3 border rounded-[15px] border-[#E0E0E0] text-[#474747] text-description-size bg-white"
+            >
+              <span>
+                {{ blog | customTranslate : "blog_title" }}
+              </span>
+            </div>
+          </a>
+          }
+        </div>
+
+        <app-talent-image-card
+          [imagePath]="'/images/news/13.webp'"
+        ></app-talent-image-card>
+      </div>
+    </div>
+    <!-- Blogs -->
+    <app-related-blogs [lightLabel]="false" [relatedBlogs]="relatedBlogs">
+    </app-related-blogs>
+    } @else {
+    <div class="py-8 text-center">
+      <p class="text-gray-500">Loading blog content...</p>
+    </div>
+    }
+  </div>
+</section>

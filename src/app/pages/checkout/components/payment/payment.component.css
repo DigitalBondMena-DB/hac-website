@@ -1,0 +1,44 @@
+.payment-methods .cash-on-delivery-info,
+.payment-methods .online-payment-info {
+  border: 3px solid transparent;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.payment-methods .cash-on-delivery-info[class*="border-[3px]"],
+.payment-methods .online-payment-info[class*="border-[3px]"] {
+  border-color: #a87c5f;
+}
+
+.payment-methods .cash-on-delivery-info:hover,
+.payment-methods .online-payment-info:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.payment-selection-box {
+  background-color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.payment-selection-box:hover {
+  border-color: #a87c5f;
+  background-color: #fff9f4;
+}
+
+.payment-selection-box.active {
+  border-color: #a87c5f;
+  background-color: #fff9f4;
+  border-style: solid;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ensure the rounded checkboxes look similar to the image */
+.checkbox-container .w-5 {
+  border-radius: 4px;
+}

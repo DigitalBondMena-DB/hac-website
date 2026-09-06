@@ -1,0 +1,17 @@
+<a
+  class="group relative rounded-xl overflow-hidden transition-all duration-300 block"
+  [attr.aria-label]="categoryName || title"
+  [routerLink]="categoryId ? ['/', currentLang, 'shopping'] : []"
+  [queryParams]="categoryId ? { categoryId: categoryId } : {}"
+>
+  <figure class="overflow-hidden mb-0 rounded-xl aspect-[4/3]">
+    <img
+      loading="lazy"
+      [appImageUrl]="imgPath"
+      [imageEndpoint]="''"
+      [alt]="alt + 'shopping.filter.category' | translate"
+      class="w-full h-full rounded-xl mb-0 object-cover transform transition-transform duration-300 group-hover:scale-110"
+    />
+  </figure>
+  <p class="text-subtitle-size font-bold my-3">{{ title }}</p>
+</a>

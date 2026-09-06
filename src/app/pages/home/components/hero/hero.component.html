@@ -1,0 +1,82 @@
+<section class="mt-[15px]" aria-label="Hero Section">
+  @defer (on timer(100)) {
+  <div class="container mx-auto relative">
+    <div class="relative bg-[#CBAC8D] overflow-hidden rounded-3xl">
+      <!-- Owl Carousel with better overflow control -->
+      <div
+        class="carousel-wrapper overflow-hidden rounded-3xl relative"
+        [class.rtl-carousel]="isRtlMode()"
+      >
+        <owl-carousel-o
+          [options]="mainCarouselOptions"
+          #owlCarousel
+          class="owl-carousel-custom"
+        >
+          @for (slide of heroSection; track slide.id) {
+          <ng-template carouselSlide [id]="'slide_' + slide.id">
+            <!-- Slide Content Container -->
+            <div class="slide-container w-full">
+              <div
+                class="slide-content flex flex-row-reverse items-center justify-between w-full gap-8 overflow-y-hidden"
+              >
+                @if (slide.en_slider_link) {
+                <a
+                  [href]="slide | customTranslate : 'slider_link'"
+                  class="w-full lg:flex justify-center items-center"
+                >
+                  <img
+                    [appImageUrl]="slide | customTranslate : 'main_image'"
+                    [imageEndpoint]="''"
+                    [alt]="'hack cosmetics-' + $index"
+                    class="w-full object-cover"
+                    loading="eager"
+                  />
+                </a>
+                } @else {
+                <div class="w-full lg:flex justify-center items-center">
+                  <img
+                    [appImageUrl]="slide | customTranslate : 'main_image'"
+                    [imageEndpoint]="''"
+                    [alt]="'hack cosmetics-' + $index"
+                    class="w-full object-cover"
+                    loading="eager"
+                  />
+                </div>
+                }
+              </div>
+            </div>
+          </ng-template>
+          }
+        </owl-carousel-o>
+      </div>
+    </div>
+  </div>
+  } @placeholder {
+  <div class="container mx-auto relative">
+    <div class="relative bg-[#CBAC8D] [border-radius:23px] mt-[15px] mb-[40px]">
+      <div class="carousel-wrapper overflow-hidden relative rounded-3xl">
+        <div class="slide-container w-full">
+          <div
+            class="slide-content flex flex-row-reverse items-center justify-between w-full gap-8 overflow-y-hidden"
+          >
+            <div class="w-full lg:flex justify-center items-center">
+              <img
+                [appImageUrl]="heroSection[0] | customTranslate : 'main_image'"
+                [imageEndpoint]="''"
+                [alt]="heroSection[0] | customTranslate : 'title'"
+                class="w-full object-cover"
+                loading="eager"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a
+        [href]="heroSection[0] | customTranslate : 'slider_link'"
+        class="bg-image absolute inset-0"
+      ></a>
+    </div>
+  </div>
+  }
+</section>

@@ -1,0 +1,705 @@
+<nav class="fixed top-0 right-0 left-0 z-50 bg-white pt-[22px] pb-6">
+  @if (!isMenuOpen) {
+    <div class="container flex flex-wrap items-center justify-between mx-auto">
+      <a
+        [routerLink]="['/', currentLang$ | async]"
+        class="flex items-center xl:rtl:ml-[92px] xl:ltr:mr-[92px]"
+        [attr.aria-label]="'navbar.home_link' | translate"
+      >
+        <figure class="max-w-[56px] max-h-[40px]">
+          <img
+            ngSrc="/images/navbar/2.webp"
+            width="56"
+            height="40"
+            priority
+            class="w-full"
+            alt="HAC Logo"
+          />
+        </figure>
+      </a>
+
+      <!-- Mobile Menu Toggle -->
+      <button
+        (click)="toggleMobileMenu()"
+        class="capitalize text-muted-rose cursor-pointer hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 rounded-lg text-sm p-2.5 xl:hidden"
+        [attr.aria-expanded]="isMenuOpen"
+        [attr.aria-label]="'navbar.toggle_menu' | translate"
+      >
+        <span class="sr-only">Open main menu</span>
+        <svg
+          class="w-6 h-6"
+          aria-hidden="true"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      </button>
+
+      <!-- Desktop Navigation - Always visible on desktop -->
+      <div class="hidden xl:block xl:w-auto flex-grow-1">
+        <div class="flex flex-row font-medium items-center">
+          <!-- Desktop Links -->
+          <ul
+            class="flex flex-row xl:space-x-[40px] rtl:space-x rtl:ml-auto ltr:mr-auto items-center"
+            role="menubar"
+          >
+            <li class="cursor-pointer">
+              <a
+                [routerLink]="['/', currentLang$ | async]"
+                class="block py-2 px-2 text-black font-bold rounded-sm xl:p-0"
+                aria-current="page"
+              >
+                {{ "navbar.pages_Title.home.title" | translate }}
+              </a>
+            </li>
+
+            <li class="cursor-pointer" role="menuitem">
+              <button
+                #megaMenuTrigger
+                class="cursor-pointer show-arrow relative block py-2 px-3 text-black font-bold rounded-sm xl:p-0 w-full text-left mega-menu-trigger"
+                (click)="toggleMegaMenu($event)"
+                (mouseenter)="showMegaMenu = true"
+                (keydown)="handleMegaMenuKeydown($event)"
+                [attr.aria-expanded]="showMegaMenu"
+                [attr.aria-haspopup]="true"
+              >
+                {{ "navbar.pages_Title.products.title" | translate }}
+              </button>
+              @if (showMegaMenu) {
+                <div
+                  class="mega-menu-container relative"
+                  (mouseleave)="showMegaMenu = false"
+                >
+                  <app-mega-menu
+                    (closeMenu)="showMegaMenu = false"
+                    (click)="$event.stopPropagation()"
+                  ></app-mega-menu>
+                </div>
+              }
+            </li>
+
+            <li class="cursor-pointer">
+              <a
+                [routerLink]="['/', currentLang$ | async, 'blogs']"
+                class="block py-2 px-2 text-black font-bold rounded-sm xl:p-0"
+              >
+                {{ "navbar.pages_Title.articles.title" | translate }}
+              </a>
+            </li>
+
+            <li class="cursor-pointer">
+              <a
+                [routerLink]="['/', currentLang$ | async, 'shopping']"
+                class="block py-2 px-2 text-black font-bold rounded-sm xl:p-0"
+              >
+                {{ "navbar.pages_Title.shopping_now.title" | translate }}
+              </a>
+            </li>
+
+            <li class="cursor-pointer">
+              <a
+                [routerLink]="['/', currentLang$ | async, 'about-us']"
+                class="block py-2 px-2 text-black font-bold rounded-sm xl:p-0"
+              >
+                {{ "navbar.pages_Title.who_we_are.title" | translate }}
+              </a>
+            </li>
+
+            <li class="cursor-pointer">
+              <a
+                [routerLink]="['/', currentLang$ | async, 'contact-us']"
+                class="block py-2 px-2 text-black font-bold rounded-sm xl:p-0"
+              >
+                {{ "navbar.pages_Title.contact_Us.title" | translate }}
+              </a>
+            </li>
+          </ul>
+          @if (isRamadanMonth) {
+            <div>
+              <img
+                src="/images/ramadan-theme/ramadan-logo.png"
+                width="130"
+                height="100"
+                alt=""
+              />
+            </div>
+          }
+          <!-- Language Selector -->
+          <ul
+            id="langDropdownButton"
+            class="flex flex-row md:space-x-[5px] rtl:space-x rtl:ml-[35px] ltr:mr-[35px] cursor-pointer"
+          >
+            <li class="relative cursor-pointer">
+              <button
+                id="langDropdownButton"
+                #langDropdownButton
+                class="cursor-pointer block py-2 px-2 text-black font-bold rounded-sm xl:p-0 focus:outline-none"
+                (click)="toggleMenu()"
+                [attr.aria-expanded]="showMenu"
+                [attr.aria-haspopup]="true"
+                [attr.aria-label]="'navbar.languages.lang' | translate"
+              >
+                <figure
+                  class="max-w-[25px] max-h-[25px] inline-block align-middle"
+                >
+                  <img
+                    ngSrc="/images/navbar/3.webp"
+                    width="25"
+                    height="25"
+                    alt="Language"
+                  />
+                </figure>
+                <span class="inline-block align-middle pr-[5px] pl-[3px]">{{
+                  "navbar.languages.lang" | translate
+                }}</span>
+                <figure
+                  class="max-w-[25px] max-h-[25px] inline-block align-middle"
+                >
+                  <img
+                    ngSrc="/images/navbar/1.webp"
+                    width="25"
+                    height="25"
+                    alt="Toggle"
+                  />
+                </figure>
+              </button>
+              <!-- Dropdown -->
+              @if (showMenu) {
+                <div
+                  id="langDropdown"
+                  class="z-50 bg-white divide-y divide-gray-100 rounded-2xl shadow w-28 absolute top-[20px] right-0 mt-2"
+                  role="menu"
+                >
+                  <ul class="py-4 text-sm text-gray-700 dark:text-gray-200">
+                    <li role="menuitem">
+                      <a
+                        [routerLink]="getLanguageRoute('ar')"
+                        (click)="changeLang('ar')"
+                        (keydown)="handleDropdownKeydown($event, 'ar')"
+                        class="cursor-pointer flex items-center justify-between px-4 py-2 text-black hover:bg-gray-100 dark:hover:text-black text-category-size w-full"
+                        tabindex="0"
+                      >
+                        <figure class="max-w-[25px] max-h-[25px]">
+                          <img
+                            ngSrc="/images/navbar/10.webp"
+                            width="25"
+                            height="25"
+                            alt="العربية"
+                          />
+                        </figure>
+                        <span> العربية </span>
+                      </a>
+                    </li>
+                    <li role="menuitem">
+                      <a
+                        [routerLink]="getLanguageRoute('en')"
+                        (click)="changeLang('en')"
+                        (keydown)="handleDropdownKeydown($event, 'en')"
+                        class="cursor-pointer flex items-center justify-between px-4 py-2 text-black hover:bg-gray-100 dark:hover:text-black text-category-size w-full"
+                        tabindex="0"
+                      >
+                        <figure class="max-w-[25px] max-h-[25px]">
+                          <img
+                            ngSrc="/images/navbar/10.webp"
+                            width="25"
+                            height="25"
+                            alt="English"
+                          />
+                        </figure>
+                        <span> English </span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              }
+            </li>
+          </ul>
+
+          <!-- Desktop Actions -->
+          <ul
+            class="flex flex-row xl:space-x-[26px] rtl:space-x items-center"
+            role="menu"
+          >
+            <!-- Search -->
+            <li
+              class="cursor-pointer search-container relative"
+              role="menuitem"
+            >
+              <button
+                class="cursor-pointer block py-2 px-2 xl:p-0"
+                (click)="toggleSearch($event)"
+                [attr.aria-label]="'navbar.search' | translate"
+                [attr.aria-expanded]="showSearch"
+              >
+                <figure class="max-w-[25px] max-h-[25px]">
+                  <img
+                    ngSrc="/images/navbar/5.webp"
+                    width="25"
+                    height="25"
+                    alt="Search"
+                  />
+                </figure>
+              </button>
+              @if (showSearch) {
+                <form
+                  class="absolute bottom-0 left-0 -translate-x-[50%] translate-y-[50%] min-w-[300px] max-w-[400px] animate-slide-in"
+                  (click)="$event.stopPropagation()"
+                >
+                  <label
+                    for="desktop-search"
+                    class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+                    >Search</label
+                  >
+                  <div class="relative">
+                    <input
+                      type="search"
+                      id="desktop-search"
+                      class="bg-white border border-[#8D8D8D] rounded-[15px] pr-4 py-[18px] w-full"
+                      [attr.placeholder]="
+                        'navbar.search_placeholder' | translate
+                      "
+                      (input)="onSearchInput($event)"
+                      (keydown)="onSearchInput($event)"
+                      (focus)="closeAllDropdownsExcept('search')"
+                      required
+                    />
+                  </div>
+                </form>
+              }
+            </li>
+
+            <!-- Desktop Wishlist Link -->
+            <li class="cursor-pointer">
+              <a
+                [routerLink]="['/', currentLang$ | async, 'wishlist']"
+                class="block py-2 px-3 xl:p-0 relative"
+                [attr.aria-label]="'navbar.wishlist' | translate"
+              >
+                <figure class="max-w-[25px] max-h-[25px]">
+                  <img
+                    ngSrc="/images/navbar/6.webp"
+                    width="25"
+                    height="25"
+                    alt="Wishlist"
+                  />
+                  @if (wishlistCount() > 0) {
+                    <span
+                      class="absolute -top-2 -right-2 bg-warm-tan text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
+                    >
+                      {{ wishlistCount() }}
+                    </span>
+                  }
+                </figure>
+              </a>
+            </li>
+
+            <li class="cursor-pointer">
+              <a
+                [routerLink]="['/', currentLang$ | async, 'cart']"
+                class="block py-2 px-3 xl:p-0 relative"
+                [attr.aria-label]="'navbar.cart' | translate"
+              >
+                <figure class="max-w-[25px] max-h-[25px]">
+                  <img
+                    ngSrc="/images/navbar/7.webp"
+                    width="25"
+                    height="25"
+                    alt="Cart"
+                  />
+                  @if (isAuthenticated() && cartCount() > 0) {
+                    <span
+                      class="absolute -top-2 -right-2 bg-warm-tan text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
+                    >
+                      {{ cartCount() }}
+                    </span>
+                  } @else if (!isAuthenticated() && cartCountSignal() > 0) {
+                    <span
+                      class="absolute -top-2 -right-2 bg-muted-rose text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
+                    >
+                      {{ cartCountSignal() }}
+                    </span>
+                  }
+                </figure>
+              </a>
+            </li>
+            <!-- PROFILE -->
+            <li class="cursor-pointer">
+              <a
+                [routerLink]="'/' + (currentLang$ | async) + '/profile'"
+                (click)="navigateToProfile(); $event.preventDefault()"
+                class="block py-2 px-3 xl:p-0"
+                [attr.aria-label]="'navbar.profile' | translate"
+              >
+                <figure class="max-w-[25px] max-h-[25px]">
+                  <img
+                    ngSrc="/images/navbar/4.webp"
+                    width="25"
+                    height="25"
+                    alt="Profile"
+                  />
+                </figure>
+              </a>
+            </li>
+            <!-- Add logout button for authenticated users -->
+            @if (isAuthenticated()) {
+              <li class="cursor-pointer">
+                <button
+                  (click)="logout()"
+                  class="block py-2 px-3 xl:p-0"
+                  [attr.aria-label]="'navbar.logout' | translate"
+                >
+                  <figure class="max-w-[25px] max-h-[25px]">
+                    <img
+                      src="/images/navbar/logout.webp"
+                      width="25"
+                      height="25"
+                      alt="Logout"
+                    />
+                  </figure>
+                </button>
+              </li>
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  }
+  <!-- Off-Canvas Mobile Menu Overlay -->
+  <div
+    class="fixed inset-0 bg-black/50 z-50 transition-opacity duration-300"
+    [class.hidden]="!isMenuOpen"
+    [class.opacity-0]="!isMenuOpen"
+    [class.opacity-100]="isMenuOpen"
+    (click)="toggleMobileMenu()"
+  ></div>
+
+  <!-- Mobile menu wrapper with animation -->
+  @if (isMenuOpen) {
+    <div class="mobile-menu-container" [class.hidden]="!isMenuOpen">
+      <div
+        class="fixed top-0 bottom-0 bg-white z-50 shadow-lg overflow-y-auto w-[80%] max-w-[300px]"
+        [class.translate-x-0]="isMenuOpen"
+        [attr.dir]="isRtl ? 'rtl' : 'ltr'"
+        [ngClass]="{
+          'right-0': isRtl,
+          'left-0': !isRtl,
+        }"
+      >
+        <div
+          class="p-4 flex justify-between items-center border-b border-gray-200"
+        >
+          <a
+            [routerLink]="['/', currentLang$ | async]"
+            (click)="toggleMobileMenu()"
+          >
+            <figure class="max-w-[56px] max-h-[40px]">
+              <img
+                src="/images/navbar/2.webp"
+                width="56"
+                height="40"
+                loading="lazy"
+                alt="HAC Logo"
+              />
+            </figure>
+          </a>
+          <button
+            (click)="toggleMobileMenu()"
+            class="cursor-pointer text-muted-rose hover:text-gray-700 focus:outline-none"
+            [attr.aria-label]="'navbar.close_menu' | translate"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mobile Menu Links -->
+        <ul class="py-4 px-6 space-y-4">
+          <!-- Mobile Search Input -->
+          <li class="mb-6">
+            <div class="relative">
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+                >
+                  <svg
+                    class="w-4 h-4 text-gray-500"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  type="search"
+                  id="mobile-search"
+                  class="block w-full p-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-warm-tan focus:border-warm-tan"
+                  [attr.placeholder]="'navbar.search_placeholder' | translate"
+                  (input)="onSearchInput($event)"
+                  (keydown)="onSearchInput($event)"
+                  (focus)="closeAllDropdownsExcept('none')"
+                  aria-label="Search products"
+                />
+              </div>
+              <div class="text-xs text-gray-500 mt-2">
+                {{ "navbar.mobile_search_hint" | translate }}
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <a
+              [routerLink]="['/', currentLang$ | async]"
+              class="block py-2 text-black font-bold"
+              (click)="toggleMobileMenu()"
+            >
+              {{ "navbar.pages_Title.home.title" | translate }}
+            </a>
+          </li>
+
+          <li class="relative show-arrow cursor-pointer">
+            <button
+              #mobileProductsTrigger
+              class="cursor-pointer flex justify-between items-center w-full py-2 text-black font-bold"
+              (click)="toggleMobileProductsMenu($event)"
+              (keydown)="handleMobileMenuKeydown($event)"
+              [attr.aria-expanded]="showMobileProductsMenu"
+            >
+              <span>{{ "navbar.pages_Title.products.title" | translate }}</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 transition-transform"
+                [class.rotate-180]="showMobileProductsMenu"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+            @if (showMobileProductsMenu) {
+              <div class="mt-2 ml-4 space-y-2">
+                <app-mega-menu
+                  [isMobile]="true"
+                  (closeMenu)="showMobileProductsMenu = false"
+                  (click)="$event.stopPropagation()"
+                ></app-mega-menu>
+              </div>
+            }
+          </li>
+
+          <li>
+            <a
+              [routerLink]="['/', currentLang$ | async, 'blogs']"
+              class="block py-2 text-black font-bold"
+              (click)="toggleMobileMenu()"
+            >
+              {{ "navbar.pages_Title.articles.title" | translate }}
+            </a>
+          </li>
+
+          <li>
+            <a
+              [routerLink]="['/', currentLang$ | async, 'shopping']"
+              class="block py-2 text-black font-bold"
+              (click)="toggleMobileMenu()"
+            >
+              {{ "navbar.pages_Title.shopping_now.title" | translate }}
+            </a>
+          </li>
+
+          <li>
+            <a
+              [routerLink]="['/', currentLang$ | async, 'about-us']"
+              class="block py-2 text-black font-bold"
+              (click)="toggleMobileMenu()"
+            >
+              {{ "navbar.pages_Title.who_we_are.title" | translate }}
+            </a>
+          </li>
+
+          <li>
+            <a
+              [routerLink]="['/', currentLang$ | async, 'contact-us']"
+              class="block py-2 text-black font-bold"
+              (click)="toggleMobileMenu()"
+            >
+              {{ "navbar.pages_Title.contact_Us.title" | translate }}
+            </a>
+          </li>
+
+          <!-- Language Selector Mobile -->
+          <li class="border-t border-gray-200 pt-4 mt-4">
+            <div class="flex space-x-4 rtl:space-x-reverse">
+              <a
+                (click)="changeLang('ar')"
+                class="flex items-center space-x-2 rtl:space-x-reverse py-2 px-3 rounded-lg hover:bg-gray-100"
+                [class.bg-gray-100]="(currentLang$ | async) === 'ar'"
+              >
+                <figure class="max-w-[25px] max-h-[25px]">
+                  <img
+                    ngSrc="/images/navbar/10.webp"
+                    width="25"
+                    height="25"
+                    alt="العربية"
+                  />
+                </figure>
+                <span>العربية</span>
+              </a>
+
+              <a
+                (click)="changeLang('en')"
+                class="flex items-center space-x-2 rtl:space-x-reverse py-2 px-3 rounded-lg hover:bg-gray-100"
+                [class.bg-gray-100]="(currentLang$ | async) === 'en'"
+              >
+                <figure class="max-w-[25px] max-h-[25px]">
+                  <img
+                    ngSrc="/images/navbar/10.webp"
+                    width="25"
+                    height="25"
+                    alt="English"
+                  />
+                </figure>
+                <span>English</span>
+              </a>
+            </div>
+          </li>
+
+          <!-- Profile Links Mobile -->
+          <li class="border-t border-gray-200 pt-4 mt-4">
+            <ul class="flex flex-row space-x-2 justify-between items-center">
+              <!-- PROFILE -->
+              <li>
+                <a
+                  [href]="'/' + (currentLang$ | async) + '/profile'"
+                  (click)="
+                    navigateToProfile();
+                    toggleMobileMenu();
+                    $event.preventDefault()
+                  "
+                  class="flex items-center space-x-2 rtl:space-x-reverse py-2"
+                >
+                  <figure>
+                    <img
+                      src="/images/navbar/4.webp"
+                      class="w-[30px]"
+                      alt="Profile"
+                      loading="lazy"
+                    />
+                  </figure>
+                </a>
+              </li>
+
+              <li>
+                <!-- Mobile Wishlist Link -->
+                <a
+                  [routerLink]="['/', currentLang$ | async, 'wishlist']"
+                  class="block py-2 text-black font-bold relative"
+                  (click)="toggleMobileMenu()"
+                >
+                  <figure
+                    class="max-w-[25px] max-h-[25px] inline-block align-middle relative mr-2"
+                  >
+                    <img
+                      src="/images/navbar/6.webp"
+                      width="25"
+                      height="25"
+                      alt="Wishlist"
+                    />
+                    @if (wishlistCount() > 0) {
+                      <span
+                        class="absolute -top-2 -right-2 bg-muted-rose text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
+                      >
+                        {{ wishlistCount() }}
+                      </span>
+                    }
+                  </figure>
+                </a>
+              </li>
+
+              <li>
+                <a
+                  [routerLink]="['/', currentLang$ | async, 'cart']"
+                  class="block py-2 text-black font-bold relative"
+                  (click)="toggleMobileMenu()"
+                >
+                  <figure
+                    class="max-w-[25px] max-h-[25px] inline-block align-middle relative mr-2"
+                  >
+                    <img
+                      ngSrc="/images/navbar/7.webp"
+                      width="25"
+                      height="25"
+                      alt="Cart"
+                    />
+                    @if (isAuthenticated() && cartCount() > 0) {
+                      <span
+                        class="absolute -top-2 -right-2 bg-muted-rose text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
+                      >
+                        {{ cartCount() }}
+                      </span>
+                    } @else if (!isAuthenticated() && cartCountSignal() > 0) {
+                      <span
+                        class="absolute -top-2 -right-2 bg-muted-rose text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
+                      >
+                        {{ cartCountSignal() }}
+                      </span>
+                    }
+                  </figure>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          @if (isAuthenticated()) {
+            <li class="mt-4">
+              <button
+                [attr.aria-label]="'navbar.logout' | translate"
+                (click)="logout()"
+                class="cursor-pointer flex items-center space-x-2 rtl:space-x-reverse py-2 text-black font-bold"
+              >
+                <figure>
+                  <img
+                    src="/images/navbar/logout.webp"
+                    class="w-[30px]"
+                    alt="Logout"
+                  />
+                </figure>
+              </button>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  }
+</nav>

@@ -1,0 +1,75 @@
+:host {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+}
+
+:host(.visible) {
+  display: flex;
+}
+
+.wrapper {
+  background-image: url("/images/common/alert-bg.webp");
+  background-color: lightgray;
+  background-size: cover;
+}
+
+/* Animation classes */
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Focus styles for accessibility */
+.alert-wrapper {
+  outline: none;
+}
+
+/* Prevent scrolling when alert is open */
+:host(.visible) {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+}
+
+/* Animation delay for staggered appearance */
+.alert-wrapper h3 {
+  animation-delay: 0.1s;
+}
+
+.alert-wrapper p {
+  animation-delay: 0.2s;
+}
+
+.alert-wrapper button {
+  animation-delay: 0.3s;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .alert-wrapper {
+    padding: 1rem;
+    width: 90%;
+  }
+}

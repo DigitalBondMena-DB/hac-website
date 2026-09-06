@@ -1,0 +1,555 @@
+@if (isLoading()) {
+<app-shopping-skeleton />
+} @else {
+<app-articles-header
+  [title]="
+    selectedFilters().length > 0
+      ? selectedFilters()
+      : ('shopping.header.title' | translate)
+  "
+  [subTitle]="'shopping.header.subtitle' | translate"
+  [showRotateImage]="true"
+  [marginBottom]="'9'"
+  @fadeIn
+></app-articles-header>
+
+<section>
+  <div class="container mx-auto">
+    <div class="wrapper fade-in-section">
+      <!-- Filter Options Header -->
+      <div
+        class="filter-header flex justify-between items-center mb-[26px]"
+        @filterAnimation
+      >
+        <h2 class="text-black text-title-size font-bold capitalize">
+          {{ "shopping.filter.selected-filter" | translate }}
+        </h2>
+        <p class="text-[#474747] font-light text-description-size">
+          {{ "shopping.filter.products-counts" | translate }}:
+          {{ paginatedProducts().length }} / {{ filteredProducts().length }}
+          {{ "shopping.filter.items" | translate }}
+        </p>
+      </div>
+
+      <!-- Dismissible-Badges Header -->
+      <div class="flex justify-between items-center mb-9" @filterAnimation>
+        <div class="chips">
+          <!-- <app-dismissible-badges
+            [badges]="selectedFilters()"
+            (badgeRemoved)="onBadgeRemoved($event)"
+            class="badge-animation"
+          ></app-dismissible-badges> -->
+
+          <!-- Subcategories section (only shown when a category is selected) -->
+          @if (selectedCategoryIds().length > 0) {
+          <div class="p-4" @fadeIn>
+            <h3 class="text-black text-[23px] font-bold mb-6 flex items-center">
+              @for (categoryId of selectedCategoryIds(); track categoryId) { @if
+              (subcategoriesForCategory().get(categoryId)?.length) {
+              <span
+                class="ml-2 text-sm font-normal text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full"
+              >
+                {{ subcategoriesForCategory().get(categoryId)?.length || 0 }}
+              </span>
+              } } @if (selectedSubcategoryIds().length > 0) {
+              <span
+                class="ml-2 text-xs font-normal bg-warm-tan text-white px-2 py-0.5 rounded-full"
+              >
+                {{ selectedSubcategoryIds().length }}
+                {{ "shopping.filter.active" | translate }}
+              </span>
+              }
+            </h3>
+
+            <div class="flex flex-wrap gap-2">
+              @for (categoryId of selectedCategoryIds(); track categoryId) {
+              @for (subcategory of subcategoriesForCategory().get(categoryId) ||
+              []; track subcategory.id) {
+              <div
+                class="inline-flex items-center gap-1 px-3 py-1.5 bg-gray-100 rounded-full cursor-pointer transition-colors"
+                [class.bg-warm-tan]="
+                  selectedSubcategoryIds().includes(subcategory.id.toString())
+                "
+                [class.text-white]="
+                  selectedSubcategoryIds().includes(subcategory.id.toString())
+                "
+                [class.bg-gray-100]="
+                  !selectedSubcategoryIds().includes(subcategory.id.toString())
+                "
+                (click)="
+                  toggleSubcategoryFilter(
+                    subcategory,
+                    !selectedSubcategoryIds().includes(
+                      subcategory.id.toString()
+                    )
+                  )
+                "
+                @badgeAnimation
+              >
+                <span class="text-sm">{{
+                  subcategory | customTranslate : "name"
+                }}</span>
+                @if
+                (selectedSubcategoryIds().includes(subcategory.id.toString())) {
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+                }
+              </div>
+              } }
+            </div>
+          </div>
+          }
+          <!-- Subcategory badges -->
+          <!-- @for (categoryId of selectedCategoryIds(); track categoryId) { @for
+          (subcategory of subcategoriesForCategory().get(categoryId) || [];
+          track subcategory.id) { @if
+          (selectedSubcategoryIds().includes(subcategory.id.toString())) {
+          <div
+            class="inline-flex items-center bg-warm-tan text-white rounded-full py-1 px-3 mr-2 text-sm badge-animation"
+            @badgeAnimation
+          >
+            <span class="mr-2">{{
+              subcategory | customTranslate : "name"
+            }}</span>
+            <button
+              class="text-white hover:text-gray-200"
+              (click)="toggleSubcategoryFilter(subcategory, false)"
+              aria-label="Remove subcategory filter"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+          } } } -->
+
+          <!-- Search filter badge -->
+          @if (searchQuery()) {
+          <div
+            class="inline-flex items-center bg-warm-tan/10 text-black border border-warm-tan rounded-full py-1 px-3 mr-2 text-sm badge-animation"
+            @badgeAnimation
+          >
+            <span class="mr-2"
+              >{{ "navbar.search" | translate }}: "{{ searchQuery() }}"</span
+            >
+            <button
+              class="text-gray-600 hover:text-gray-900"
+              (click)="clearSearchFilter()"
+              aria-label="Clear search filter"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+          }
+        </div>
+        <button class="underline cursor-pointer" (click)="clearAllFilters()">
+          {{ "shopping.filter.filter-type.clear-all" | translate }}
+        </button>
+      </div>
+
+      <div class="grid grid-cols-12 gap-[13px]">
+        <!-- Filter Box -->
+        <div class="col-span-12 xl:col-span-3" @slideInOut>
+          <!-- Filter Box Category -->
+          <div
+            class="p-4 overflow-y-auto shadow-[0_4px_4px_rgba(0,0,0,0.15)] rounded-2xl scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar scrollbar-thumb-warm-tan scrollbar-track-[#EEE2E2] max-h-[320px] hover:shadow-[0_6px_8px_rgba(0,0,0,0.2)] transition-shadow duration-300 filter-box"
+          >
+            <div class="filter-box">
+              <h3
+                class="text-black text-[23px] font-bold mb-6 flex items-center"
+              >
+                <span>{{ "shopping.filter-box.title" | translate }}</span>
+                <span
+                  class="ml-2 text-sm font-normal text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full"
+                  >{{ categories.length }}</span
+                >
+                @if (selectedFilters().length > 0) {
+                <span
+                  class="ml-2 text-xs font-normal bg-warm-tan text-white px-2 py-0.5 rounded-full"
+                >
+                  {{ selectedFilters().length }}
+                  {{ "shopping.filter.active" | translate }}
+                </span>
+                }
+              </h3>
+
+              <!-- CheckBox -->
+              @for (category of categories ; track $index) {
+              <label
+                class="flex items-center gap-2 cursor-pointer justify-start rtl:justify-end rtl:flex-row-reverse mb-4 group hover:bg-gray-50 p-1 rounded-md transition-colors"
+              >
+                <input
+                  type="checkbox"
+                  class="hidden peer"
+                  [attr.data-slug]="category | customTranslate : 'slug'"
+                  [checked]="
+                    selectedFilters().includes(
+                      category | customTranslate : 'slug'
+                    )
+                  "
+                  (change)="toggleFilter(category, $event.target)"
+                />
+
+                <!-- Label Text -->
+                <span
+                  class="text-description-size text-[#474747] group-hover:text-black transition-colors peer-checked:font-medium"
+                >
+                  {{ category | customTranslate : "name" }}
+                </span>
+
+                <!-- Custom Checkbox Style -->
+                <div
+                  class="w-6 h-6 border-2 border-[#8D8D8D] rounded-md flex items-center justify-center text-transparent peer-checked:text-black peer-checked:bg-warm-tan/10 peer-checked:border-warm-tan group-hover:border-warm-tan transition-all checkbox-pulse"
+                >
+                  <!-- Checkmark Icon -->
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="3"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+              </label>
+              }
+            </div>
+          </div>
+
+          <!-- Price Filter -->
+          <!-- Price Filter -->
+          <div
+            class="p-4 overflow-y-auto shadow-[0_4px_4px_rgba(0,0,0,0.15)] rounded-2xl scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar scrollbar-thumb-warm-tan scrollbar-track-[#EEE2E2] max-h-[320px] hover:shadow-[0_6px_8px_rgba(0,0,0,0.2)] transition-shadow duration-300 filter-box"
+          >
+            <h3
+              class="text-black description-size text-[23px] font-bold mb-6 flex items-center"
+            >
+              <span>{{ "shopping.filter.price.title" | translate }}</span>
+              <span
+                class="ml-2 text-sm font-normal text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full"
+              >
+                {{ minPrice }}-{{ maxPrice }}
+              </span>
+              @if (minPrice !== 1 || maxPrice !== 50000) {
+              <span
+                class="ml-2 text-xs font-normal bg-warm-tan text-white px-2 py-0.5 rounded-full"
+              >
+                {{ "shopping.filter.active" | translate }}
+              </span>
+              }
+            </h3>
+
+            <!-- Price Range Display -->
+            <div class="mb-4 text-[#474747] text-sm flex justify-between">
+              <p class="font-medium flex items-center gap-1">
+                <span>{{ minPrice }}</span>
+                <span class="icon-saudi_riyal"></span>
+              </p>
+              <p class="font-medium flex items-center gap-1">
+                <span>{{ maxPrice }}</span>
+                <span class="icon-saudi_riyal"></span>
+              </p>
+            </div>
+
+            <!-- Range Slider -->
+            <div class="price-range-slider relative mb-6 shimmer-effect">
+              <div
+                class="slider-track bg-gray-200 h-1 absolute w-full top-1/2 transform -translate-y-1/2 rounded-full"
+              ></div>
+
+              <label for="price-min" class="sr-only">
+                {{ "shopping.filter.price.min" | translate }}
+              </label>
+              <input
+                id="price-min"
+                type="range"
+                class="range-min appearance-none w-full absolute cursor-pointer bg-transparent pointer-events-none z-10"
+                [min]="1"
+                [max]="50000"
+                [value]="minPrice"
+                [(ngModel)]="minPrice"
+                (input)="onPriceChange()"
+                (change)="onPriceRangeComplete()"
+              />
+
+              <label for="price-max" class="sr-only">
+                {{ "shopping.filter.price.max" | translate }}
+              </label>
+              <input
+                id="price-max"
+                type="range"
+                class="range-max appearance-none w-full absolute cursor-pointer bg-transparent pointer-events-none z-10"
+                [min]="1"
+                [max]="50000"
+                [value]="maxPrice"
+                [(ngModel)]="maxPrice"
+                (input)="onPriceChange()"
+                (change)="onPriceRangeComplete()"
+              />
+            </div>
+
+            <!-- Apply Price Filter Button -->
+            <div class="flex justify-between items-center mb-4">
+              <button
+                (click)="applyPriceFilter()"
+                class="cursor-pointer bg-warm-tan text-white px-4 py-2 min-w-[48px] min-h-[48px] rounded-md hover:bg-warm-tan/90 transition-all flex items-center justify-center text-sm"
+              >
+                GO
+              </button>
+
+              <!-- Reset Price Button -->
+              @if (minPrice !== 1 || maxPrice !== 50000) {
+              <button
+                (click)="resetPriceToDefault()"
+                class="cursor-pointer text-xs underline text-gray-500 hover:text-warm-tan transition-colors flex items-center badge-animation min-h-[48px] min-w-[48px] px-2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-3 w-3 mr-1"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                  />
+                </svg>
+                {{ "shopping.filter.price.reset" | translate }}
+              </button>
+              }
+            </div>
+          </div>
+
+          <div class="border-t border-[#D0CBCB] my-[35px]"></div>
+
+          <div
+            class="p-4 overflow-y-auto shadow-[0_4px_4px_rgba(0,0,0,0.15)] rounded-2xl scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar scrollbar-thumb-warm-tan scrollbar-track-[#EEE2E2] max-h-[320px] hover:shadow-[0_6px_8px_rgba(0,0,0,0.2)] transition-shadow duration-300 filter-box mb-7"
+          >
+            <h3 class="text-black text-[23px] font-bold mb-6 flex items-center">
+              <span>{{ "availability" | translate }}</span>
+              <span
+                class="ml-2 text-sm font-normal text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full"
+              >
+                {{ stockFilter() === "all" ? "2" : "1" }}
+              </span>
+              @if (stockFilter() !== 'all') {
+              <span
+                class="ml-2 text-xs font-normal bg-warm-tan text-white px-2 py-0.5 rounded-full"
+              >
+                {{ "shopping.filter.active" | translate }}
+              </span>
+              }
+            </h3>
+
+            <!-- Available Products Filter -->
+            <label
+              class="flex items-center gap-2 cursor-pointer justify-start rtl:justify-end rtl:flex-row-reverse mb-4 group hover:bg-gray-50 p-1 rounded-md transition-colors"
+            >
+              <input
+                type="checkbox"
+                class="hidden peer"
+                id="availabilityToggle"
+                [checked]="stockFilter() === 'available'"
+                (change)="toggleAvailabilityFilter(true, $event.target)"
+              />
+
+              <!-- Label Text -->
+              <span
+                class="text-description-size text-[#474747] group-hover:text-black transition-colors peer-checked:font-medium"
+              >
+                {{ "availability" | translate }}
+              </span>
+
+              <!-- Custom Checkbox Style -->
+              <div
+                class="w-6 h-6 border-2 border-[#8D8D8D] rounded-md flex items-center justify-center text-transparent peer-checked:text-black peer-checked:bg-warm-tan/10 peer-checked:border-warm-tan group-hover:border-warm-tan transition-all"
+              >
+                <!-- Checkmark Icon -->
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </div>
+            </label>
+
+            <!-- Unavailable Products Filter -->
+            <label
+              class="flex items-center gap-2 cursor-pointer justify-start rtl:justify-end rtl:flex-row-reverse mb-4 group hover:bg-gray-50 p-1 rounded-md transition-colors"
+            >
+              <input
+                type="checkbox"
+                class="hidden peer"
+                id="unavailabilityToggle"
+                [checked]="stockFilter() === 'unavailable'"
+                (change)="toggleAvailabilityFilter(false, $event.target)"
+              />
+
+              <!-- Label Text -->
+              <span
+                class="text-description-size text-[#474747] group-hover:text-black transition-colors peer-checked:font-medium"
+              >
+                {{ "unavailability" | translate }}
+              </span>
+
+              <!-- Custom Checkbox Style -->
+              <div
+                class="w-6 h-6 border-2 border-[#8D8D8D] rounded-md flex items-center justify-center text-transparent peer-checked:text-black peer-checked:bg-warm-tan/10 peer-checked:border-warm-tan group-hover:border-warm-tan transition-all"
+              >
+                <!-- Checkmark Icon -->
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </div>
+            </label>
+          </div>
+        </div>
+        <!-- All Cards -->
+        <div class="col-span-12 xl:col-span-9 mb-15">
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            @productGridAnimation
+          >
+            @for (product of paginatedProducts() ; track product.id) {
+            <div
+              class="product-card"
+              [@cardHover]="productHoverStates[product.id] || 'normal'"
+              (mouseenter)="onProductMouseEnter(product.id)"
+              (mouseleave)="onProductMouseLeave(product.id)"
+            >
+              <app-shared-best-seller
+                [productData]="product"
+              ></app-shared-best-seller>
+            </div>
+            }
+          </div>
+
+          <!-- Pagination Controls -->
+          <div
+            class="pagination-controls flex justify-center items-center mt-10 gap-2"
+            @fadeIn
+          >
+            <!-- Previous Button -->
+            <a
+              [routerLink]="[]"
+              [queryParams]="getPageQueryParams(currentPage() - 1)"
+              [class.pointer-events-none]="currentPage() === 1"
+              [class.opacity-50]="currentPage() === 1"
+              class="cursor-pointer pagination-button px-[10px] py-[1px] bg-[#D9D9D9] rounded-[10px] font-medium text-[20px] text-black hover:bg-gray-300 disabled:cursor-not-allowed border-[#B4B4B4] no-underline"
+              [attr.aria-disabled]="currentPage() === 1"
+            >
+              {{ "shared.previous" | translate }}
+            </a>
+
+            <!-- Page Numbers - Hide on mobile -->
+            <div class="hidden md:flex gap-2">
+              @for (page of getPageNumbers(); track page) {
+              <a
+                [routerLink]="[]"
+                [queryParams]="getPageQueryParams(page)"
+                [class.bg-warm-tan]="currentPage() === page"
+                [class.text-white]="currentPage() === page"
+                [class.border-[#A48374]]="currentPage() === page"
+                [class.bg-white]="currentPage() !== page"
+                class="cursor-pointer font-semibold text-[12px] w-[23px] h-[23px] border border-[#A7A0A0] text-white rounded-full pagination-button no-underline flex items-center justify-center"
+                [attr.aria-current]="currentPage() === page ? 'page' : null"
+              >
+                {{ page }}
+              </a>
+              }
+            </div>
+
+            <!-- Mobile Page Indicator -->
+            <div
+              class="md:hidden flex items-center px-4 py-2 bg-gray-100 rounded-md"
+            >
+              {{ currentPage() }}/{{ totalPages() }}
+            </div>
+
+            <!-- Next Button -->
+            <a
+              [routerLink]="[]"
+              [queryParams]="getPageQueryParams(currentPage() + 1)"
+              [class.pointer-events-none]="currentPage() === totalPages()"
+              [class.opacity-50]="currentPage() === totalPages()"
+              class="cursor-pointer pagination-button px-[10px] py-[1px] bg-[#D9D9D9] rounded-[10px] font-medium text-[20px] text-black hover:bg-gray-300 disabled:cursor-not-allowed border-[#B4B4B4] no-underline"
+              [attr.aria-disabled]="currentPage() === totalPages()"
+            >
+              {{ "shared.next" | translate }}
+            </a>
+          </div>
+
+          <!-- Pagination Info -->
+          <div class="text-center text-gray-500 mt-4" @fadeIn>
+            {{ "page" | translate }} {{ currentPage() }} {{ "of" | translate }}
+            {{ totalPages() }} ({{ filteredProducts().length }}
+            {{ "shopping.filter.items" | translate }})
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+}

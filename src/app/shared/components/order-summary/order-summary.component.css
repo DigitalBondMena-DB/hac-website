@@ -1,0 +1,21 @@
+.order-summary {
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.order-summary h3 {
+  margin-top: 0;
+}
+
+@media (max-width: 768px) {
+  .order-summary {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+}
+.order-summary {
+  background: url(/images/cart/1.webp);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}

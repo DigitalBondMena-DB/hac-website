@@ -1,0 +1,14 @@
+@media screen and (max-width: 1024px) {
+  .text-description ::ng-deep p {
+    text-align: center !important;
+  }
+}
+@media (min-width: 1024px) {
+  [dir="ltr"] .text-description ::ng-deep p {
+    text-align: left !important;
+  }
+
+  [dir="rtl"] .text-description ::ng-deep p {
+    text-align: right !important;
+  }
+}

@@ -1,0 +1,976 @@
+<app-articles-header
+  [title]="'cart.header.title' | translate"
+  [subTitle]="'cart.header.subtitle' | translate"
+  [showRotateImage]="false"
+  [marginBottom]="'9'"
+></app-articles-header>
+
+<section>
+  @if (_authService.isAuthenticated()) {
+
+  <div class="container mx-auto">
+    @if(isLoading) {
+    <app-cart-skeleton />
+    } @else {
+    <div class="grid grid-cols-12 mb-15">
+      <div class="col-span-12 xl:col-span-8 overflow-hidden">
+        @if (!isEmpty()) {
+        <!-- Cart Items Header -->
+        <div
+          class="header hidden md:flex items-center justify-between rounded-[15px] bg-warm-tan py-6 px-12 text-white text-description-size"
+        >
+          <span class="capitalize">
+            {{ "wishlist.orderList.product" | translate }}
+          </span>
+          <span class="capitalize">
+            {{ "wishlist.orderList.price" | translate }}
+          </span>
+          <span class="capitalize">
+            {{ "wishlist.orderList.quantity" | translate }}
+          </span>
+
+          <span class="capitalize">
+            {{ "all-total-price" | translate }}
+          </span>
+        </div>
+        <!-- Global Discount Message -->
+        @if(getGlobalDiscountMessage() && discountPercentage > 0) {
+        <div class="mb-4 px-4 my-2">
+          <div
+            class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg text-sm transition-all duration-300 flex items-center gap-2"
+          >
+            <span class="text-green-600">🎉</span>
+            <span>{{ getGlobalDiscountMessage() }}</span>
+          </div>
+        </div>
+        }
+        <!-- Cart Items -->
+        <div
+          class="cart-items-container max-h-[564px] overflow-y-auto px-4 mb-[30px]"
+          [@listAnimation]
+        >
+          @for (item of orderDetails(); track item.product_id) {
+          <div
+            class="cart-item block md:flex items-center justify-between flex-wrap py-[30px] px-[23px] border-b-1 border-[#8D8D8D]"
+            [@itemState]="item.animationState || 'visible'"
+            (@itemState.done)="onAnimationDone($event, item)"
+          >
+            <!-- Image && Product Name -->
+            <div
+              class="flex justify-start lg:ltr:pr-15 lg:rtl:pl-15 lg:justify-between items-center capitalize gap-[10px] mb-5 md:mb-0"
+            >
+              <!-- Remove Item -->
+              <div class="close cursor-pointer" (click)="removeItem(item)">
+                <figure class="mx-0 remove-icon">
+                  @if(isRemovingItem && removingItemId === item.id) {
+                  <div
+                    class="w-5 h-5 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"
+                  ></div>
+                  } @else {
+                  <img
+                    width="23px"
+                    height="23px"
+                    loading="lazy"
+                    src="/images/wishlist/remove.webp"
+                    alt="remove item"
+                  />
+                  }
+                </figure>
+              </div>
+
+              <a
+                [routerLink]="[
+                  '/',
+                  currentLang$ | async,
+                  'product-details',
+                  item.product | customTranslate : 'slug'
+                ]"
+                class="max-w-[80px] rounded-[15px] overflow-hidden"
+              >
+                @if (item.product.main_image) {
+                <img
+                  [appImageUrl]="item.product.main_image"
+                  [imageEndpoint]="''"
+                  [alt]="item.product | customTranslate : 'name'"
+                  class="w-full"
+                />
+                }
+              </a>
+              <div class="details">
+                <h3
+                  [routerLink]="[
+                    '/',
+                    currentLang$ | async,
+                    'product-details',
+                    item.product | customTranslate : 'slug'
+                  ]"
+                  [title]="item.product | customTranslate : 'name'"
+                  class="text-category-size text-black font-bold mb-[15px] line-clamp-1 cursor-pointer"
+                >
+                  {{ item.product | customTranslate : "name" }}
+                </h3>
+                <div
+                  class="text-[#333] text-[14px] max-w-[200px] text-wrap line-clamp-1"
+                >
+                  <app-safe-html
+                    [content]="item.product | customTranslate : 'description'"
+                  ></app-safe-html>
+                </div>
+              </div>
+            </div>
+            <!-- Price & Quantity -->
+
+            <div
+              class="flex justify-between items-center flex-row-reverse md:flex-row mb-5 md:mb-0"
+            >
+              <!-- Price -->
+              <p
+                class="flex items-center justify-between text-[#333] text-category-size font-bold"
+              >
+                <span> {{ formatPrice(item.unit_price) }} </span>
+                <span class="icon-saudi_riyal"></span>
+              </p>
+            </div>
+            <!-- Quantity -->
+            <div class="relative flex items-center gap-0 max-w-[8rem]">
+              <button
+                type="button"
+                [disabled]="
+                  isAddingItem &&
+                  (updatingItemId === item.product_id ||
+                    removingItemId === item.product_id)
+                "
+                (click)="decreaseQuantity(item)"
+                class="cursor-pointer bg-transparent border border-[#8D8D8D] ltr:rounded-l-2xl rtl:rounded-r-2xl px-[13px] h-[42px] flex items-center justify-center"
+              >
+                <span class="text-xl font-medium">−</span>
+              </button>
+              <input
+                type="text"
+                [value]="item.quantity"
+                readonly
+                class="bg-transparent text-[#040404] border-y border-[#8D8D8D] border-x-0 px-[13px] text-center w-[50px] h-[42px] flex items-center justify-center"
+              />
+              <button
+                type="button"
+                [disabled]="
+                  isAddingItem &&
+                  (updatingItemId === item.product_id ||
+                    removingItemId === item.product_id)
+                "
+                (click)="increaseQuantity(item)"
+                class="cursor-pointer bg-transparent border border-[#8D8D8D] ltr:rounded-r-2xl rtl:rounded-l-2xl px-[13px] h-[42px] flex items-center justify-center"
+              >
+                @if(isAddingItem && updatingItemId === item.product_id) {
+                <div
+                  class="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"
+                ></div>
+                } @else {
+                <span class="text-xl font-medium">+</span>
+                }
+              </button>
+            </div>
+
+            <!-- Item Total -->
+            <div
+              class="flex justify-end items-center text-description-size text-[#333] font-semibold"
+            >
+              <p class="flex items-center justify-between">
+                <span class="icon-saudi_riyal"></span>
+                <span> {{ formatPrice(item.subtotal) }} </span>
+              </p>
+            </div>
+          </div>
+          }
+        </div>
+        <!-- Cart Footer -->
+        <div class="flex items-center justify-between flex-wrap gap-y-4 mb-5">
+          <div
+            class="btns flex items-center justify-between border border-[#8D8D8D] rounded-[50px] px-[10px] py-[5px] flex-grow-1 capitalize"
+          >
+            <form
+              [formGroup]="promoCodeForm"
+              (ngSubmit)="applyPromoCode()"
+              class="flex items-center justify-between w-full flex-wrap"
+            >
+              <input
+                formControlName="code"
+                type="text"
+                class="bg-transparent border-0 outline-none flex-grow text-[#333] text-category-size"
+                [placeholder]="'cart.cart-footer.discount-code' | translate"
+              />
+              <button
+                type="submit"
+                [disabled]="!promoCodeForm.valid || isPromoCodeLoading"
+                class="cursor-pointer text-white bg-warm-tan rounded-[50px] border text-description-size py-[8px] px-[16px]"
+              >
+                @if (isPromoCodeLoading) {
+                <span
+                  class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"
+                ></span>
+                } @else {
+                {{ "cart.cart-footer.active-the-code" | translate }}
+                }
+              </button>
+            </form>
+          </div>
+
+          <span
+            class="text-end rtl:text-end text-muted-rose text-description-size font-bold capitalize underline flex-grow-1 cursor-pointer"
+            (click)="clearCart()"
+          >
+            @if(isClearingCart) {
+            <div
+              class="border-2 border-gray-400 border-t-transparent rounded-full"
+            ></div>
+            } @else {
+            {{ "wishlist.wishlist-footer.delete-all" | translate }}
+            }
+          </span>
+        </div>
+        <div class="w-full">
+          @if (promoCodeError) {
+          <div class="flex items-center text-muted-rose text-sm">
+            <svg
+              class="w-4 h-4 mr-1"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <span>{{ promoCodeError }}</span>
+          </div>
+          } @if (promoCodeSuccess) {
+          <div class="flex items-center text-green-600 text-sm">
+            <svg
+              class="w-4 h-4 mr-1"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <span>{{ promoCodeSuccess }}</span>
+          </div>
+          } @if (promoCodeForm.get('code')?.invalid &&
+          promoCodeForm.get('code')?.touched) {
+          <div class="flex items-center text-muted-rose text-sm">
+            <svg
+              class="w-4 h-4 mr-1"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <span>{{ "cart.promo-code.enter-valid-code" | translate }}</span>
+          </div>
+          }
+        </div>
+
+        <!-- Cart Status Messages -->
+        @if(cartUpdateSuccess || removeItemError) {
+        <div class="mt-4">
+          @if(cartUpdateSuccess) {
+          <div
+            class="flex items-center text-green-600 text-sm bg-green-50 p-2 rounded"
+          >
+            <svg
+              class="w-4 h-4 mr-1"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <span>{{ cartUpdateSuccess }}</span>
+          </div>
+          } @if(removeItemError) {
+          <div
+            class="flex items-center text-muted-rose text-sm bg-red-50 p-2 rounded"
+          >
+            <svg
+              class="w-4 h-4 mr-1"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <span>{{ removeItemError }}</span>
+          </div>
+          }
+        </div>
+        } }
+      </div>
+
+      @if (!isEmpty()) {
+      <div
+        class="col-span-12 xl:col-span-4 my-8 lg:my-0 lg:rtl:pr-15 lg:ltr:pl-15"
+      >
+        <div
+          class="wrapper py-[19px] px-[45px] border border-[#202020] rounded-[15px] capitalize"
+        >
+          <h3
+            class="text-black text-description-size font-bold pb-[17px] border-b border-[#8D8D8D]"
+          >
+            {{ "summary.summary" | translate }}
+          </h3>
+
+          <div
+            class="flex items-center justify-between pb-[38px] pt-[23px] text-[#333] text-category-size font-medium"
+          >
+            <span> {{ "summary.items" | translate }} </span>
+            <span> {{ orderDetails().length }} </span>
+          </div>
+          <div
+            class="flex items-center justify-between pb-[38px] text-[#333] text-category-size font-medium"
+          >
+            <span> {{ "summary.subtotal" | translate }} </span>
+            <p class="flex items-center justify-between">
+              <span> {{ formatPrice(order().subtotal) }} </span>
+              <span class="icon-saudi_riyal"></span>
+            </p>
+          </div>
+
+          @if(order().shipping > 0){
+          <div
+            class="flex items-center justify-between pb-[38px] text-[#333] text-category-size font-medium"
+          >
+            <span> {{ "summary.delivery" | translate }} </span>
+            <p class="flex items-center justify-between">
+              <span> {{ formatPrice(order().shipping) }} </span>
+              <span class="icon-saudi_riyal"></span>
+            </p>
+          </div>
+          } @if(order().tax > 0){
+
+          <div
+            class="flex items-center justify-between pb-[38px] text-[#333] text-category-size font-medium"
+          >
+            <span> {{ "summary.tax" | translate }} </span>
+            <p class="flex items-center justify-between">
+              <span> {{ formatPrice(order().tax) }}</span>
+              <span class="icon-saudi_riyal"></span>
+            </p>
+          </div>
+          } @if (order().promo_code_id) {
+          <div
+            class="flex items-center justify-between pb-[44px] text-[#333] text-category-size font-medium border-b border-[#8D8D8D]"
+          >
+            <span> {{ "summary.discount-coupon" | translate }} </span>
+            <p class="text-[#C00000] flex items-center justify-between">
+              <span> -{{ formatPrice(order().promo_code_value) }}</span>
+              <span class="icon-saudi_riyal"></span>
+            </p>
+          </div>
+          }
+
+          <div
+            class="flex justify-between items-center rounded-[15px] border border-warm-tan py-[17px] px-[15px] mt-[45px] mb-[50px] bg-white"
+          >
+            <span class="text-[#333] text-category-size font-medium">{{
+              "summary.total" | translate
+            }}</span>
+            <p
+              class="flex items-center justify-between text-black text-category-size font-medium"
+            >
+              <span>
+                {{ order().total }}
+              </span>
+
+              <span class="icon-saudi_riyal"></span>
+            </p>
+          </div>
+
+          <button
+            [routerLink]="[
+              '/',
+              currentLang$ | async,
+              'checkout',
+              'checkout-address'
+            ]"
+            class="cursor-pointer text-white rounded-[50px] border border-[(#164, 131, 116, 0.00)] bg-warm-tan capitalize w-full py-[9px] px-[30px] 2xl:px-[40px] text-description-size mb-6"
+          >
+            {{ "summary.complete-the-order" | translate }}
+          </button>
+        </div>
+      </div>
+      }
+    </div>
+    @if (isEmpty()) {
+    <div
+      class="flex items-center justify-center min-h-[60vh] w-full bg-white rounded-[15px] mx-auto transition-all duration-300 ease-out"
+    >
+      <div class="text-center py-12">
+        <svg
+          class="mx-auto mb-6 w-[200px] h-[200px]"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M2 3H4.5L6.5 17H17M17 17C15.8954 17 15 17.8954 15 19C15 20.1046 15.8954 21 17 21C18.1046 21 19 20.1046 19 19C19 17.8954 18.1046 17 17 17ZM6.07142 14H18L21 5H4.78571M11 19C11 20.1046 10.1046 21 9 21C7.89543 21 7 20.1046 7 19C7 17.8954 7.89543 17 9 17C10.1046 17 11 17.8954 11 19Z"
+            stroke="#A4907C"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <circle cx="9" cy="19" r="2" fill="#A4907C" opacity="0.3" />
+          <circle cx="17" cy="19" r="2" fill="#A4907C" opacity="0.3" />
+          <path d="M4 5H21L18 14H6.07142L4 5Z" fill="#A4907C" opacity="0.3" />
+          <path
+            d="M7 8L8 12M11 8L11.5 12M15 8L14 12"
+            stroke="white"
+            stroke-linecap="round"
+          />
+        </svg>
+        <h3 class="text-2xl font-bold text-[#333] mb-4">
+          {{ "cart.empty.title" | translate }}
+        </h3>
+        <p class="text-[#666] mb-6">
+          {{ "cart.empty.message" | translate }}
+        </p>
+        <button
+          [routerLink]="['/', currentLang$ | async, 'shopping']"
+          class="cursor-pointer bg-warm-tan text-white px-8 py-3 rounded-full hover:opacity-90 transition-opacity"
+        >
+          {{ "cart.empty.shop-now" | translate }}
+        </button>
+      </div>
+    </div>
+    }
+    <!-- Card Service -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6">
+      @for (feature of aboutUsTwo.features | customTranslate; track feature.id)
+      {
+
+      <app-service-card
+        [cardDescription]="feature.text"
+        [cardImagePath]="feature.icon_image"
+        [cardTitle]="feature.title"
+        [isCenter]="false"
+      ></app-service-card>
+      }
+    </div>
+    }
+  </div>
+  } @else {
+  <div class="container mx-auto">
+    @if(isLoading) {
+    <app-cart-skeleton />
+    } @else {
+    <div class="grid grid-cols-12 mb-15">
+      <div class="col-span-12 xl:col-span-8 overflow-hidden">
+        @if (orderDetailsUnauth.length > 0) {
+        <!-- Cart Items Header -->
+        <div
+          class="header hidden md:flex items-center justify-between rounded-[15px] bg-warm-tan py-6 px-12 text-white text-description-size"
+        >
+          <span class="capitalize">
+            {{ "wishlist.orderList.product" | translate }}
+          </span>
+          <span class="capitalize">
+            {{ "wishlist.orderList.price" | translate }}
+          </span>
+          <span class="capitalize">
+            {{ "wishlist.orderList.quantity" | translate }}
+          </span>
+
+          <span class="capitalize">
+            {{ "all-total-price" | translate }}
+          </span>
+        </div>
+        <!-- Global Discount Message -->
+        @if(getGlobalDiscountMessage() && discountPercentage > 0) {
+        <div class="mb-4 px-4 my-2">
+          <div
+            class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg text-sm transition-all duration-300 flex items-center gap-2"
+          >
+            <span class="text-green-600">🎉</span>
+            <span>{{ getGlobalDiscountMessage() }}</span>
+          </div>
+        </div>
+        }
+
+        <!-- Cart Items -->
+        <div
+          class="cart-items-container max-h-[564px] overflow-y-auto px-4 mb-[30px]"
+          [@listAnimation]
+        >
+          @for (item of orderDetailsUnauth; track item.id) {
+
+          <!--
+
+           [@itemState]="item.animationState || 'visible'"
+            (@itemState.done)="onAnimationDone($event, item)"-->
+          <div
+            class="cart-item block md:flex items-center justify-between flex-wrap py-[30px] px-[23px] border-b-1 border-[#8D8D8D]"
+          >
+            <!-- Image && Product Name -->
+            <div
+              class="flex justify-start lg:ltr:pr-15 lg:rtl:pl-15 lg:justify-between items-center capitalize gap-[10px] mb-5 md:mb-0"
+            >
+              <!-- Remove Item -->
+              <div
+                class="close cursor-pointer"
+                (click)="removeUnauthItem(item)"
+              >
+                <figure class="mx-0 remove-icon">
+                  @if(isRemovingItem && removingItemId === item.id) {
+                  <div
+                    class="w-5 h-5 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"
+                  ></div>
+                  } @else {
+                  <img
+                    width="23px"
+                    height="23px"
+                    loading="lazy"
+                    src="/images/wishlist/remove.webp"
+                    alt="remove item"
+                  />
+                  }
+                </figure>
+              </div>
+
+              <a
+                [routerLink]="[
+                  '/',
+                  currentLang$ | async,
+                  'product-details',
+                  item | customTranslate : 'slug'
+                ]"
+                class="max-w-[80px] rounded-[15px] overflow-hidden"
+              >
+                @if (item.product_image) {
+                <img
+                  [appImageUrl]="item.product_image"
+                  [imageEndpoint]="''"
+                  [alt]="item | customTranslate : 'name'"
+                  class="w-full"
+                />
+                }
+              </a>
+              <div class="details">
+                <a
+                  [routerLink]="[
+                    '/',
+                    currentLang$ | async,
+                    'product-details',
+                    item | customTranslate : 'slug'
+                  ]"
+                  [title]="item | customTranslate : 'name'"
+                  class="text-black font-bold mb-[15px] text-[14px] max-w-[200px] text-wrap line-clamp-1 cursor-pointer"
+                >
+                  {{ item | customTranslate : "name" }}
+                </a>
+
+                <div
+                  class="text-[#333] text-[14px] max-w-[200px] text-wrap line-clamp-1"
+                >
+                  {{ item | customTranslate : "name" }}
+                </div>
+              </div>
+            </div>
+            <!-- Price & Quantity -->
+
+            <div
+              class="flex justify-between items-center flex-row-reverse md:flex-row mb-5 md:mb-0"
+            >
+              <!-- Price -->
+              <p
+                class="flex items-center justify-between text-[#333] text-category-size font-bold"
+              >
+                <span> {{ formatPrice(item.price) }} </span>
+                <span class="icon-saudi_riyal"></span>
+              </p>
+            </div>
+            <!-- Quantity -->
+
+            <div class="relative flex items-center gap-0 max-w-[8rem]">
+              <button
+                type="button"
+                [disabled]="
+                  isAddingItem &&
+                  (updatingItemId === item.id || removingItemId === item.id)
+                "
+                (click)="decreaseUnauthQuantity(item)"
+                class="cursor-pointer bg-transparent border border-[#8D8D8D] ltr:rounded-l-2xl rtl:rounded-r-2xl px-[13px] h-[42px] flex items-center justify-center"
+              >
+                <span class="text-xl font-medium">−</span>
+              </button>
+              <input
+                type="text"
+                [value]="item.quantity || 1"
+                readonly
+                class="bg-transparent text-[#040404] border-y border-[#8D8D8D] border-x-0 px-[13px] text-center w-[50px] h-[42px] flex items-center justify-center"
+              />
+              <button
+                type="button"
+                [disabled]="
+                  isAddingItem &&
+                  (updatingItemId === item.id || removingItemId === item.id)
+                "
+                (click)="increaseUnauthQuantity(item)"
+                class="cursor-pointer bg-transparent border border-[#8D8D8D] ltr:rounded-r-2xl rtl:rounded-l-2xl px-[13px] h-[42px] flex items-center justify-center"
+              >
+                @if(isAddingItem ) {
+                <div
+                  class="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"
+                ></div>
+                } @else {
+                <span class="text-xl font-medium">+</span>
+                }
+              </button>
+            </div>
+
+            <!-- Item Total -->
+            <div
+              class="flex justify-end items-center text-description-size text-[#333] font-semibold"
+            >
+              <p class="flex items-center justify-between">
+                <span class="icon-saudi_riyal"></span>
+                <span> {{ calculateUnauthItemSubtotal(item) }} </span>
+              </p>
+            </div>
+          </div>
+          }
+        </div>
+        <!-- Cart Footer -->
+        <!-- <div class="flex items-center justify-between flex-wrap gap-y-4 mb-5">
+          <div
+            class="btns flex items-center justify-between border border-[#8D8D8D] rounded-[50px] px-[10px] py-[5px] flex-grow-1 capitalize"
+          >
+            <form
+              [formGroup]="promoCodeForm"
+              (ngSubmit)="applyPromoCode()"
+              class="flex items-center justify-between w-full flex-wrap"
+            >
+              <input
+                formControlName="code"
+                type="text"
+                class="bg-transparent border-0 outline-none flex-grow text-[#333] text-category-size"
+                [placeholder]="'cart.cart-footer.discount-code' | translate"
+              />
+              <button
+                type="submit"
+                [disabled]="!promoCodeForm.valid || isPromoCodeLoading"
+                class="cursor-pointer text-white bg-warm-tan rounded-[50px] border text-description-size py-[8px] px-[16px]"
+              >
+                @if (isPromoCodeLoading) {
+                <span
+                  class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"
+                ></span>
+                } @else {
+                {{ "cart.cart-footer.active-the-code" | translate }}
+                }
+              </button>
+            </form>
+          </div>
+
+
+        </div>
+        <div class="w-full">
+          @if (promoCodeError) {
+          <div class="flex items-center text-muted-rose text-sm">
+            <svg
+              class="w-4 h-4 mr-1"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <span>{{ promoCodeError }}</span>
+          </div>
+          } @if (promoCodeSuccess) {
+          <div class="flex items-center text-green-600 text-sm">
+            <svg
+              class="w-4 h-4 mr-1"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <span>{{ promoCodeSuccess }}</span>
+          </div>
+          } @if (promoCodeForm.get('code')?.invalid &&
+          promoCodeForm.get('code')?.touched) {
+          <div class="flex items-center text-muted-rose text-sm">
+            <svg
+              class="w-4 h-4 mr-1"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <span>{{ "cart.promo-code.enter-valid-code" | translate }}</span>
+          </div>
+          }
+        </div> -->
+
+        <div class="flex just-bettween">
+          <span
+            class="text-end rtl:text-end text-muted-rose text-description-size font-bold capitalize underline flex-grow-1 cursor-pointer"
+            (click)="clearUnauthCart()"
+          >
+            @if(isClearingCart) {
+            <div
+              class="border-2 border-gray-400 border-t-transparent rounded-full"
+            ></div>
+            } @else {
+            {{ "wishlist.wishlist-footer.delete-all" | translate }}
+            }
+          </span>
+        </div>
+
+        <!-- Cart Status Messages -->
+        @if(cartUpdateSuccess || removeItemError) {
+        <div class="mt-4">
+          @if(cartUpdateSuccess) {
+          <div
+            class="flex items-center text-green-600 text-sm bg-green-50 p-2 rounded"
+          >
+            <svg
+              class="w-4 h-4 mr-1"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <span>{{ cartUpdateSuccess }}</span>
+          </div>
+          } @if(removeItemError) {
+          <div
+            class="flex items-center text-muted-rose text-sm bg-red-50 p-2 rounded"
+          >
+            <svg
+              class="w-4 h-4 mr-1"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <span>{{ removeItemError }}</span>
+          </div>
+          }
+        </div>
+        } }
+      </div>
+
+      @if (!isUnauthCartEmpty()) {
+      <div
+        class="col-span-12 xl:col-span-4 my-8 lg:my-0 lg:rtl:pr-15 lg:ltr:pl-15"
+      >
+        <div
+          class="wrapper py-[19px] px-[45px] border border-[#202020] rounded-[15px] capitalize"
+        >
+          <h3
+            class="text-black text-description-size font-bold pb-[17px] border-b border-[#8D8D8D]"
+          >
+            {{ "summary.summary" | translate }}
+          </h3>
+
+          <div
+            class="flex items-center justify-between pb-[38px] pt-[23px] text-[#333] text-category-size font-medium"
+          >
+            <span> {{ "summary.items" | translate }} </span>
+            <span> {{ orderDetailsUnauth.length }} </span>
+          </div>
+          <div
+            class="flex items-center justify-between pb-[38px] text-[#333] text-category-size font-medium"
+          >
+            <span> {{ "summary.subtotal" | translate }} </span>
+            <p class="flex items-center justify-between">
+              <span>
+                {{ formatPrice(unauthOrderSummary.subtotal) }}
+              </span>
+              <span class="icon-saudi_riyal"></span>
+            </p>
+          </div>
+          <!--
+          @if(order().shipping > 0){
+          <div
+            class="flex items-center justify-between pb-[38px] text-[#333] text-category-size font-medium"
+          >
+            <span> {{ "summary.delivery" | translate }} </span>
+            <p class="flex items-center justify-between">
+              <span> {{ formatPrice(order().shipping) }} </span>
+              <span class="icon-saudi_riyal"></span>
+            </p>
+          </div>
+          } @if(order().tax > 0){
+
+          <div
+            class="flex items-center justify-between pb-[38px] text-[#333] text-category-size font-medium"
+          >
+            <span> {{ "summary.tax" | translate }} </span>
+            <p class="flex items-center justify-between">
+              <span> {{ formatPrice(order().tax) }}</span>
+              <span class="icon-saudi_riyal"></span>
+            </p>
+          </div>
+          } @if (order().promo_code_id) {
+          <div
+            class="flex items-center justify-between pb-[44px] text-[#333] text-category-size font-medium border-b border-[#8D8D8D]"
+          >
+            <span> {{ "summary.discount-coupon" | translate }} </span>
+            <p class="text-[#C00000] flex items-center justify-between">
+              <span> -{{ formatPrice(order().promo_code_value) }}</span>
+              <span class="icon-saudi_riyal"></span>
+            </p>
+          </div>
+          } -->
+
+          <div
+            class="flex justify-between items-center rounded-[15px] border border-warm-tan py-[17px] px-[15px] mt-[45px] mb-[50px] bg-white"
+          >
+            <span class="text-[#333] text-category-size font-medium">{{
+              "summary.total" | translate
+            }}</span>
+            <p
+              class="flex items-center justify-between text-black text-category-size font-medium"
+            >
+              <span>
+                {{ formatPrice(unauthOrderSummary.total) }}
+              </span>
+
+              <span class="icon-saudi_riyal"></span>
+            </p>
+          </div>
+          @if (_authService.isAuthenticated()) {
+          <button
+            [routerLink]="[
+              '/',
+              currentLang$ | async,
+              'checkout',
+              'checkout-address'
+            ]"
+            class="cursor-pointer text-white rounded-[50px] border border-[(#164, 131, 116, 0.00)] bg-warm-tan capitalize w-full py-[9px] px-[30px] 2xl:px-[40px] text-description-size mb-6"
+          >
+            {{ "summary.complete-the-order" | translate }}
+          </button>
+          } @else {
+          <!-- Address form for unauthenticated users -->
+          <button
+            (click)="toggleAddressFormModal()"
+            class="cursor-pointer text-white rounded-[50px] border border-[(#164, 131, 116, 0.00)] bg-warm-tan capitalize w-full py-[9px] px-[30px] 2xl:px-[40px] text-description-size mb-6"
+          >
+            {{ "summary.complete-the-order" | translate }}
+          </button>
+          }
+        </div>
+      </div>
+      }
+    </div>
+    @if (orderDetailsUnauth.length === 0) {
+    <div
+      class="flex items-center justify-center min-h-[60vh] w-full bg-white rounded-[15px] mx-auto transition-all duration-300 ease-out"
+    >
+      <div class="text-center py-12">
+        <svg
+          class="mx-auto mb-6 w-[200px] h-[200px]"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M2 3H4.5L6.5 17H17M17 17C15.8954 17 15 17.8954 15 19C15 20.1046 15.8954 21 17 21C18.1046 21 19 20.1046 19 19C19 17.8954 18.1046 17 17 17ZM6.07142 14H18L21 5H4.78571M11 19C11 20.1046 10.1046 21 9 21C7.89543 21 7 20.1046 7 19C7 17.8954 7.89543 17 9 17C10.1046 17 11 17.8954 11 19Z"
+            stroke="#A4907C"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <circle cx="9" cy="19" r="2" fill="#A4907C" opacity="0.3" />
+          <circle cx="17" cy="19" r="2" fill="#A4907C" opacity="0.3" />
+          <path d="M4 5H21L18 14H6.07142L4 5Z" fill="#A4907C" opacity="0.3" />
+          <path
+            d="M7 8L8 12M11 8L11.5 12M15 8L14 12"
+            stroke="white"
+            stroke-linecap="round"
+          />
+        </svg>
+        <h3 class="text-2xl font-bold text-[#333] mb-4">
+          {{ "cart.empty.title" | translate }}
+        </h3>
+        <p class="text-[#666] mb-6">
+          {{ "cart.empty.message" | translate }}
+        </p>
+        <button
+          [routerLink]="['/', currentLang$ | async, 'shopping']"
+          class="cursor-pointer bg-warm-tan text-white px-8 py-3 rounded-full hover:opacity-90 transition-opacity"
+        >
+          {{ "cart.empty.shop-now" | translate }}
+        </button>
+      </div>
+    </div>
+    }
+    <!-- Card Service -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6">
+      @for (feature of aboutUsTwo.features | customTranslate; track feature.id)
+      {
+
+      <app-service-card
+        [cardDescription]="feature.text"
+        [cardImagePath]="feature.icon_image"
+        [cardTitle]="feature.title"
+        [isCenter]="false"
+      ></app-service-card>
+      }
+    </div>
+    }
+  </div>
+  }
+</section>
+
+<!-- Address Form Modal -->
+<app-address-form-modal
+  [isOpen]="showAddressFormModal"
+  (close)="toggleAddressFormModal()"
+  (formSubmit)="handleAddressFormSubmit($event)"
+></app-address-form-modal>

@@ -1,0 +1,81 @@
+<section aria-labelledby="register-heading">
+  <app-articles-header
+    [title]="'auth.login.header.title' | translate"
+    [subTitle]="'auth.login.header.subtitle' | translate"
+    [showRotateImage]="false"
+    [marginBottom]="'15'"
+    [headingId]="'register-heading'"
+  ></app-articles-header>
+  <div class="container mx-auto">
+    <!-- Registration Type Badge -->
+    <!-- <div class="text-center mb-4">
+      <div
+        class="inline-block py-2 px-4 mb-6 rounded-full text-white text-sm font-medium"
+        [ngClass]="{
+          'bg-blue-600': userRole === UserRole.CUSTOMER,
+          'bg-green-600': userRole === UserRole.BUSINESS
+        }"
+      >
+        {{
+          userRole === UserRole.BUSINESS
+            ? ("auth.register.as-business" | translate)
+            : ("auth.register.as-user" | translate)
+        }}
+      </div>
+    </div> -->
+    <!-- Contact Us Form -->
+    <div class="mb-15">
+      <div class="grid grid-cols-12 gap-8">
+        <!-- Outlet Form -->
+        <div class="col-span-12 lg:col-span-8 xl:col-span-9 order-2 lg:order-1">
+          <router-outlet></router-outlet>
+        </div>
+        <!-- Buttons Toggle -->
+        <div class="col-span-12 lg:col-span-4 xl:col-span-3 order-1 lg:order-2">
+          <nav
+            class="register-tabs mb-[30px] capitalize"
+            aria-label="Registration steps"
+          >
+            <button
+              class="bg-white rounded-[15px] text-[#474747] border border-[#E0E0E0] w-full mb-[10px] p-[11px] cursor-pointer"
+              [routerLink]="['personal']"
+              [routerLinkActive]="['active-subroute', 'text-white']"
+              [attr.aria-current]="isRouteActive('personal') ? 'step' : null"
+            >
+              {{ "auth.taps.personal" | translate }}
+            </button>
+            <!-- <button
+              class="bg-white rounded-[15px] text-[#474747] border border-[#E0E0E0] w-full mb-[10px] p-[11px] cursor-pointer"
+              [routerLink]="['password']"
+              [routerLinkActive]="['active-subroute', 'text-white']"
+              [attr.aria-current]="isRouteActive('password') ? 'step' : null"
+            >
+              {{ "auth.taps.password" | translate }}
+            </button>
+            <button
+              class="bg-white rounded-[15px] text-[#474747] border border-[#E0E0E0] w-full mb-[10px] p-[11px] cursor-pointer"
+              [routerLink]="['address']"
+              [routerLinkActive]="['active-subroute', 'text-white']"
+              [attr.aria-current]="isRouteActive('address') ? 'step' : null"
+            >
+              {{ "auth.taps.address" | translate }}
+            </button> -->
+          </nav>
+          <!-- Image Banner -->
+          <div class="col-span-12 md:col-span-2 lg:col-span-3">
+            <figure class="w-full">
+              <img
+                class="w-full"
+                src="/images/auth/1.webp"
+                alt="{{ 'auth.register.register-image-alt' | translate }}"
+                loading="eager"
+                width="350"
+                height="400"
+              />
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

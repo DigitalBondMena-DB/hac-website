@@ -1,0 +1,8 @@
+{
+  "i18n-ally.localesPaths": [
+    "public/i18n",
+    "src/app/core/i18n",
+    "src/app/core/services/service/lang"
+  ],
+  "i18n-ally.keystyle": "nested"
+}

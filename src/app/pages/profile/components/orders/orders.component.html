@@ -1,0 +1,378 @@
+<!-- Show loading spinner when data is loading -->
+@if(loading()){
+<app-loading></app-loading>
+} @else {
+<!-- First section: All orders -->
+@if(orders() && orders().row && orders().row.confirmed_orders &&
+orders().row.confirmed_orders.length > 0){
+<div class="mb-[35px] max-h-[1062px] overflow-y-auto px-4">
+  @for(allOrders of orders().row.confirmed_orders; track allOrders.id){
+  <!-- ALL ORDERS -->
+  <div class="my-8">
+    <div
+      class="bg-warm-tan text-white flex flex-col md:flex-row-reverse justify-between items-center rounded-t-[20px] pb-[17px] pt-[18px] px-[42px] text-description-size capitalize text-center"
+    >
+      <div class="mb-4 md:mb-0">
+        <p class="pb-[10px]">{{ "order.date.date" | translate }}</p>
+        <p class="font-bold">
+          {{ allOrders.order_date | date : "M/d/yyyy" }}
+        </p>
+      </div>
+
+      <div class="mb-4 md:mb-0">
+        <p class="pb-[10px]">{{ "payment-method" | translate }}</p>
+        <p class="font-bold">
+          {{ allOrders.payment_method }}
+        </p>
+      </div>
+
+      <!-- <div class="mb-4 md:mb-0">
+        <p class="pb-[10px]">{{ "order-status.order-status" | translate }}</p>
+        @if (allOrders.order_status) { @let config =
+        getOrderStatusConfig(allOrders.order_status);
+        <div
+          [class]="
+            config.bgColor + ' rounded-full px-3 py-1 inline-flex items-center'
+          "
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            [class]="config.textColor + ' h-4 w-4 mr-1'"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            @switch(config.icon) { @case('check-circle') {
+            <path
+              fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+              clip-rule="evenodd"
+            />
+            } @case('truck') {
+            <path
+              d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"
+            />
+            <path
+              d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1v-5a1 1 0 00-.293-.707l-2-2A1 1 0 0015 7h-1z"
+            />
+            } @case('clipboard-check') {
+            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+            <path
+              fill-rule="evenodd"
+              d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+              clip-rule="evenodd"
+            />
+            } @case('x-circle') {
+            <path
+              fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+              clip-rule="evenodd"
+            />
+            } @case('refresh') {
+            <path
+              fill-rule="evenodd"
+              d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+              clip-rule="evenodd"
+            />
+            } @default {
+            <path
+              fill-rule="evenodd"
+              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+              clip-rule="evenodd"
+            />
+            } }
+          </svg>
+          <span [class]="config.textColor + ' font-bold'">{{
+            config.label
+          }}</span>
+        </div>
+        } @else {
+        <p class="font-bold">{{ "unknown" | translate }}</p>
+        }
+      </div> -->
+      <div class="mb-4 md:mb-0">
+        <p class="pb-[10px]">{{ "total-price.total-price" | translate }}</p>
+        <p class="font-bold">${{ allOrders.total }}</p>
+      </div>
+      <div class="mb-4 md:mb-0">
+        <p class="pb-[10px]">{{ "order-number" | translate }}</p>
+        <p class="font-bold">{{ allOrders.order_number }}</p>
+      </div>
+    </div>
+
+    <div class="space-y-4 border border-[#AFA8A8] px-[42px] rounded-b-[15px]">
+      @for(order of allOrders.details; track order.id){
+      <div
+        class="flex flex-col md:flex-row items-center border-b border-[#8D8D8D] pb-[30px] pt-[54px]"
+      >
+        <img
+          loading="lazy"
+          class="w-[80px] h-[80px] rounded-[15px] mb-4 md:mb-0"
+          [appImageUrl]="order.product.main_image"
+          [imageEndpoint]="''"
+          alt="Product Image"
+        />
+        <div class="flex-grow rtl:pr-4 ltr:pl-4">
+          <p class="text-description-size font-bold mb-[15px]">
+            {{ order.product | customTranslate : "name" }}
+          </p>
+          <div class="text-category-size text-[#333] line-clamp-1">
+            @if (lang === 'ar') {
+            <p [innerHTML]="order.product.ar_description.slice(0, 30)"></p>
+            } @else {
+            <p [innerHTML]="order.product.en_description.slice(0, 30)"></p>
+            }
+          </div>
+        </div>
+        <p
+          class="flex items-center justify-between gap-x-2 text-[18px] font-semibold"
+        >
+          <span>
+            {{ order.subtotal }}
+          </span>
+          <span class="icon-saudi_riyal"></span>
+        </p>
+      </div>
+      } @if (allOrders.order_status) { @let config =
+      getOrderStatusConfig(allOrders.order_status);
+      <div
+        [class]="
+          config.borderColor +
+          ' rounded-full px-[40px] py-[9px] my-4 inline-flex items-center ' +
+          config.bgColor
+        "
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          [class]="config.textColor + ' h-4 w-4 mr-1'"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          @switch(config.icon) { @case('check-circle') {
+          <path
+            fill-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+            clip-rule="evenodd"
+          />
+          } @case('truck') {
+          <path
+            d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"
+          />
+          <path
+            d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1v-5a1 1 0 00-.293-.707l-2-2A1 1 0 0015 7h-1z"
+          />
+          } @case('clipboard-check') {
+          <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+          <path
+            fill-rule="evenodd"
+            d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+            clip-rule="evenodd"
+          />
+          } @case('x-circle') {
+          <path
+            fill-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+            clip-rule="evenodd"
+          />
+          } @case('refresh') {
+          <path
+            fill-rule="evenodd"
+            d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+            clip-rule="evenodd"
+          />
+          } @default {
+          <path
+            fill-rule="evenodd"
+            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+            clip-rule="evenodd"
+          />
+          } }
+        </svg>
+        <span
+          class="text-description-size"
+          [class]="config.textColor + ' font-bold'"
+          >{{ config.label }}</span
+        >
+      </div>
+      } @else {
+      <p class="font-bold">{{ "unknown" | translate }}</p>
+      }
+
+      <!-- Track Order Button - Only show for confirmed or on the way orders -->
+      @if (allOrders.order_status && (allOrders.order_status.toLowerCase() ===
+      'confirmed' || allOrders.order_status.toLowerCase() === 'on the way')) {
+      <div class="flex mt-4 mb-6">
+        <button
+          (click)="navigateToTrackOrder(allOrders.id)"
+          class="bg-[#CBAC8D] text-white cursor-pointer border border-[#CBAC8D] py-[9px] px-15 text-description-size rounded-[50px] capitalize hover:bg-[#b99b7d] transition-colors"
+        >
+          {{ "order.track-order" | translate }}
+        </button>
+      </div>
+      }
+    </div>
+  </div>
+  }
+</div>
+} @else {
+<!-- No orders message -->
+<div class="flex flex-col items-center justify-center p-8 text-center">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="h-16 w-16 text-warm-tan mb-4"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="1.5"
+      d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+    />
+  </svg>
+  <h3 class="text-lg font-bold mb-2">{{ "no-orders-title" | translate }}</h3>
+  <p class="text-gray-600">{{ "no-orders-message" | translate }}</p>
+</div>
+} }
+
+<!-- Second section: Last order -->
+<!-- @if(lastOrder() && lastOrder().order && lastOrder().order.details &&
+lastOrder().order.details.length > 0){ -->
+<!-- Have been Delivered -->
+<!-- <div class=""> -->
+<!-- <div
+    class="bg-warm-tan text-white flex flex-col md:flex-row-reverse justify-between items-center rounded-t-[20px] pb-[17px] pt-[18px] px-[42px] text-description-size capitalize text-center"
+  >
+    <div class="mb-4 md:mb-0">
+      <p class="pb-[10px]">{{ "order.date.date" | translate }}</p>
+      <p class="font-bold">
+        {{ lastOrder()?.order?.order_date | date : "dd/MM/yyyy" }}
+      </p>
+    </div>
+    <div class="mb-4 md:mb-0">
+      <p class="pb-[10px]">{{ "order-status.order-status" | translate }}</p>
+      @if (lastOrder()?.order?.order_status) { @let orderStatus =
+      lastOrder()?.order?.order_status || ''; @let config =
+      getOrderStatusConfig(orderStatus);
+      <div
+        [class]="
+          config.bgColor + ' rounded-full px-3 py-1 inline-flex items-center'
+        "
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          [class]="config.textColor + ' h-4 w-4 mr-1'"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          @switch(config.icon) { @case('check-circle') {
+          <path
+            fill-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+            clip-rule="evenodd"
+          />
+          } @case('truck') {
+          <path
+            d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"
+          />
+          <path
+            d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1v-5a1 1 0 00-.293-.707l-2-2A1 1 0 0015 7h-1z"
+          />
+          } @case('clipboard-check') {
+          <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+          <path
+            fill-rule="evenodd"
+            d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+            clip-rule="evenodd"
+          />
+          } @case('x-circle') {
+          <path
+            fill-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+            clip-rule="evenodd"
+          />
+          } @case('refresh') {
+          <path
+            fill-rule="evenodd"
+            d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+            clip-rule="evenodd"
+          />
+          } @default {
+          <path
+            fill-rule="evenodd"
+            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+            clip-rule="evenodd"
+          />
+          } }
+        </svg>
+        <span [class]="config.textColor + ' font-bold'">{{
+          config.label
+        }}</span>
+      </div>
+      } @else {
+      <p class="font-bold">{{ "unknown" | translate }}</p>
+      }
+    </div>
+    <div class="mb-4 md:mb-0">
+      <p class="pb-[10px]">{{ "total-price.total-price" | translate }}</p>
+      <p class="font-bold">${{ lastOrder()?.order?.total }}</p>
+    </div>
+    <div class="mb-4 md:mb-0">
+      <p class="pb-[10px]">{{ "order-number" | translate }}</p>
+      <p class="font-bold">{{ lastOrder()?.order?.order_number }}</p>
+    </div>
+
+  </div> -->
+<!-- <div class="space-y-4 border border-[#AFA8A8] px-[42px] rounded-b-[15px]">
+    @for (deliveredOrder of lastOrder()?.order?.details; track
+    deliveredOrder.id){ -->
+
+<!-- <div class="flex items-center pb-[30px] pt-[54px]">
+      <img
+        loading="lazy"
+        class="w-[80px] h-[80px] rounded-[15px]"
+        [appImageUrl]="deliveredOrder.product.main_image"
+        [imageEndpoint]="''"
+        alt="Product Image"
+      />
+      <div class="flex-grow rtl:pr-4 ltr:pl-4">
+        <p class="text-description-size font-bold mb-[15px]">
+          {{ deliveredOrder.product | customTranslate : "name" }}
+        </p>
+        <p class="text-category-size text-[#333]">
+          {{ deliveredOrder.product | customTranslate : "descritpion" }}
+        </p>
+      </div>
+      <p class="text-lg font-semibold">
+        ${{ deliveredOrder.subtotal }}
+        <span class="icon-saudi_riyal"></span>      </p>
+    </div> -->
+<!-- <div>
+    </div> -->
+
+<!-- }
+  </div>
+</div> -->
+<!-- } @else { -->
+<!-- No last order message -->
+<!-- <div class="flex flex-col items-center justify-center p-8 text-center mt-8">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="h-16 w-16 text-warm-tan mb-4"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="1.5"
+      d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+    />
+  </svg>
+  <h3 class="text-lg font-bold mb-2">
+    {{ "no-last-order-title" | translate }}
+  </h3>
+  <p class="text-gray-600">{{ "no-last-order-message" | translate }}</p>
+</div> -->
+<!-- } } -->

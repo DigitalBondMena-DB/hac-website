@@ -1,0 +1,19 @@
+<section>
+  <h2 class="sr-only">{{ "CHECKOUT" | translate }}</h2>
+  <router-outlet></router-outlet>
+</section>
+<!-- Card Service -->
+<div class="container mx-auto">
+  <!-- Card Service -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6">
+    @for (feature of features() | customTranslate; track feature.id) {
+
+    <app-service-card
+      [cardDescription]="feature.text"
+      [cardImagePath]="feature.icon_image"
+      [cardTitle]="feature.title"
+      [isCenter]="false"
+    ></app-service-card>
+    }
+  </div>
+</div>

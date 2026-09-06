@@ -1,0 +1,134 @@
+<div
+  [ngClass]="{
+    'fixed z-50 bg-white shadow-xl rounded-xl ltr:-translate-x-[25%]  rtl:translate-x-[25%] max-h-[510px]':
+      !isMobile,
+    'w-full overflow-hidden': isMobile
+  }"
+  [style.width]="isMobile ? '100%' : width"
+  (click)="$event.stopPropagation()"
+>
+  <div
+    [ngClass]="{
+      'max-h-[calc(100vh-150px)] overflow-y-auto shadow-xl rounded-b-xl':
+        !isMobile,
+      'relative w-full': isMobile
+    }"
+  >
+    <div
+      class="w-full bg-white text-sm/6 rounded-b-xl px-4"
+      [ngClass]="{
+        'ring-1 ring-gray-200': !isMobile,
+        'overflow-y-auto max-h-[40vh]': isMobile
+      }"
+    >
+      <div class="py-5">
+        <!-- Title and close button (only show on desktop) -->
+        @if(!isMobile){
+        <div class="flex justify-between items-center">
+          <button
+            class="p-2 rounded-full hover:bg-gray-100 transition-colors cursor-pointer"
+            (click)="closeMenu.emit()"
+            aria-label="Close menu"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 md:h-6 md:w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        }
+
+        <!-- Categories grid -->
+        <div
+          class="grid gap-4"
+          [ngClass]="{
+            'grid-cols-1': isMobile || categories().length <= 1,
+            'md:grid-cols-2': !isMobile && categories().length === 2,
+            'md:grid-cols-3': !isMobile && categories().length === 3,
+            'md:grid-cols-4': !isMobile && categories().length === 4,
+            'md:grid-cols-5': !isMobile && categories().length >= 5
+          }"
+        >
+          <!-- Skeleton loader when categories are loading -->
+          @if (isLoading()) { @for (i of generateArray(3); track i) {
+          <div class="animate-pulse my-5">
+            <div
+              class="bg-white min-w-[180px] h-[150px] md:h-[200px] shadow-sm border border-gray-100 rounded-xl p-4"
+            >
+              <div class="space-y-4">
+                @for (j of generateArray(5); track j) {
+                <div class="h-4 bg-gray-200 rounded w-full"></div>
+                }
+              </div>
+            </div>
+          </div>
+          } } @else {
+          <!-- Categories -->
+          @for (category of categories(); track category.id) { @if (category &&
+          category.subcategories && category.subcategories.length > 0) {
+          <div class="category-card w-full pt-2 pb-4">
+            <a
+              [routerLink]="['/', currentLang, 'shopping']"
+              [queryParams]="{ categoryId: category.id }"
+              (click)="navigateToCategory(category)"
+              class="block mb-3 font-medium"
+            >
+              <span
+                class="text-black font-bold capitalize underline text-[16px] px-[15px]"
+              >
+                {{ category | customTranslate : "name" }}
+              </span>
+            </a>
+
+            <div
+              #menuContent
+              class="p-[15px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] subcategory-card bg-white w-full overflow-y-auto rounded-[15px]"
+              [ngClass]="{
+                'max-h-[150px]': !isMobile
+              }"
+            >
+              <div>
+                @for (subCategory of category.subcategories; track
+                subCategory.id) {
+                <a
+                  [routerLink]="['/', currentLang, 'shopping']"
+                  [queryParams]="{ subcategoryId: subCategory.id }"
+                  class="mb-[10px] text-black hover:bg-gray-50 transition-colors cursor-pointer group flex justify-between items-center text-[15px] font-medium py-1 px-2"
+                  (click)="navigateToSubcategory(subCategory.id.toString())"
+                >
+                  <span>{{ subCategory | customTranslate : "name" }}</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-3 w-3 md:h-4 md:w-4 opacity-0 group-hover:opacity-100 text-warm-tan transition-all duration-300"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M13 7l5 5m0 0l-5 5m5-5H6"
+                    />
+                  </svg>
+                </a>
+                }
+              </div>
+            </div>
+          </div>
+          } } }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

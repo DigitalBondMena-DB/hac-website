@@ -1,0 +1,60 @@
+.tamara-widget-container {
+  width: 100%;
+  margin: 1rem 0;
+  font-family: inherit;
+}
+
+/* Tamara widget element styling */
+tamara-widget {
+  display: block;
+  width: 100%;
+  min-height: 60px;
+}
+
+/* Ensure the iframe injected by Tamara has proper styling */
+tamara-widget iframe {
+  width: 100% !important;
+  border: none !important;
+  border-radius: 8px;
+  max-width: 100%;
+}
+
+/* RTL Support for container */
+.tamara-widget-container[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+.tamara-widget-container[dir="ltr"] {
+  direction: ltr;
+  text-align: left;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .tamara-widget-container {
+    margin: 0.75rem 0;
+  }
+
+  tamara-widget {
+    min-height: 50px;
+  }
+}
+
+/* Loading state */
+tamara-widget:empty {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 8px;
+  min-height: 60px;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

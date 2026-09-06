@@ -1,0 +1,13 @@
+.banner-container {
+  background-color: #cbac8d;
+  &.hac-bg {
+    background-image: url("/images/common/bg.webp");
+    background-size: 80%;
+    background-position: center bottom;
+    opacity: 0.09;
+  }
+  &.ramadan-bg {
+    background-image: url("/images/ramadan-theme/ramadan-h-bg.png");
+    opacity: 1;
+  }
+}

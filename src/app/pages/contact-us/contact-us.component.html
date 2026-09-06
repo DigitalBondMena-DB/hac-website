@@ -1,0 +1,389 @@
+@if (!contactUs() || !features()) {
+<app-contact-us-skeleton />
+} @else {
+<section class="contact-section">
+  <div class="container mx-auto">
+    <h1 class="sr-only">{{ "contact-us.heading" | translate }}</h1>
+
+    <!-- Header Map -->
+    <figure class="mb-[60px]" @fadeIn>
+      <iframe
+        width="100%"
+        height="300"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        src="https://www.google.com/maps/embed?pb=!1m13!1m8!1m3!1d3624.601173477347!2d46.6787112!3d24.7062332!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjTCsDQyJzE0LjYiTiA0NsKwNDAnNTIuMiJF!5e0!3m2!1sen!2seg!4v1749630464776!5m2!1sen!2seg"
+        title="{{ 'contact-us.map-alt' | translate }}"
+        allowfullscreen=""
+        @fadeIn
+      ></iframe>
+    </figure>
+
+    <!-- Contact Us Form -->
+    <div class="mb-15">
+      <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-12 lg:col-span-8" @formAnimation>
+          <!-- Left Section: Form -->
+          <form
+            [formGroup]="contactForm"
+            (ngSubmit)="onSubmit()"
+            class="form-fade-in"
+          >
+            <!-- Full Name  -->
+            <div
+              class="flex justify-between items-center gap-x-[23px] mb-[44px]"
+            >
+              <!-- Name  -->
+              <div class="flex-grow-1 w-full">
+                <label
+                  for="name"
+                  class="block relative text-subtitle-size font-bold mb-[23px] after:absolute after:content-['*'] after:-top-[6px] ltr:after:right-0 rtl:after:left-0 w-fit after:text-muted-rose after:transform after:translate-x-full rtl:after:-translate-x-full after:font-bold after:text-start-size"
+                >
+                  {{ "contact-us.form.first-name" | translate }}
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  formControlName="name"
+                  class="bg-white border border-[#8D8D8D] rounded-[15px] rtl:pr-4 ltr:pl-4 py-[18px] w-full {{
+                    getControlClass('name')
+                  }}"
+                  [placeholder]="
+                    'contact-us.form.placeholder-first-name' | translate
+                  "
+                  autocomplete="name"
+                  aria-required="true"
+                />
+                <div class="min-h-[24px]">
+                  @if (contactForm.get('name')?.touched &&
+                  contactForm.get('name')?.errors) {
+                  <div class="text-red-500 text-sm mt-1" aria-live="polite">
+                    @if (contactForm.get('name')?.errors?.['required']) {
+                    <span>{{ "validation.name-required" | translate }}</span>
+                    } @else if (contactForm.get('name')?.errors?.['minlength'])
+                    {
+                    <span>{{ "validation.name-min-length" | translate }}</span>
+                    }
+                  </div>
+                  }
+                </div>
+              </div>
+              <!-- Last Name -->
+              <div class="flex-grow-1 w-full">
+                <label
+                  for="last_name"
+                  class="block relative text-subtitle-size font-bold mb-[23px] after:absolute after:content-['*'] after:-top-[6px] ltr:after:right-0 rtl:after:left-0 w-fit after:text-muted-rose after:transform after:translate-x-full rtl:after:-translate-x-full after:font-bold after:text-start-size"
+                >
+                  {{ "contact-us.form.last-name" | translate }}
+                </label>
+                <input
+                  type="text"
+                  id="last_name"
+                  formControlName="last_name"
+                  class="bg-white border border-[#8D8D8D] rounded-[15px] rtl:pr-4 ltr:pl-4 py-[18px] w-full {{
+                    getControlClass('last_name')
+                  }}"
+                  [placeholder]="
+                    'contact-us.form.placeholder-last-name' | translate
+                  "
+                  autocomplete="last_name"
+                  aria-required="true"
+                />
+                <div class="min-h-[24px]">
+                  @if (contactForm.get('last_name')?.touched &&
+                  contactForm.get('last_name')?.errors) {
+                  <div class="text-red-500 text-sm mt-1" aria-live="polite">
+                    @if (contactForm.get('last_name')?.errors?.['required']) {
+                    <p>{{ "validation.name-required" | translate }}</p>
+                    } @else if
+                    (contactForm.get('last_name')?.errors?.['minlength']) {
+                    <p>{{ "validation.name-min-length" | translate }}</p>
+                    }
+                  </div>
+                  }
+                </div>
+              </div>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="mb-[41px]">
+              <label
+                for="phone"
+                class="block relative text-subtitle-size font-bold mb-[23px] after:absolute after:content-['*'] after:-top-[6px] ltr:after:right-0 rtl:after:left-0 w-fit after:text-muted-rose after:transform after:translate-x-full rtl:after:-translate-x-full after:font-bold after:text-start-size"
+              >
+                {{ "contact-us.form.phone-number" | translate }}
+              </label>
+              <div
+                class="flex items-center border border-[#8D8D8D] rounded-[15px] overflow-hidden"
+              >
+                <span
+                  class="bg-[#eee] text-[#333] px-3 py-[19px] text-description-size ltr:-order-1 rtl:order-1"
+                  >+966</span
+                >
+                <input
+                  type="text"
+                  formControlName="phone"
+                  id="phone-number"
+                  class="flex-1 bg-white py-[18px] rtl:pr-4 ltr:pl-4 w-full rtl:text-right ltr:text-left focus:outline-none"
+                  [placeholder]="'' | translate"
+                  class="bg-white  rtl:pr-4 ltr:pl-4 py-[18px] w-full rtl:text-right ltr:text-left {{
+                    getControlClass('phone')
+                  }}"
+                  autocomplete="tel"
+                  aria-required="true"
+                />
+              </div>
+
+              <div class="min-h-[24px]">
+                @if (contactForm.get('phone')?.touched &&
+                contactForm.get('phone')?.errors) {
+                <div class="text-red-500 text-sm mt-1" aria-live="polite">
+                  @if (contactForm.get('phone')?.errors?.['required']) {
+                  <p>{{ "validation.phone-required" | translate }}</p>
+                  } @else if (contactForm.get('phone')?.errors?.['pattern']) {
+                  <p>{{ "validation.phone-pattern-example" | translate }}</p>
+                  }
+                </div>
+                }
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-[41px]">
+              <label
+                for="email"
+                class="block relative text-subtitle-size font-bold mb-[23px] after:absolute after:content-['*'] after:-top-[6px] ltr:after:right-0 rtl:after:left-0 w-fit after:text-muted-rose after:transform after:translate-x-full rtl:after:-translate-x-full after:font-bold after:text-start-size"
+              >
+                {{ "contact-us.form.email" | translate }}
+              </label>
+              <input
+                type="email"
+                id="email"
+                formControlName="email"
+                class="bg-white border border-[#8D8D8D] rounded-[15px] rtl:pr-4 ltr:pl-4 py-[18px] w-full {{
+                  getControlClass('email')
+                }}"
+                [placeholder]="'contact-us.form.placeholder-email' | translate"
+                autocomplete="email"
+                aria-required="true"
+              />
+              <div class="min-h-[24px]">
+                @if (contactForm.get('email')?.touched &&
+                contactForm.get('email')?.errors) {
+                <div class="text-red-500 text-sm mt-1" aria-live="polite">
+                  @if (contactForm.get('email')?.errors?.['required']) {
+                  <p>{{ "validation.email-required" | translate }}</p>
+                  } @else if (contactForm.get('email')?.errors?.['email']) {
+                  <p>{{ "validation.email-format" | translate }}</p>
+                  }
+                </div>
+                }
+              </div>
+            </div>
+
+            <!-- Your Msg -->
+            <div class="mb-[41px]">
+              <label
+                for="message"
+                class="block relative text-subtitle-size font-bold mb-[23px] after:absolute after:content-['*'] after:-top-[6px] ltr:after:right-0 rtl:after:left-0 w-fit after:text-muted-rose after:transform after:translate-x-full rtl:after:-translate-x-full after:font-bold after:text-start-size"
+              >
+                {{ "contact-us.form.your-msg" | translate }}
+              </label>
+
+              <textarea
+                id="message"
+                rows="4"
+                formControlName="message"
+                class="bg-white border border-[#8D8D8D] rounded-[15px] rtl:pr-4 ltr:pl-4 py-[18px] w-full min-h-[250px] {{
+                  getControlClass('message')
+                }}"
+                [placeholder]="
+                  'contact-us.form.placeholder-your-msg' | translate
+                "
+                aria-required="true"
+              ></textarea>
+              <div class="min-h-[24px]">
+                @if (contactForm.get('message')?.touched &&
+                contactForm.get('message')?.errors) {
+                <div class="text-red-500 text-sm mt-1" aria-live="polite">
+                  @if (contactForm.get('message')?.errors?.['required']) {
+                  <p>{{ "validation.your-msg-required" | translate }}</p>
+                  } @else if (contactForm.get('message')?.errors?.['minlength'])
+                  {
+                  <p>{{ "validation.your-msg-min-length" | translate }}</p>
+                  }
+                </div>
+                }
+              </div>
+            </div>
+
+            <app-arrow-button
+              [gap]="'5px'"
+              [px]="'[30px]'"
+              [py]="'[9px]'"
+              [title]="
+                (isSubmitting() ? 'common.sending' : 'form.send') | translate
+              "
+              [type]="'submit'"
+              [bg]="'[#C9A888]'"
+              [border]="'[#C9A888]'"
+              [color]="'white'"
+              [image]="'/images/common/white-arrow.webp'"
+              [disabled]="isSubmitting()"
+              [attr.aria-busy]="isSubmitting()"
+            >
+            </app-arrow-button>
+          </form>
+        </div>
+        <div class="hidden lg:block lg:col-span-4 main_Image_Animation">
+          <figure
+            class="relative aspect-[2/3] w-full rounded-xl overflow-hidden h-full"
+          >
+            <img
+              class="w-full h-full object-cover"
+              loading="eager"
+              src="/images/contact-us/1.webp"
+              alt="{{ 'contact-us.contact-image-alt' | translate }}"
+            />
+          </figure>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Cards Details -->
+    <div class="min-h-[350px]" @fadeIn>
+      @if (contactUs()) {
+      <div class="grid md:grid-cols-12 gap-[30px]">
+        <!-- Maps Cards -->
+        <div class="md:col-span-6 lg:col-span-4">
+          <div
+            class="border border-[#8D8D8D] rounded-[15px] text-center h-full transition-all hover:shadow-lg"
+          >
+            <figure
+              class="mt-[30px] rounded-full bg-warm-tan p-[18px] w-fit mx-auto aspect-square card-icon-container"
+            >
+              <img
+                loading="lazy"
+                width="30"
+                height="30"
+                class="w-[30px] h-[30px]"
+                src="/images/contact-us/maps.webp"
+                alt="{{ 'contact-us.cards.maps-card.alt' | translate }}"
+              />
+            </figure>
+
+            <h3
+              class="mt-[27px] text-black text-subtitle-size font-bold capitalize"
+            >
+              {{ "contact-us.cards.maps-card.title" | translate }}
+            </h3>
+
+            <p class="text-[#333] text-category-size font-light mt-5 mb-[55px]">
+              {{ contactUs() | customTranslate : "address" }}
+            </p>
+          </div>
+        </div>
+
+        <!-- Call Cards -->
+        <div class="md:col-span-6 lg:col-span-4">
+          <div
+            class="border border-[#8D8D8D] rounded-[15px] text-center h-full transition-all hover:shadow-lg"
+          >
+            <figure
+              class="mt-[30px] rounded-full bg-warm-tan p-[18px] w-fit mx-auto aspect-square card-icon-container"
+            >
+              <img
+                loading="lazy"
+                width="30"
+                height="30"
+                class="w-[30px] h-[30px]"
+                src="/images/contact-us/call.webp"
+                alt="{{ 'contact-us.cards.call-card.alt' | translate }}"
+              />
+            </figure>
+
+            <h3
+              class="mt-[27px] text-black text-subtitle-size font-bold capitalize"
+            >
+              {{ "contact-us.cards.call-card.title" | translate }}
+            </h3>
+
+            <address
+              class="text-[#333] text-category-size font-light mt-5 mb-[55px] not-italic"
+            >
+              {{
+                contactUs().phone || "contact-us.cards.call-card.subTitle"
+                  | translate
+              }}
+            </address>
+          </div>
+        </div>
+
+        <!-- Msg Cards -->
+        <div class="md:col-span-6 lg:col-span-4">
+          <div
+            class="border border-[#8D8D8D] rounded-[15px] text-center h-full transition-all hover:shadow-lg"
+          >
+            <figure
+              class="mt-[30px] rounded-full bg-warm-tan p-[18px] w-fit mx-auto aspect-square card-icon-container"
+            >
+              <img
+                loading="lazy"
+                width="30"
+                height="30"
+                class="w-[30px] h-[30px]"
+                src="/images/contact-us/msg.webp"
+                alt="{{ 'contact-us.cards.msg-card.alt' | translate }}"
+              />
+            </figure>
+
+            <h3
+              class="mt-[27px] text-black text-subtitle-size font-bold capitalize"
+            >
+              {{ "contact-us.cards.msg-card.title" | translate }}
+            </h3>
+
+            <address
+              class="text-[#333] text-category-size font-light mt-5 mb-[55px] not-italic"
+            >
+              {{ contactUs().email || "example@gmail.com" }}
+            </address>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+
+  @if (breaks().length > 0) {
+  <app-banner
+    [showLeftSideImage]="true"
+    [showRightSideImage]="true"
+    [bgBanner]="false"
+    [bannerText]="breaks()[breaks().length - 1] | customTranslate : 'name'"
+    @fadeIn
+  ></app-banner>
+  }
+
+  <div class="container mx-auto">
+    <!-- Service Features Section -->
+    <section aria-labelledby="service-features" class="py-8" @fadeIn>
+      <h2 id="service-features" class="sr-only">
+        {{ "contact-us.services.heading" | translate }}
+      </h2>
+      <!-- Card Service -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6">
+        @for (feature of features() | customTranslate; track feature.id) {
+
+        <app-service-card
+          [cardDescription]="feature.text"
+          [cardImagePath]="feature.icon_image"
+          [cardTitle]="feature.title"
+          [isCenter]="false"
+        ></app-service-card>
+        }
+      </div>
+    </section>
+  </div>
+</section>
+}

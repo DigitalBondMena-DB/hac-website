@@ -1,0 +1,55 @@
+@if (!pathLink ) {
+<button
+  [disabled]="disabled"
+  [class]="
+    'cursor-pointer capitalize text-' +
+    color +
+    ' bg-' +
+    bg +
+    ' border border-' +
+    border +
+    ' rounded-full flex items-center py-' +
+    py +
+    ' px-' +
+    px +
+    ' text-description-size gap-[' +
+    gap +
+    ']' +
+    (disabled ? ' opacity-50 cursor-not-allowed' : '')
+  "
+  [type]="type"
+>
+  <span>{{ title }}</span>
+  <figure class="direction-aware-rotate max-w-[24px] max-h-[24px]">
+    <img class="w-full h-auto" loading="lazy" [src]="image" alt="arrow" />
+  </figure>
+</button>
+} @else {
+<a [routerLink]="['/', currentLang$ | async, pathLink]">
+  <button
+    [disabled]="disabled"
+    [class]="
+      'cursor-pointer capitalize text-' +
+      color +
+      ' bg-' +
+      bg +
+      ' border border-' +
+      border +
+      ' rounded-full flex items-center py-' +
+      py +
+      ' px-' +
+      px +
+      ' text-description-size gap-[' +
+      gap +
+      ']' +
+      (disabled ? ' opacity-50 cursor-not-allowed' : '')
+    "
+    [type]="type"
+  >
+    <span>{{ title }}</span>
+    <figure class="direction-aware-rotate max-w-[24px] max-h-[24px]">
+      <img class="w-full h-auto" loading="lazy" [src]="image" alt="arrow" />
+    </figure>
+  </button>
+</a>
+}

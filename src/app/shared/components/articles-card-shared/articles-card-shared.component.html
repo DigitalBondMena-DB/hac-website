@@ -1,0 +1,79 @@
+<div class="bg-white mb-15">
+  <div class="relative mb-[23px]">
+    <!-- ArticleImage -->
+    <a
+      [routerLink]="[
+        '/',
+        currentLang$ | async,
+        'blog',
+        blogData | customTranslate : 'slug'
+      ]"
+    >
+      <figure
+        class="w-full max-w-[900px] aspect-[900/432] rounded-xl overflow-hidden main_Image_Animation bg-gray-100"
+      >
+        <img
+          loading="lazy"
+          [appImageUrl]="blogData.main_image"
+          [imageEndpoint]="'uploads/blogs'"
+          alt="article"
+          class="w-full h-full"
+          width="900"
+          height="432"
+        />
+      </figure>
+    </a>
+  </div>
+
+  <div>
+    <!-- ArticleDate -->
+
+    <div
+      class="built ltr:left-[16px] rtl:right-[16px] text-[12px] sm:text-[14px] text-[#333] mb-[15px] sm:mb-[13px] relative"
+    >
+      <div class="text-[16px] text-[#333]">
+        @if(isArabic$ | async) {
+        {{ blogData.blog_date | date : "M/d/yyyy" }}
+
+        } @else {
+        {{ blogData.blog_date | date : "M/d/yyyy" }}
+
+        }
+      </div>
+      <div
+        class="circle rtl:right-[-4px] rtl:translate-x-full -translate-y-1/2 transform ltr:left-[-4px] ltr:-translate-x-full"
+      ></div>
+    </div>
+
+    <!-- ArticleTitle -->
+    <h3 class="text-subtitle-size text-black mb-[15px] font-semibold">
+      {{ blogData | customTranslate : "blog_title" }}
+    </h3>
+
+    <!-- ArticleDescription -->
+    <div
+      [ngClass]="{
+        'mb-[23px]': true,
+        'mb-[10px]': !false
+      }"
+      class="text-description-size text-justify line-clamp-2"
+    >
+      <app-safe-html
+        [content]="blogData | customTranslate : 'blog_text'"
+      ></app-safe-html>
+    </div>
+
+    <!-- Read More -->
+    <a
+      [routerLink]="[
+        '/',
+        currentLang$ | async,
+        'blog',
+        blogData | customTranslate : 'slug'
+      ]"
+      class="text-muted-rose text-[14px] font-bold underline"
+    >
+      {{ "shared.readMore" | translate }}
+    </a>
+  </div>
+</div>

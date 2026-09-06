@@ -1,0 +1,323 @@
+<app-articles-header
+  [title]="'checkout.header.title' | translate"
+  [subTitle]="'checkout.header.subtitle' | translate"
+  [showRotateImage]="false"
+  [marginBottom]="'9'"
+></app-articles-header>
+<div class="container mx-auto">
+  <div class="checkout-content">
+    <div class="grid grid-cols-12 gap-6">
+      <div class="col-span-12 lg:col-span-8">
+        <div class="payment-container">
+          @if(isSubmitting()) {
+          <div class="flex justify-center items-center py-8">
+            <app-loading></app-loading>
+          </div>
+          } @else {
+
+          <div>
+            <h2 class="text-title-size text-black font-bold mb-[20px]">
+              {{ "checkout.payment.choices" | translate }}
+            </h2>
+
+            <!-- Payment Methods -->
+            <div class="payment-methods mb-8">
+              <!-- Cash Option -->
+              <div
+                class="payment-selection-box border border-dashed border-[#8D8D8D] rounded-lg p-4 mb-4 cursor-pointer flex justify-between items-center"
+                [class.active]="
+                  selectedPaymentMethod() === PaymentMethod.CASH_ON_DELIVERY
+                "
+                (click)="selectPaymentMethod(PaymentMethod.CASH_ON_DELIVERY)"
+              >
+                <div class="">
+                  <div class="flex items-center gap-x-2">
+                    <figure
+                      class="w-[50px] h-[50px] rounded-[15px] flex items-center justify-center"
+                    >
+                      <img
+                        src="/images/cart/cash.webp"
+                        alt="Cash"
+                        class="w-[40px] h-[40px]"
+                        onerror="this.src='/images/cart/cash.webp'"
+                      />
+                    </figure>
+                    <span class="text-[#0E0E0E] text-description-size">{{
+                      "checkout.payment.methods.cash_on_delivery" | translate
+                    }}</span>
+                  </div>
+                  <p
+                    class="text-green-600 text-xs block"
+                    [innerHTML]="
+                      'checkout.payment.COD'
+                        | translate
+                          : {
+                              currency:
+                                '<span class=\'icon-saudi_riyal text-xs before:!text-[15px]  \'></span>'
+                            }
+                    "
+                  ></p>
+                </div>
+                <div class="checkbox-container">
+                  <div
+                    class="w-7 h-7 border border-[#8D8D8D] rounded-[5px] flex items-center justify-center bg-white"
+                  >
+                    @if(selectedPaymentMethod() ===
+                    PaymentMethod.CASH_ON_DELIVERY) {
+                    <div class="w-5 h-5 bg-[#CBAC8D] rounded-[5px]"></div>
+                    }
+                  </div>
+                </div>
+              </div>
+
+              <!-- Online Payment TAMARA -->
+              <div
+                class="payment-selection-box border border-dashed border-[#8D8D8D] rounded-lg p-4 mb-4 cursor-pointer flex justify-between items-center"
+                [class.active]="
+                  selectedPaymentMethod() ===
+                  PaymentMethod.ONLINE_PAYMENT_TAMARA
+                "
+                (click)="
+                  selectPaymentMethod(PaymentMethod.ONLINE_PAYMENT_TAMARA)
+                "
+              >
+                <div class="flex items-center gap-x-2">
+                  <figure
+                    class="w-[50px] h-[50px] rounded-[15px] flex items-center justify-center"
+                  >
+                    <img
+                      src="/images/payment/tamara.jpeg"
+                      alt="Credit Card"
+                      class="w-[40px] h-[40px]"
+                      onerror="this.src='/images/payment/tamara.jpeg'"
+                    />
+                  </figure>
+                  <span class="text-[#0E0E0E] text-description-size">{{
+                    "PaymentMethodAr_tm" | translate
+                  }}</span>
+                </div>
+                <div class="checkbox-container">
+                  <div
+                    class="w-7 h-7 border border-[#8D8D8D] rounded-[5px] flex items-center justify-center bg-white"
+                  >
+                    @if(selectedPaymentMethod() ===
+                    PaymentMethod.ONLINE_PAYMENT_TAMARA) {
+                    <div class="w-5 h-5 bg-[#CBAC8D] rounded-[5px]"></div>
+                    }
+                  </div>
+                </div>
+              </div>
+
+              <!-- Online Payment VISA -->
+              <div
+                class="payment-selection-box border border-dashed border-[#8D8D8D] rounded-lg p-4 mb-4 cursor-pointer flex justify-between items-center"
+                [class.active]="
+                  selectedPaymentMethod() === PaymentMethod.ONLINE_PAYMENT_VISA
+                "
+                (click)="selectPaymentMethod(PaymentMethod.ONLINE_PAYMENT_VISA)"
+              >
+                <div class="flex items-center gap-x-2">
+                  <figure
+                    class="w-[50px] h-[50px] rounded-[15px] flex items-center justify-center"
+                  >
+                    <img
+                      src="/images/payment/visa.webp"
+                      alt="Credit Card"
+                      class="w-[40px] h-[40px]"
+                      onerror="this.src='/images/payment/visa.webp'"
+                    />
+                  </figure>
+                  <span class="text-[#0E0E0E] text-description-size">{{
+                    "PaymentMethodAr_vm" | translate
+                  }}</span>
+                </div>
+                <div class="checkbox-container">
+                  <div
+                    class="w-7 h-7 border border-[#8D8D8D] rounded-[5px] flex items-center justify-center bg-white"
+                  >
+                    @if(selectedPaymentMethod() ===
+                    PaymentMethod.ONLINE_PAYMENT_VISA) {
+                    <div class="w-5 h-5 bg-[#CBAC8D] rounded-[5px]"></div>
+                    }
+                  </div>
+                </div>
+              </div>
+
+              <!-- Online Payment MADA -->
+              <div
+                class="payment-selection-box border border-dashed border-[#8D8D8D] rounded-lg p-4 mb-4 cursor-pointer flex justify-between items-center"
+                [class.active]="
+                  selectedPaymentMethod() === PaymentMethod.ONLINE_PAYMENT_MADA
+                "
+                (click)="selectPaymentMethod(PaymentMethod.ONLINE_PAYMENT_MADA)"
+              >
+                <div class="flex items-center gap-x-2">
+                  <figure
+                    class="w-[50px] h-[50px] rounded-[15px] flex items-center justify-center"
+                  >
+                    <img
+                      src="/images/payment/mada.webp"
+                      alt="Credit Card"
+                      class="w-[40px] h-[40px]"
+                      onerror="this.src='/images/payment/mada.webp'"
+                    />
+                  </figure>
+                  <span class="text-[#0E0E0E] text-description-size">{{
+                    "PaymentMethodAr_md" | translate
+                  }}</span>
+                </div>
+                <div class="checkbox-container">
+                  <div
+                    class="w-7 h-7 border border-[#8D8D8D] rounded-[5px] flex items-center justify-center bg-white"
+                  >
+                    @if(selectedPaymentMethod() ===
+                    PaymentMethod.ONLINE_PAYMENT_MADA) {
+                    <div class="w-5 h-5 bg-[#CBAC8D] rounded-[5px]"></div>
+                    }
+                  </div>
+                </div>
+              </div>
+
+              <!-- Online Payment Apple Pay -->
+              <div
+                class="payment-selection-box border border-dashed border-[#8D8D8D] rounded-lg p-4 mb-4 cursor-pointer flex justify-between items-center"
+                [class.active]="
+                  selectedPaymentMethod() ===
+                  PaymentMethod.ONLINE_PAYMENT_Apple_Pay
+                "
+                (click)="
+                  selectPaymentMethod(PaymentMethod.ONLINE_PAYMENT_Apple_Pay)
+                "
+              >
+                <div class="flex items-center gap-x-2">
+                  <figure
+                    class="w-[50px] h-[50px] rounded-[15px] flex items-center justify-center"
+                  >
+                    <img
+                      src="https://sa.myfatoorah.com/imgs/payment-methods/ap.png"
+                      alt="Credit Card"
+                      class="w-[40px] h-[40px]"
+                      onerror="this.src='https://sa.myfatoorah.com/imgs/payment-methods/ap.png'"
+                    />
+                  </figure>
+                  <span class="text-[#0E0E0E] text-description-size">{{
+                    "PaymentMethodAr_ap" | translate
+                  }}</span>
+                </div>
+                <div class="checkbox-container">
+                  <div
+                    class="w-7 h-7 border border-[#8D8D8D] rounded-[5px] flex items-center justify-center bg-white"
+                  >
+                    @if(selectedPaymentMethod() ===
+                    PaymentMethod.ONLINE_PAYMENT_Apple_Pay) {
+                    <div class="w-5 h-5 bg-[#CBAC8D] rounded-[5px]"></div>
+                    }
+                  </div>
+                </div>
+              </div>
+
+              <!-- Online Payment  STC Pay -->
+              <div
+                class="payment-selection-box border border-dashed border-[#8D8D8D] rounded-lg p-4 mb-4 cursor-pointer flex justify-between items-center"
+                [class.active]="
+                  selectedPaymentMethod() ===
+                  PaymentMethod.ONLINE_PAYMENT_STC_Pay
+                "
+                (click)="
+                  selectPaymentMethod(PaymentMethod.ONLINE_PAYMENT_STC_Pay)
+                "
+              >
+                <div class="flex items-center gap-x-2">
+                  <figure
+                    class="w-[50px] h-[50px] rounded-[15px] flex items-center justify-center"
+                  >
+                    <img
+                      src="https://sa.myfatoorah.com/imgs/payment-methods/stc.png"
+                      alt="Credit Card"
+                      class="w-[40px] h-[40px]"
+                      onerror="this.src='https://sa.myfatoorah.com/imgs/payment-methods/stc.png'"
+                    />
+                  </figure>
+                  <span class="text-[#0E0E0E] text-description-size">{{
+                    "PaymentMethodAr_stc" | translate
+                  }}</span>
+                </div>
+                <div class="checkbox-container">
+                  <div
+                    class="w-7 h-7 border border-[#8D8D8D] rounded-[5px] flex items-center justify-center bg-white"
+                  >
+                    @if(selectedPaymentMethod() ===
+                    PaymentMethod.ONLINE_PAYMENT_STC_Pay) {
+                    <div class="w-5 h-5 bg-[#CBAC8D] rounded-[5px]"></div>
+                    }
+                  </div>
+                </div>
+              </div>
+
+              <!-- Online Payment Google Pay -->
+              <div
+                class="payment-selection-box border border-dashed border-[#8D8D8D] rounded-lg p-4 mb-4 cursor-pointer flex justify-between items-center"
+                [class.active]="
+                  selectedPaymentMethod() ===
+                  PaymentMethod.ONLINE_PAYMENT_Google_Pay
+                "
+                (click)="
+                  selectPaymentMethod(PaymentMethod.ONLINE_PAYMENT_Google_Pay)
+                "
+              >
+                <div class="flex items-center gap-x-2">
+                  <figure
+                    class="w-[50px] h-[50px] rounded-[15px] flex items-center justify-center"
+                  >
+                    <img
+                      src="https://sa.myfatoorah.com/imgs/payment-methods/gp.png"
+                      alt="Credit Card"
+                      class="w-[40px] h-[40px]"
+                      onerror="this.src='https://sa.myfatoorah.com/imgs/payment-methods/gp.png'"
+                    />
+                  </figure>
+                  <span class="text-[#0E0E0E] text-description-size">
+                    Google Pay
+                  </span>
+                </div>
+                <div class="checkbox-container">
+                  <div
+                    class="w-7 h-7 border border-[#8D8D8D] rounded-[5px] flex items-center justify-center bg-white"
+                  >
+                    @if(selectedPaymentMethod() ===
+                    PaymentMethod.ONLINE_PAYMENT_Google_Pay) {
+                    <div class="w-5 h-5 bg-[#CBAC8D] rounded-[5px]"></div>
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+
+      <!-- Order Summary Column -->
+      <div class="col-span-12 lg:col-span-4">
+        <app-order-summary
+          [COD]="selectedPaymentMethod() === PaymentMethod.CASH_ON_DELIVERY"
+          [showDeliveryFee]="true"
+          [showActionButton]="false"
+        >
+          <div class="flex justify-center mt-10">
+            <app-button
+              [px]="'px-[70px]'"
+              [py]="'py-[9px]'"
+              [title]="'checkout.payment.place_order' | translate"
+              [disabled]="isSubmitting() || !selectedPaymentMethod()"
+              [isLoading]="isSubmitting()"
+              (click)="handleOrderPlacement()"
+              type="button"
+            >
+            </app-button>
+          </div>
+        </app-order-summary>
+      </div>
+    </div>
+  </div>
+</div>

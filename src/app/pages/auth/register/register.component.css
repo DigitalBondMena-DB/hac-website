@@ -1,0 +1,17 @@
+.active-subroute {
+  background-color: #cbac8d;
+  border-color: #cbac8d;
+  font-weight: 600;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  transform: translateY(-2px);
+  transition: all 0.2s ease-in-out;
+}
+
+.register-tabs button {
+  transition: all 0.2s ease-in-out;
+}
+
+.register-tabs button:hover:not(.active-subroute) {
+  background-color: #f9f5f1;
+  border-color: #e5d5c5;
+}

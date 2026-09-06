@@ -1,0 +1,38 @@
+@if (!bannerText) {
+<app-banner-skeleton
+  [showLeftSideImage]="showLeftSideImage"
+  [showRightSideImage]="showRightSideImage"
+></app-banner-skeleton>
+} @else {
+<div class="bg-warm-tan pt-[23px] pb-[20px] my-[60px] text-center w-full">
+  <div class="container mx-auto flex items-center justify-center gap-2">
+    @if (showLeftSideImage) {
+    <figure class="mx-2 md:mx-7">
+      <img
+        class="hidden sm:block max-w-[55px] max-h-[50px]"
+        loading="lazy"
+        src="/images/common/1.webp"
+        alt=""
+        role="presentation"
+      />
+    </figure>
+    }
+
+    <p class="text-black text-description-size font-normal">
+      " {{ bannerText }} "
+    </p>
+
+    @if (showRightSideImage) {
+    <figure class="mx-2 md:mx-7">
+      <img
+        class="hidden sm:block max-w-[55px] max-h-[50px]"
+        loading="lazy"
+        src="/images/common/1.webp"
+        alt=""
+        role="presentation"
+      />
+    </figure>
+    }
+  </div>
+</div>
+}

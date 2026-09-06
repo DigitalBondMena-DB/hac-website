@@ -1,0 +1,89 @@
+<section>
+  <app-articles-header
+    [title]="'auth.login.header.title' | translate"
+    [subTitle]="'profile.subtitle' | translate"
+    [showRotateImage]="false"
+    [marginBottom]="'15'"
+  ></app-articles-header>
+  <div class="container mx-auto px-4 lg:px-0">
+    <!-- Contact Us Form -->
+    <div class="mb-15">
+      <div class="grid grid-cols-12 gap-4 lg:gap-8">
+        <!-- Outlet Form -->
+        <div class="col-span-12 lg:col-span-8 xl:col-span-9 order-2 lg:order-1">
+          <div class="router-container" [@routeContentAnimation]="activeTab">
+            <router-outlet></router-outlet>
+          </div>
+        </div>
+        <!-- Buttons Toggle -->
+        <div class="col-span-12 lg:col-span-4 xl:col-span-3 order-1 lg:order-2">
+          <div class="register-tabs mb-[30px]">
+            <button
+              class="nav-button transition-btn bg-white rounded-[15px] capitalize text-[#474747] border border-[#E0E0E0] w-full mb-[10px] p-[11px] cursor-pointer"
+              [routerLink]="['personal']"
+              [routerLinkActive]="['active-subroute', 'text-white']"
+              [@buttonHover]="getButtonState('personal')"
+            >
+              {{ "auth.taps.personal" | translate }}
+            </button>
+            <button
+              class="nav-button transition-btn bg-white rounded-[15px] capitalize text-[#474747] border border-[#E0E0E0] w-full mb-[10px] p-[11px] cursor-pointer"
+              [routerLink]="['orders']"
+              [routerLinkActive]="['active-subroute', 'text-white']"
+              [@buttonHover]="getButtonState('orders')"
+            >
+              {{ "my.requests" | translate }}
+            </button>
+            <button
+              class="nav-button transition-btn bg-white rounded-[15px] capitalize text-[#474747] border border-[#E0E0E0] w-full mb-[10px] p-[11px] cursor-pointer"
+              [routerLink]="['address']"
+              [routerLinkActive]="['active-subroute', 'text-white']"
+              [@buttonHover]="getButtonState('address')"
+            >
+              {{ "add.address" | translate }}
+            </button>
+            <button
+              class="nav-button transition-btn bg-white rounded-[15px] capitalize text-[#474747] border border-[#E0E0E0] w-full mb-[10px] p-[11px] cursor-pointer"
+              [routerLink]="['password']"
+              [routerLinkActive]="['active-subroute', 'text-white']"
+              [@buttonHover]="getButtonState('password')"
+            >
+              {{ "change.password" | translate }}
+            </button>
+            <button
+              class="nav-button transition-btn bg-white rounded-[15px] capitalize text-[#474747] border border-[#E0E0E0] w-full mb-[10px] p-[11px] cursor-pointer"
+              [routerLink]="['account-management']"
+              [routerLinkActive]="['active-subroute', 'text-white']"
+              [@buttonHover]="getButtonState('account-management')"
+            >
+              {{ "account_management.title" | translate }}
+            </button>
+            <button
+              class="nav-button transition-btn bg-white rounded-[15px] capitalize text-[#474747] border border-[#E0E0E0] w-full mb-[10px] p-[11px] cursor-pointer"
+              [routerLink]="['/', currentLang$ | async, 'login']"
+              [routerLinkActive]="['active-subroute', 'text-white']"
+            >
+              {{ "signOut" | translate }}
+            </button>
+          </div>
+          @if (isProfileDetailsRoute$ | async) {
+            <div class="hidden h-full lg:block rounded-[30px] overflow-hidden">
+              <div class="talent-image w-full h-[708px] bg-white relative">
+                <figure
+                  class="main_Image_Animation h-full rounded-[30px] overflow-hidden"
+                >
+                  <img
+                    loading="lazy"
+                    [src]="'/images/news/13.webp'"
+                    alt="Talent Image"
+                    class="w-full h-full object-cover"
+                  />
+                </figure>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,95 @@
+<div
+  class="order-summary py-[19px] px-[45px] border border-[#202020] rounded-[15px] capitalize"
+>
+  <h3
+    class="text-black text-description-size font-bold pb-[17px] border-b border-[#8D8D8D]"
+  >
+    {{ "summary.summary" | translate }}
+  </h3>
+
+  <div
+    class="flex items-center justify-between pb-[38px] pt-[23px] text-[#333] text-category-size font-medium"
+  >
+    <span> {{ "summary.items" | translate }} </span>
+    <span> {{ orderDetails().length }} </span>
+  </div>
+
+  <div
+    class="flex items-center justify-between pb-[38px] text-[#333] text-category-size font-medium"
+  >
+    <span> {{ "summary.subtotal" | translate }} </span>
+    <span class="flex items-center justify-between gap-x-2">
+      <span>
+        {{ formatPrice(order().subtotal) }}
+      </span>
+      <span class="icon-saudi_riyal"></span>
+    </span>
+  </div>
+
+  <!-- Delivery fee comes from backend -->
+  <div
+    class="flex items-center justify-between pb-[38px] text-[#333] text-category-size font-medium"
+  >
+    <span> {{ "summary.delivery" | translate }} </span>
+    <span class="flex items-center justify-between gap-x-2">
+      <span>
+        {{ formatPrice(order().shipping) }}
+      </span>
+      <span class="icon-saudi_riyal"></span>
+    </span>
+  </div>
+  @if(order().tax > 0){
+  <div
+    class="flex items-center justify-between pb-[38px] text-[#333] text-category-size font-medium"
+  >
+    <span> {{ "summary.tax" | translate }} </span>
+    <span class="flex items-center justify-between gap-x-2">
+      <span>
+        {{ formatPrice(order().tax) }}
+      </span>
+      <span class="icon-saudi_riyal"></span>
+    </span>
+  </div>
+  }
+  <!-- Check if promo code exists and is not zero -->
+  @if (order().promo_code_id && order().promo_code_value !== 0) {
+  <div
+    class="flex items-center justify-between pb-[44px] text-[#333] text-category-size font-medium border-b border-[#8D8D8D]"
+  >
+    <span> {{ "summary.discount-coupon" | translate }} </span>
+    <span class="flex items-center justify-between gap-x-2 text-[#C00000]">
+      <span> -{{ formatPrice(order().promo_code_value) }} </span>
+      <span class="icon-saudi_riyal"></span>
+    </span>
+  </div>
+  }
+
+  <div
+    class="flex justify-between items-center rounded-[15px] border border-warm-tan py-[17px] px-[15px] mt-[45px] mb-[10px] bg-white"
+  >
+    <span class="text-[#333] text-category-size font-medium">
+      {{ "summary.total" | translate }}
+    </span>
+    <span
+      class="flex items-center justify-between gap-x-2 text-black text-category-size font-medium"
+    >
+      <span>
+        {{ formatPrice(order().total) }}
+      </span>
+      <span class="icon-saudi_riyal"></span>
+    </span>
+  </div>
+  <ng-content></ng-content>
+
+  <!-- Only show action button if enabled -->
+  @if(showActionButton) {
+  <button
+    [routerLink]="
+      nextRoute ? ['/', currentLang$ | async, 'checkout', nextRoute] : null
+    "
+    class="cursor-pointer text-white rounded-[50px] border border-[(#164, 131, 116, 0.00)] bg-warm-tan capitalize w-full py-[9px] px-[30px] 2xl:px-[60px] text-description-size mb-6"
+  >
+    {{ actionButtonText | translate }}
+  </button>
+  }
+</div>

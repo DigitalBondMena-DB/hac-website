@@ -1,0 +1,39 @@
+::ng-deep .owl-nav {
+  button.owl-prev,
+  button.owl-next {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.7) !important;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.9) !important;
+    }
+
+    svg {
+      stroke: #666;
+    }
+
+    &:hover svg {
+      stroke: #333;
+    }
+  }
+
+  .owl-prev {
+    left: 10px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .owl-next {
+    right: 10px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}

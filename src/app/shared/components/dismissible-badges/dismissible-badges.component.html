@@ -1,0 +1,26 @@
+<div class="block md:flex justify-between flex-wrap items-center gap-[10px]">
+  @for (badge of badges; track $index) {
+  <span
+    class="inline-flex items-center text-white bg-warm-tan rounded-full py-[7px] px-[20px] mb-[10px] md:mb-0"
+  >
+    {{ badge }}
+    <button
+      type="button"
+      class="cursor-pointer inline-flex items-center text-white bg-transparent ms-[5px]"
+      (click)="removeBadge($index)"
+      aria-label="Remove"
+    >
+      <figure class="mx-0">
+        <img
+          loading="lazy"
+          class="max-w-[24px]"
+          src="/images/common/remove-icon.webp"
+          alt="remove "
+        />
+      </figure>
+      <span class="sr-only">Remove badge</span>
+    </button>
+  </span>
+
+  }
+</div>

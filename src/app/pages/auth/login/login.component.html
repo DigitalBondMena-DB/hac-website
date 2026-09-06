@@ -1,0 +1,183 @@
+<section aria-labelledby="login-heading" @formAnimation>
+  <app-articles-header
+    [title]="'auth.login.header.title' | translate"
+    [subTitle]="'auth.login.header.subtitle' | translate"
+    [showRotateImage]="false"
+    [marginBottom]="'9'"
+    [headingId]="'login-heading'"
+  ></app-articles-header>
+  <div class="container mx-auto">
+    <!-- Contact Us Form -->
+    <div class="mb-15">
+      <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-12 lg:col-span-8">
+          <!-- Left Section: Form -->
+          <form
+            [formGroup]="loginForm"
+            (ngSubmit)="submition()"
+            novalidate
+            @inputAnimation
+            [@shake]="shakeState()"
+          >
+            <!-- Email/Phone Number -->
+            <div class="mb-[30px]">
+              <label
+                for="phone-number"
+                class="block relative text-[23px] capitalize font-bold mb-[23px] after:absolute after:content-['*'] after:-top-[6px] ltr:after:right-0 rtl:after:left-0 w-fit after:text-muted-rose after:transform after:translate-x-full rtl:after:-translate-x-full after:font-bold after:text-[30px]"
+              >
+                {{ "auth.login.login-form.phone-number" | translate }}
+              </label>
+              <input
+                formControlName="email"
+                type="text"
+                id="phone-number"
+                class="bg-white border border-[#8D8D8D] rounded-[15px] rtl:pr-4 ltr:pl-4 py-[18px] w-full rtl:text-right ltr:text-left"
+                [class.border-red-500]="emailInvalid()"
+                [attr.aria-invalid]="emailInvalid() ? 'true' : 'false'"
+                [attr.aria-describedby]="emailInvalid() ? 'email-error' : null"
+                (blur)="onEmailBlur()"
+                [placeholder]="
+                  'auth.login.login-form.phone-number-placeholder' | translate
+                "
+              />
+              @if (emailInvalid()) {
+              <div
+                id="email-error"
+                class="text-red-500 mt-2 text-sm"
+                role="alert"
+                aria-live="assertive"
+              >
+                @if (email?.errors?.['required']) {
+                <p>{{ "validation.email-required" | translate }}</p>
+                } @if (email?.errors?.['email']) {
+                <p>{{ "validation.email-format" | translate }}</p>
+                }
+              </div>
+              }
+            </div>
+
+            <!-- Password -->
+            <div class="mb-[30px]">
+              <label
+                for="password"
+                class="block relative text-[23px] capitalize font-bold mb-[23px] after:absolute after:content-['*'] after:-top-[6px] ltr:after:right-0 rtl:after:left-0 w-fit after:text-muted-rose after:transform ltr:after:translate-x-full rtl:after:-translate-x-full after:font-bold after:text-[30px]"
+              >
+                {{ "auth.login.login-form.password" | translate }}
+              </label>
+
+              <input
+                type="password"
+                id="password"
+                class="bg-white border border-[#8D8D8D] rounded-[15px] rtl:pr-4 ltr:pl-4 py-[18px] w-full"
+                [class.border-red-500]="passwordInvalid()"
+                [attr.aria-invalid]="passwordInvalid() ? 'true' : 'false'"
+                [attr.aria-describedby]="
+                  passwordInvalid() ? 'password-error' : null
+                "
+                (blur)="onPasswordBlur()"
+                [placeholder]="
+                  'auth.login.login-form.password-placeholder' | translate
+                "
+                formControlName="password"
+              />
+              @if (passwordInvalid()) {
+              <div
+                id="password-error"
+                class="text-red-500 mt-2 text-sm"
+                role="alert"
+                aria-live="assertive"
+              >
+                @if (password?.errors?.['required']) {
+                <p>{{ "validation.password-required" | translate }}</p>
+                } @if (password?.errors?.['minlength']) {
+                <p>{{ "validation.password-min-length" | translate }}</p>
+                }
+              </div>
+              }
+            </div>
+
+            <div class="flex justify-between items-center">
+              <app-button
+                [px]="'px-[67px]'"
+                [py]="'py-[9px]'"
+                [title]="'routes.login' | translate"
+                [type]="'submit'"
+                [disabled]="loginForm.invalid"
+                [isLoading]="isLoading()"
+                [ariaLabel]="'submit-button-aria-label' | translate"
+              >
+              </app-button>
+              <div class="relative">
+                <a
+                  [routerLink]="['/', currentLang$ | async, 'register']"
+                  class="text-muted-rose text-description-size cursor-pointer"
+                  [attr.aria-label]="
+                    'auth.login.login-form.haveAccount' | translate
+                  "
+                  role="button"
+                  tabindex="0"
+                >
+                  {{ "auth.login.login-form.haveAccount" | translate }}
+                </a>
+                <!-- <a
+                  (click)="toggleMegaMenu($event)"
+                  class="text-muted-rose text-description-size cursor-pointer"
+                  [attr.aria-label]="
+                    'auth.login.login-form.haveAccount' | translate
+                  "
+                  [attr.aria-expanded]="isMegaMenuOpen()"
+                  role="button"
+                  tabindex="0"
+                >
+                  {{ "auth.login.login-form.haveAccount" | translate }}
+                </a> -->
+                <!-- Mega Menu Dropdown -->
+                <!-- <div
+                  *ngIf="isMegaMenuOpen()"
+                  class="absolute mt-2 p-3 bg-white rounded-lg shadow-lg z-10 w-48 rtl:right-0 ltr:left-0"
+                  role="menu"
+                  @dropdownAnimation
+                >
+                  <a
+                    [routerLink]="['/', currentLang$ | async, 'register']"
+                    class="block py-2 px-3 text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+                    (click)="registerAs('user')"
+                    role="menuitem"
+                  >
+                    {{ "auth.register.as-user" | translate }}
+                  </a>
+                  <a
+                    [routerLink]="[
+                      '/',
+                      currentLang$ | async,
+                      'register',
+                      UserRole.BUSINESS
+                    ]"
+                    class="block py-2 px-3 text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+                    (click)="registerAs('business')"
+                    role="menuitem"
+                  >
+                    {{ "auth.register.as-business" | translate }}
+                  </a>
+                </div> -->
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="hidden lg:block lg:col-span-4">
+          <figure @imageAnimation>
+            <img
+              class="rtl:mr-auto ltr:ml-auto"
+              loading="lazy"
+              width="350"
+              height="400"
+              fetchpriority="low"
+              src="/images/auth/1.webp"
+              alt="{{ 'auth.login.login-image-alt' | translate }}"
+            />
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

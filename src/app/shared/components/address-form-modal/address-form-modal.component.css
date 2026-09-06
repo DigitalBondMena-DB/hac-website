@@ -1,0 +1,52 @@
+/* Modal animation */
+:host {
+  display: contents;
+}
+
+/* Add some custom styling for the modal */
+.fixed {
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.relative {
+  animation: slideIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Custom scrollbar for the modal */
+.max-h-\[90vh\]::-webkit-scrollbar {
+  width: 6px;
+}
+
+.max-h-\[90vh\]::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.max-h-\[90vh\]::-webkit-scrollbar-thumb {
+  background: #a4907c;
+  border-radius: 10px;
+}
+
+.max-h-\[90vh\]::-webkit-scrollbar-thumb:hover {
+  background: #8a7665;
+}

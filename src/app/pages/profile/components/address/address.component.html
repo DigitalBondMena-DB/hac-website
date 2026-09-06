@@ -1,0 +1,350 @@
+<form [formGroup]="addressForm" (ngSubmit)="submition()">
+  <div
+    class="address-container max-h-[300px] overflow-y-auto overflow-x-hidden mb-6"
+  >
+    @if(!loading()) {
+    <div class="grid grid-cols-1 gap-4 px-3">
+      @for(addr of address; track $index) {
+      <div
+        class="flex justify-start items-center pt-[23px] px-6 pb-[22px] gap-[15px] border border-[#AFA8A8] rounded-[15px]"
+      >
+        <figure class="hidden sm:block">
+          <img
+            class="max-w-[60px] max-h-[60px] sm:max-w-[80px] sm:max-h-[80px] rounded-[15px] box-shadow-sm"
+            loading="lazy"
+            src="/images/common/maps.webp"
+            alt="address"
+          />
+        </figure>
+        <div class="title w-full">
+          <div class="flex justify-between items-center text-wrap">
+            <h3
+              class="text-black text-sm sm:text-description-size font-semibold capitalize mb-[13px]"
+            >
+              {{ addr.first_name }}
+            </h3>
+          </div>
+
+          <p
+            class="text-[#333] text-wrap text-xs sm:text-category-size capitalize truncate"
+          >
+            {{ addr.city }} , {{ addr.address }}
+          </p>
+        </div>
+      </div>
+      }
+    </div>
+    } @else {
+    <div class="flex justify-center items-center h-[200px]">
+      <app-loading></app-loading>
+    </div>
+    }
+  </div>
+
+  <h2 class="text-title-size text-black font-bold mb-[40px]">
+    {{ "add.new.address" | translate }}
+  </h2>
+
+  <!-- Full Name  -->
+  <div
+    class="flex flex-col md:flex-row justify-between items-center gap-y-6 md:gap-x-[23px] mb-[44px]"
+  >
+    <!-- First Name  -->
+    <div class="w-full md:flex-1">
+      <label
+        for="first_name"
+        class="block relative text-subtitle-size font-bold mb-[23px] after:absolute after:content-['*'] after:-top-[6px] ltr:after:right-0 rtl:after:left-0 w-fit after:text-muted-rose after:transform after:translate-x-full rtl:after:-translate-x-full after:font-bold after:text-[30px]"
+      >
+        {{
+          "auth.register.register-form.address.fields.first_name.label"
+            | translate
+        }}
+      </label>
+      <input
+        type="text"
+        id="first_name"
+        formControlName="first_name"
+        [ngClass]="{ 'border-red-500': isFieldInvalid('first_name') }"
+        class="bg-white border border-[#8D8D8D] rounded-[15px] rtl:pr-4 ltr:pl-4 py-[18px] w-full"
+        [placeholder]="
+          'auth.register.register-form.address.fields.first_name.placeholder'
+            | translate
+        "
+      />
+      @if(isFieldInvalid('first_name')) {
+      <div class="text-red-500 text-sm mt-1">
+        {{ getErrorMessage("first_name") }}
+      </div>
+      }
+    </div>
+
+    <!-- Last Name  -->
+    <div class="w-full md:flex-1">
+      <label
+        for="last-name"
+        class="block relative text-subtitle-size font-bold mb-[23px] after:absolute after:content-['*'] after:-top-[6px] ltr:after:right-0 rtl:after:left-0 w-fit after:text-muted-rose after:transform after:translate-x-full rtl:after:-translate-x-full after:font-bold after:text-[30px]"
+      >
+        {{
+          "auth.register.register-form.address.fields.last_name.label"
+            | translate
+        }}
+      </label>
+      <input
+        type="text"
+        id="last-name"
+        formControlName="last_name"
+        [ngClass]="{ 'border-red-500': isFieldInvalid('last_name') }"
+        class="bg-white border border-[#8D8D8D] rounded-[15px] rtl:pr-4 ltr:pl-4 py-[18px] w-full"
+        [placeholder]="
+          'auth.register.register-form.address.fields.last_name.placeholder'
+            | translate
+        "
+      />
+      @if(isFieldInvalid('last_name')) {
+      <div class="text-red-500 text-sm mt-1">
+        {{ getErrorMessage("last_name") }}
+      </div>
+      }
+    </div>
+  </div>
+
+  <!-- Location -->
+  <div class="mb-[41px] relative">
+    <label
+      id="location-label"
+      for="location_id"
+      class="block relative text-subtitle-size font-bold mb-[23px] after:absolute after:content-['*'] after:-top-[6px] ltr:after:right-0 rtl:after:left-0 w-fit after:text-muted-rose after:transform after:translate-x-full rtl:after:-translate-x-full after:font-bold after:text-[30px]"
+    >
+      {{
+        "auth.register.register-form.address.fields.location.label" | translate
+      }}
+    </label>
+
+    <div class="relative">
+      <select
+        id="location_id"
+        formControlName="location_id"
+        placeholder="'{{Select_Location' | translate}}"
+        [ngClass]="{ 'border-red-500': isFieldInvalid('location_id') }"
+        class="appearance-none bg-white border border-[#8D8D8D] rounded-[15px] rtl:pr-4 ltr:pl-4 py-[18px] w-full focus:outline-none transition-all duration-200 cursor-pointer"
+        aria-labelledby="location-label"
+        [attr.disabled]="loading() ? '' : null"
+        [title]="
+          currentLang() === 'ar'
+            ? locations().length > 0
+              ? locations()[0].ar_name
+              : ''
+            : locations().length > 0
+            ? locations()[0].en_name
+            : ''
+        "
+      >
+        <option value="" disabled selected>
+          @if(loading()) {
+          {{ "common.loading" | translate }}
+          } @else if(locations().length === 0) {
+          {{ "common.no_locations_available" | translate }}
+          } @else {
+          {{
+            "auth.register.register-form.address.fields.location.placeholder"
+              | translate
+          }}
+          }
+        </option>
+        @for(location of locations(); track location.id) {
+        <option [value]="location.id">
+          {{ currentLang() === "ar" ? location.ar_name : location.en_name }}
+        </option>
+        }
+      </select>
+
+      <!-- Custom dropdown arrow or loading indicator -->
+      <div
+        class="pointer-events-none absolute inset-y-0 ltr:right-0 rtl:left-0 flex items-center px-4 text-gray-500"
+      >
+        @if(loading()) {
+        <div
+          class="animate-spin h-5 w-5 border-2 border-warm-tans border-t-transparent rounded-full"
+        ></div>
+        } @else if(locations().length < 0) {
+        <svg
+          class="h-5 w-5 text-rose-400"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9a1 1 0 00-1-1z"
+            clip-rule="evenodd"
+          />
+        </svg>
+        } @else {
+        <svg
+          class="h-5 w-5"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+            clip-rule="evenodd"
+          />
+        </svg>
+        }
+      </div>
+    </div>
+
+    @if(locations().length === 0 && !loading()) {
+    <div class="text-amber-600 text-sm mt-1 flex items-center gap-1">
+      <svg
+        class="h-4 w-4"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9a1 1 0 00-1-1z"
+          clip-rule="evenodd"
+        />
+      </svg>
+      {{ "common.no_locations_available_message" | translate }}
+    </div>
+    } @if(isFieldInvalid('location_id')) {
+    <div class="text-red-500 text-sm mt-1">
+      {{ getErrorMessage("location_id") }}
+    </div>
+    }
+  </div>
+
+  <!-- address -->
+  <div class="mb-[41px]">
+    <label
+      for="address"
+      class="block relative text-subtitle-size font-bold mb-[23px] after:absolute after:content-['*'] after:-top-[6px] ltr:after:right-0 rtl:after:left-0 w-fit after:text-muted-rose after:transform after:translate-x-full rtl:after:-translate-x-full after:font-bold after:text-[30px]"
+    >
+      {{
+        "auth.register.register-form.address.fields.address.label" | translate
+      }}
+    </label>
+    <input
+      type="text"
+      id="address"
+      formControlName="address"
+      [ngClass]="{ 'border-red-500': isFieldInvalid('address') }"
+      class="bg-white border border-[#8D8D8D] rounded-[15px] rtl:pr-4 ltr:pl-4 py-[18px] w-full"
+      [placeholder]="
+        'auth.register.register-form.address.fields.address.placeholder'
+          | translate
+      "
+    />
+    @if(isFieldInvalid('address')) {
+    <div class="text-red-500 text-sm mt-1">
+      {{ getErrorMessage("address") }}
+    </div>
+    }
+  </div>
+
+  <!-- City -->
+  <div class="mb-[41px]">
+    <label
+      for="city"
+      class="block relative text-subtitle-size font-bold mb-[23px] after:absolute after:content-['*'] after:-top-[6px] ltr:after:right-0 rtl:after:left-0 w-fit after:text-muted-rose after:transform after:translate-x-full rtl:after:-translate-x-full after:font-bold after:text-[30px]"
+    >
+      {{ "auth.register.register-form.address.fields.city.label" | translate }}
+    </label>
+    <input
+      type="text"
+      id="city"
+      formControlName="city"
+      [ngClass]="{ 'border-red-500': isFieldInvalid('city') }"
+      class="bg-white border border-[#8D8D8D] rounded-[15px] rtl:pr-4 ltr:pl-4 py-[18px] w-full"
+      [placeholder]="
+        'auth.register.register-form.address.fields.city.placeholder'
+          | translate
+      "
+    />
+    @if(isFieldInvalid('city')) {
+    <div class="text-red-500 text-sm mt-1">
+      {{ getErrorMessage("city") }}
+    </div>
+    }
+  </div>
+
+  <!-- phone -->
+  <div class="mb-[41px]">
+    <label
+      for="phone"
+      class="block relative text-subtitle-size font-bold mb-[23px] after:absolute after:content-['*'] after:-top-[6px] ltr:after:right-0 rtl:after:left-0 w-fit after:text-muted-rose after:transform after:translate-x-full rtl:after:-translate-x-full after:font-bold after:text-[30px]"
+    >
+      {{ "auth.register.register-form.address.fields.phone.label" | translate }}
+    </label>
+    <input
+      type="tel"
+      id="phone"
+      formControlName="phone"
+      [ngClass]="{ 'border-red-500': isFieldInvalid('phone') }"
+      class="bg-white border border-[#8D8D8D] rounded-[15px] rtl:pr-4 ltr:pl-4 py-[18px] w-full"
+      [placeholder]="
+        'auth.register.register-form.address.fields.phone.placeholder'
+          | translate
+      "
+    />
+    @if(isFieldInvalid('phone')) {
+    <div class="text-red-500 text-sm mt-1">
+      {{ getErrorMessage("phone") }}
+    </div>
+    }
+  </div>
+
+  <!-- Email -->
+  <div class="mb-[41px]">
+    <label
+      for="email"
+      class="block relative text-subtitle-size font-bold mb-[23px] after:absolute after:content-['*'] after:-top-[6px] ltr:after:right-0 rtl:after:left-0 w-fit after:text-muted-rose after:transform after:translate-x-full rtl:after:-translate-x-full after:font-bold after:text-[30px]"
+    >
+      {{ "auth.register.register-form.address.fields.email.label" | translate }}
+    </label>
+    <input
+      type="email"
+      formControlName="email"
+      id="email"
+      [ngClass]="{ 'border-red-500': isFieldInvalid('email') }"
+      class="bg-white border border-[#8D8D8D] rounded-[15px] rtl:pr-4 ltr:pl-4 py-[18px] w-full"
+      [placeholder]="
+        'auth.register.register-form.address.fields.email.placeholder'
+          | translate
+      "
+    />
+    @if(isFieldInvalid('email')) {
+    <div class="text-red-500 text-sm mt-1">
+      {{ getErrorMessage("email") }}
+    </div>
+    }
+  </div>
+
+  <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+    <app-button
+      [px]="'px-[40px] sm:px-[84px]'"
+      [py]="'py-[9px] '"
+      [title]="'add.address' | translate"
+      [disabled]="loading()"
+      [isLoading]="loading()"
+      type="submit"
+    >
+    </app-button>
+
+    <button
+      type="button"
+      (click)="resetForm()"
+      class="cursor-pointer text-rose-600 text-description-size underline font-light capitalize"
+    >
+      {{ "reset.form" | translate }}
+    </button>
+  </div>
+</form>

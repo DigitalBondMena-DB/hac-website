@@ -1,0 +1,58 @@
+<!-- Sliders -->
+<app-hero [heroSection]="sliders() ?? []"></app-hero>
+
+<!-- About-us  -->
+<app-about-shared ut-shared [aboutUs]="aboutUs() ?? []" [counters]="counters() ?? []" [showSloganText]="false"
+  [showBgImage]="true" [sloganText]="'hero.title' | translate">
+</app-about-shared>
+
+<!-- Categories -->
+
+<app-sections [categories]="subCategories() ?? []"></app-sections>
+
+@defer (on viewport) {
+<!-- Breacks -->
+<app-banner [showLeftSideImage]="true" [bgBanner]="false" [showRightSideImage]="true"
+  [bannerText]="getQuoteById(1) ?? ''| customTranslate : 'name'"></app-banner>
+} @placeholder {
+<div class="h-[100px] bg-gray-200"></div>
+}
+<!-- offers -->
+@defer (on viewport) {
+<app-offer-card [offers]="offers() ?? []"></app-offer-card>
+} @placeholder {
+<div class="h-[100px] bg-gray-200"></div>
+}
+<!-- Latest-Products -->
+<app-best-seller [LatestProducts]="latestProducts() ?? []"></app-best-seller>
+
+<!-- Static-Banners -->
+@defer (on viewport) {
+<app-banner [showLeftSideImage]="true" [bgBanner]="false" [showRightSideImage]="true"
+  [bannerText]="getQuoteById(2) ?? ''| customTranslate : 'name'"></app-banner>
+} @placeholder {
+<div class="h-[100px] bg-gray-200"></div>
+}
+<!-- RandomProducts -->
+<app-offer-day [randomProducts]="randomProducts()"
+  [lastOffer]="(offers()?.length ?? 0) > 0 ? offers()[offers().length - 1] : null"
+  [isLoading]="isLoading()"></app-offer-day>
+<!-- Static-Banners -->
+@defer (on idle) {
+<app-banner [bgBanner]="true" [showLeftSideImage]="true" [showRightSideImage]="true"
+  [bannerText]="getQuoteById(2) ?? '' | customTranslate : 'name'"></app-banner>
+}
+<!-- bestProducts -->
+<app-new-products [bestProducts]="bestProducts() ?? []"> </app-new-products>
+<!-- Static-Banners -->
+@defer (on viewport) {
+<app-banner [bgBanner]="false" [showLeftSideImage]="true" [showRightSideImage]="true"
+  [bannerText]="getQuoteById(3) ?? '' | customTranslate : 'name'"></app-banner>
+} @placeholder {
+<div class="h-[100px] bg-gray-200"></div>
+}
+
+<!-- Blogs -->
+@if (latestBlogs().length > 0) {
+<app-related-blogs [relatedBlogs]="latestBlogs() ?? []" [lightLabel]="true"></app-related-blogs>
+}

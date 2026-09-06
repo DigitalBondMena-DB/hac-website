@@ -1,0 +1,203 @@
+<section class="overflow-x-hidden">
+  <app-articles-header
+    [title]="'articles.header.title' | translate"
+    [showRotateImage]="false"
+    [subTitle]="'articles.header.subtitle' | translate"
+    [marginBottom]="'6'"
+  ></app-articles-header>
+  <div class="container mx-auto">
+    <!-- Layout -->
+
+    <div class="grid grid-cols-1 xl:grid-cols-12 gap-11 items-start">
+      <div class="xl:col-span-9 xl:text-justify order-2 xl:order-1">
+        @if (loading) {
+        <app-articles-skeleton />
+        } @else if (blogs && blogs.length > 0) {
+        <!-- Reserve minimum height to prevent shifts -->
+        <div class="min-h-[800px]">
+          @for (blog of blogs | paginate: { itemsPerPage: itemsPerPage,
+          currentPage: currentPage, totalItems: totalItems }; track blog.id ||
+          $index) {
+          <app-articles-card-shared
+            [blogData]="blog"
+          ></app-articles-card-shared>
+          }
+        </div>
+
+        <!-- Pagination Controls - Always reserve space -->
+        <div class="flex justify-center mt-8 min-h-[60px]">
+          <div
+            class="custom-pagination flex items-center gap-2 rtl:flex-row-reverse"
+          >
+            <!-- Next Button (التالى in Arabic) -->
+            <button
+              (click)="onPageChange(currentPage + 1)"
+              [disabled]="currentPage >= totalPages()"
+              [class.opacity-50]="currentPage >= totalPages()"
+              class="pagination-button px-[10px] pb-[1px] bg-[#D9D9D9] rounded-[10px] font-medium text-[20px] text-black hover:bg-gray-300 disabled:cursor-not-allowed border-[1px] border-[#B4B4B4]"
+            >
+              {{ "shared.next" | translate }}
+            </button>
+
+            <!-- Page Numbers -->
+            <div class="flex gap-2">
+              @for (page of getPageNumbers(); track page) {
+              <button
+                (click)="onPageChange(page)"
+                [class.bg-[#d3aa7e]]="currentPage === page"
+                [class.text-white]="currentPage === page"
+                [class.border-[#CBAC8D]]="currentPage === page"
+                class="cursor-pointer pagination-number w-[23px] h-[23px] flex items-center justify-center rounded-full text-black border-2 border-[#A7A0A0] px-[8px] py-[1px]"
+              >
+                {{ page }}
+              </button>
+              }
+            </div>
+          </div>
+        </div>
+        } @else {
+        <!-- Reserve space even for empty state -->
+        <div
+          class="text-center py-8 min-h-[400px] flex items-center justify-center"
+        >
+          <p class="text-gray-500">{{ "No_articles" | translate }}</p>
+        </div>
+        }
+      </div>
+
+      <div class="xl:col-span-3 order-1 xl:order-2">
+        <!-- Heading -->
+        <app-section-heading
+          class="mb-3"
+          [sectionName]="'articles.sidebar.popular-section' | translate"
+        ></app-section-heading>
+
+        <!-- Blogs Related -->
+        <div class="all-sections mb-[60px] min-h-[240px]">
+          @if (loading) {
+          <!-- Skeleton for popular articles to prevent CLS -->
+          <div class="animate-pulse">
+            @for (i of [1, 2, 3, 4]; track i) {
+            <div
+              class="p-3 mb-3 border rounded-[15px] border-[#E0E0E0] bg-gray-200 h-[56px]"
+            ></div>
+            }
+          </div>
+          } @else if (blogs && blogs.length > 0) { @for (blog of blogs.slice(0,
+          4); track $index) {
+          <a
+            class="cursor-pointer block"
+            href="#"
+            [routerLink]="[
+              '/',
+              currentLanguage$ | async,
+              'blog',
+              blog | customTranslate : 'slug'
+            ]"
+          >
+            <div
+              class="p-3 mb-3 border rounded-[15px] border-[#E0E0E0] text-[#474747] text-description-size bg-white min-h-[56px] flex items-center"
+            >
+              <span>
+                {{ blog | customTranslate : "blog_title" }}
+              </span>
+            </div>
+          </a>
+          } } @else {
+          <div
+            class="text-center py-4 min-h-[200px] flex items-center justify-center"
+          >
+            <p class="text-gray-500">Loading popular articles...</p>
+          </div>
+          }
+        </div>
+
+        <!-- Best Selling  -->
+        <div class="newProducts mb-[60px]">
+          <app-section-heading
+            class="mb-3"
+            [sectionName]="'articles.sidebar.new-products' | translate"
+          ></app-section-heading>
+
+          <!-- Latest Products -->
+          <div
+            class="card md:flex flex-wrap justify-between block min-h-[420px]"
+          >
+            @if (latestProductsLoading()) {
+            <!-- Loading state for latest products with exact dimensions -->
+            @for (i of [1, 2, 3, 4]; track i) {
+            <div class="flex gap-2 items-center mb-[23px] animate-pulse">
+              <div
+                class="w-[99px] h-[99px] rounded-[15px] bg-gray-200 flex-shrink-0"
+              ></div>
+              <div class="content w-full">
+                <div class="mb-[10px] h-4 bg-gray-200 rounded w-3/4"></div>
+                <div class="mb-[10px] h-4 bg-gray-200 rounded w-full"></div>
+              </div>
+            </div>
+            } } @else if (latestProducts().length > 0) { @for (product of
+            latestProducts().slice(0,4); track product.id) {
+            <div class="flex gap-2 items-center mb-[23px]">
+              <a
+                class="cursor-pointer flex-shrink-0"
+                [routerLink]="[
+                  '/',
+                  currentLanguage$ | async,
+                  'product-details',
+                  product | customTranslate : 'slug'
+                ]"
+              >
+                <figure
+                  class="w-[99px] h-[99px] rounded-[15px] overflow-hidden"
+                >
+                  <img
+                    loading="lazy"
+                    class="w-full h-full object-cover"
+                    [appImageUrl]="product.main_image"
+                    [imageEndpoint]="'uploads/blogs'"
+                    [alt]="product | customTranslate : 'name'"
+                    width="99"
+                    height="99"
+                  />
+                </figure>
+              </a>
+              <div class="content min-w-0 flex-1">
+                <p class="mb-[10px] text-category-size text-[#333]">
+                  <a
+                    [routerLink]="[
+                      '/',
+                      currentLanguage$ | async,
+                      'product-details',
+                      product | customTranslate : 'slug'
+                    ]"
+                  >
+                    {{ product | customTranslate : "name" }}
+                  </a>
+                </p>
+                <div
+                  class="mb-[10px] text-category-size font-semibold text-black line-clamp-1"
+                >
+                  <app-safe-html
+                    [content]="product | customTranslate : 'description'"
+                  ></app-safe-html>
+                </div>
+              </div>
+            </div>
+            } } @else {
+            <div
+              class="text-center py-4 min-h-[200px] flex items-center justify-center"
+            >
+              <p class="text-gray-500">No latest products available.</p>
+            </div>
+            }
+          </div>
+        </div>
+
+        <app-talent-image-card
+          class="hidden xl:block"
+          [imagePath]="'/images/news/13.webp'"
+        ></app-talent-image-card>
+      </div>
+    </div>
+  </div>
+</section>
