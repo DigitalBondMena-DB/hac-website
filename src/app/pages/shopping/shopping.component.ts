@@ -371,20 +371,6 @@ export class ShoppingComponent implements OnInit, OnDestroy {
           this.selectedCategoryIds.set([categoryId]);
           this.selectedSubcategoryIds.set([]);
 
-          // Update URL to reflect the change, preserve page if valid
-          const queryParams: any = { categoryId };
-          if (page > 1) {
-            queryParams.page = page;
-          }
-
-          this.router.navigate(
-            ['/' + this._translate.currentLang + '/shopping'],
-            {
-              queryParams,
-              replaceUrl: true,
-            }
-          );
-
           // Use globalSearch instead of old API
           this.fetchFilteredProducts();
 
@@ -505,8 +491,9 @@ export class ShoppingComponent implements OnInit, OnDestroy {
       this.subcategoryName.set(null);
 
       // Update URL to remove subcategory parameter, but maintain categoryId
-      this.router.navigate(['/' + currentLang + '/shopping'], {
-        queryParams: { categoryId: category.id },
+      this.router.navigate([], {
+        queryParams: { categoryId: category.id, subcategoryId: null },
+        queryParamsHandling: 'merge',
         replaceUrl: true,
       });
     }
@@ -568,7 +555,9 @@ export class ShoppingComponent implements OnInit, OnDestroy {
         this.subcategoryName.set(null);
 
         // Update URL to remove both category and subcategory parameters
-        this.router.navigate(['/' + currentLang + '/shopping'], {
+        this.router.navigate([], {
+          queryParams: { categoryId: null, subcategoryId: null },
+          queryParamsHandling: 'merge',
           replaceUrl: true,
         });
       }
@@ -710,7 +699,7 @@ export class ShoppingComponent implements OnInit, OnDestroy {
     this.resetCheckboxes();
 
     // Update URL to remove all query parameters
-    this.router.navigate(['/' + this._translate.currentLang + '/shopping'], {
+    this.router.navigate([], {
       replaceUrl: true,
       queryParams: {}, // Clear all query parameters
     });
@@ -769,12 +758,11 @@ export class ShoppingComponent implements OnInit, OnDestroy {
         this.categoryName.set(null);
 
         // Update URL to remove the category ID parameter
-        this.router.navigate(
-          ['/' + this._translate.currentLang + '/shopping'],
-          {
-            replaceUrl: true,
-          }
-        );
+        this.router.navigate([], {
+          queryParams: { categoryId: null },
+          queryParamsHandling: 'merge',
+          replaceUrl: true,
+        });
       }
     } else {
       // If it's not a category badge, it might be a subcategory badge
