@@ -1,7 +1,7 @@
 export const API_CONFIG = {
   BASE_URL: 'https://dev.mesoshop.digitalbondmena.com/api/',
 
-  BASE_URL_IMAGE: 'https://mesoshop.digitalbondmena.com/',
+  BASE_URL_IMAGE: 'https://dev.mesoshop.digitalbondmena.com/',
 
   HOME: {
     GET: 'home',
