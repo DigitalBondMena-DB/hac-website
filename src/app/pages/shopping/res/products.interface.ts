@@ -43,6 +43,8 @@ export interface Category {
   active_status: number;
   main_image: any;
   order_view: number;
+  is_special?: boolean | number | string;
+
   created_at: string;
   updated_at: string;
 }

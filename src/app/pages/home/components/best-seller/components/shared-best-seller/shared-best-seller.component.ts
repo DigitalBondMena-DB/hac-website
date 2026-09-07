@@ -45,7 +45,6 @@ let globalWishlistLoaded = false;
 })
 export class SharedBestSellerComponent implements OnInit {
   private _authService = inject(AuthService);
-
   private _router = inject(Router);
 
   private _languageService = inject(LanguageService);
@@ -63,6 +62,15 @@ export class SharedBestSellerComponent implements OnInit {
   currentLang$ = this._languageService.getLanguage();
 
   @Input({ required: true }) productData!: IAllProduct | BestProduct;
+  @Input() isSpecial: boolean = false;
+
+  get isSpecialProduct(): boolean {
+    if (this.isSpecial) return true;
+    const flag =
+      (this.productData as any)?.category?.is_special ??
+      (this.productData as any)?.is_special;
+    return flag === true || flag === 1 || flag === '1' || flag === 'true';
+  }
 
   ngOnInit(): void {
     if (this._authService.isAuthenticated() && this.userId) {

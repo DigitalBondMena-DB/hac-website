@@ -11,6 +11,7 @@ import {
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
   Component,
+  computed,
   inject,
   OnDestroy,
   OnInit,
@@ -208,6 +209,26 @@ export class ShoppingComponent implements OnInit, OnDestroy {
   products: IAllProduct[] = [];
 
   categories: ICategory[] = [];
+
+  /**
+   * Checks if current products are special products
+   */
+  readonly isSpecial = computed(() => {
+    const list = this.filteredProducts();
+    if (list.length > 0) {
+      return list.some((p) => this.isSpecialProduct(p));
+    }
+    return this.products.some((p) => this.isSpecialProduct(p));
+  });
+
+  /**
+   * Helper method to check if a product is marked as special
+   */
+  isSpecialProduct(product: IAllProduct): boolean {
+    const flag =
+      (product as any)?.category?.is_special ?? (product as any)?.is_special;
+    return flag === true || flag === 1 || flag === '1' || flag === 'true';
+  }
 
   // ===== Subscriptions =====
   private searchSubscription: Subscription | null = null;
@@ -1264,8 +1285,8 @@ export class ShoppingComponent implements OnInit, OnDestroy {
         this.stockFilter() === 'available'
           ? '1'
           : this.stockFilter() === 'unavailable'
-          ? '0'
-          : undefined,
+            ? '0'
+            : undefined,
     };
   }
 
