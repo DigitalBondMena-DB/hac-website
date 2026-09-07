@@ -32,12 +32,14 @@
       content: "";
       position: absolute;
       inset-block: 0;
+      top: 17px;
       height: 100%;
       background-image: url("/images/national-day/national-day-pattern.png");
       background-repeat: repeat-y;
-      background-size: contain;
-      background-position: center;
+      background-size: 32px 34px;
+      background-position: center top;
       width: 32px;
+      background-color: white;
     }
 
     &::before {

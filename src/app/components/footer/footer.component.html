@@ -7,6 +7,12 @@
         <div class="text-sm text-footer-color leading-relaxed">
           <app-safe-html [content]="footerTitle | customTranslate : 'footer_for_text'"></app-safe-html>
         </div>
+        @if(isNationalDay) {
+        <div class="rounded-sm p-1.5 bg-[#7B5D20] w-fit mx-auto md:mx-0">
+          <img src="/images/national-day/national-footer-logo.png" width="190" height="36"
+            alt="عزنا بطبعنا اليوم الوطني السعودي">
+        </div>
+        }
       </div>
 
       <!-- Column 2: لينكات سريعه (Now spans 2 columns) -->

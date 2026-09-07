@@ -16,6 +16,7 @@ import { AboutUsService } from 'src/app/pages/about-us/res/about-us.service';
 import { IContactUs } from 'src/app/pages/contact-us/res/contact-us.interface';
 import { ContactUsService } from 'src/app/pages/contact-us/res/contact-us.service';
 import { SafeHtmlComponent } from '../../core/safe-html/safe-html.component';
+import { isNationalDay } from '@core/services/conf/api.config';
 
 @Component({
   selector: 'app-footer',
@@ -36,6 +37,7 @@ export class FooterComponent implements OnInit {
   private languageService = inject(LanguageService);
   private aboutService = inject(AboutUsService);
   private contactUsService = inject(ContactUsService);
+  readonly isNationalDay = isNationalDay
   navItems = [
     {
       routLink: '',
