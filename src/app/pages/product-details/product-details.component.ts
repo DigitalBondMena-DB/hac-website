@@ -194,8 +194,7 @@ import { IProduct } from './res/productDetails.interface';
   host: { ngSkipHydration: 'true' },
 })
 export class ProductDetailsComponent
-  implements AfterViewInit, OnInit, OnDestroy
-{
+  implements AfterViewInit, OnInit, OnDestroy {
   @HostBinding('class.rtl') get isRtl() {
     return this.isRtlMode();
   }
@@ -328,8 +327,7 @@ export class ProductDetailsComponent
     if (this.isBrowser) {
       this.currentPageUrl = window.location.href;
       this.currentLanguagePageUrl = window.location.href;
-      console.log(this.currentLanguagePageUrl, 'currentLanguagePageUrl');
-      console.log(this.currentPageUrl, 'currentPageUrl');
+
     }
 
     // Check language direction
@@ -708,6 +706,7 @@ export class ProductDetailsComponent
     }
 
     console.log('Final processed images:', images);
+
     this.processedImages.set(images);
   }
 
@@ -908,12 +907,7 @@ export class ProductDetailsComponent
     this._wishlistService.loadWishlistCount();
 
     this.isInWishlist.set(isInWishlist);
-    console.log(
-      'Product in wishlist:',
-      isInWishlist,
-      'Product ID:',
-      this.productDetails.id
-    );
+
   }
 
   /* Cart */
@@ -1425,7 +1419,7 @@ export class ProductDetailsComponent
    * Update meta tags for SEO and social sharing
    */
   appendDynamicScript(code: string | null) {
-    if(code) {
+    if (code) {
       const script = this.renderer.createElement('script');
       script.type = 'text/javascript';
       script.text = code;
@@ -1441,9 +1435,8 @@ export class ProductDetailsComponent
       currentLang === 'ar' ? product.ar_meta_Title : product.en_meta_Title;
     const description =
       currentLang === 'ar' ? product.ar_meta_text : product.en_meta_text;
-    const imageUrl = `https://digitalbondmena.com/mesoshop/${
-      product.main_image || ''
-    }`;
+    const imageUrl = `https://digitalbondmena.com/mesoshop/${product.main_image || ''
+      }`;
 
     // Get canonical URL using our helper method
     const url = this.buildProductUrl(product, currentLang);
@@ -1765,7 +1758,6 @@ export class ProductDetailsComponent
     );
 
     this._authService.cartCountSignal.set(cart.length);
-    console.log('cartCountSignal', this._authService.cartCountSignal());
   }
 
   private removeFromCartLocally(): void {
@@ -1799,7 +1791,6 @@ export class ProductDetailsComponent
           'alerts.cart.remove_success.title'
         );
         this._authService.cartCountSignal.set(updatedCart.length);
-        console.log('cartCountSignal', this._authService.cartCountSignal());
       },
       onCancel: () => {
         this.setCartLoading(false);
