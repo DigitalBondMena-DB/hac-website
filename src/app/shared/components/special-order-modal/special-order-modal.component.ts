@@ -53,8 +53,8 @@ export class SpecialOrderModalComponent implements OnInit, OnChanges {
   private _authService = inject(AuthService);
   private _translateService = inject(TranslateService);
 
-  @HostListener('document:keydown.escape', ['$event'])
-  onEscapeKey(event: KeyboardEvent): void {
+  @HostListener('document:keydown.escape')
+  onEscapeKey(): void {
     if (this.isOpen && !this.isSubmitting) {
       this.closeModal();
     }
