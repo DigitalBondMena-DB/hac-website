@@ -79,6 +79,7 @@
           </div>
 
           <!-- Product Price -->
+          @if(productDetails.price) {
           <div class="price-container flex items-center gap-4 mb-6">
             @if (productDetails.choices && productDetails.choices.length > 0) {
             <p class="flex items-center justify-between text-lg font-bold">
@@ -103,6 +104,7 @@
             </p>
             }
           </div>
+          }
 
           <!-- Product Description -->
           <div class="text-[#333] text-description-size mb-[30px] leading-relaxed"
@@ -240,6 +242,7 @@
           </div>
 
           <!-- Social Share -->
+          @if(!isSpecialProduct()) {
           <div class="mt-2 flex items-center gap-2 mb-4">
             <span class="text-black font-bold">{{ "share" | translate }}:</span>
             <div class="social-icons flex gap-2" role="group" aria-label="Social media sharing options">
@@ -275,6 +278,7 @@
               </a>
             </div>
           </div>
+          }
           <!-- Tamara Widget -->
           @if ((productDetails && getCurrentProductPriceForTamara() > 0) && !isSpecialProduct()) {
           <app-tamara-widget [amount]="getCurrentProductPriceForTamara()" />

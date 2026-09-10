@@ -1333,8 +1333,8 @@
   },
   "special_order": {
     "button": "Ask About",
-    "modal_title": "Register Your Order",
-    "modal_subtitle": "Please fill in the following details to register your order and our team will contact you shortly",
+    "modal_title": "Ask about the product",
+    "modal_subtitle": "Please fill in the following details and our team will contact you shortly",
     "product_label": "Selected Product",
     "special_product": "Special Product",
     "quantity": "Quantity",
@@ -1398,7 +1398,7 @@
         "required": "Doctor’s code is required"
       }
     },
-    "submit_button": "Confirm Order Registration",
+    "submit_button": "Confirm",
     "submitting": "Registering order...",
     "cancel": "Cancel",
     "success": {

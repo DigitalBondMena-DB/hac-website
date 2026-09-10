@@ -518,11 +518,16 @@ export class ProductDetailsComponent
             this.checkIfProductInWishlist();
             this.checkIfProductInCart();
           }
+
+          // Share special product state with ProductsService
+          this._productsService.setIsSpecialProduct(this.isSpecialProduct());
         } else {
           this.userRoleAccess = false;
+          this._productsService.setIsSpecialProduct(false);
         }
       } else {
         this.userRoleAccess = false;
+        this._productsService.setIsSpecialProduct(false);
       }
     });
     this.subscriptions.push(routeSub);
@@ -1401,6 +1406,7 @@ export class ProductDetailsComponent
   }
 
   ngOnDestroy(): void {
+    this._productsService.setIsSpecialProduct(false);
     // Clean up all subscriptions
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
@@ -1815,7 +1821,9 @@ export class ProductDetailsComponent
    * Check if current product is a special product
    */
   isSpecialProduct(): boolean {
-    const flag = this.productDetails?.is_special;
+    const flag =
+      (this.productDetails as any)?.category?.is_special ??
+      this.productDetails?.is_special;
     return flag === true || flag === 1 || flag === '1' || flag === 'true';
   }
 

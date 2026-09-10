@@ -1,4 +1,5 @@
 <div [class.national-day-pattern]="isNationalDay">
+  @if (!productsService.isSpecialProduct()) {
   @defer (on timer(1000)) {
   <app-navbar></app-navbar>
   }
@@ -72,6 +73,7 @@
     </div>
   </nav>
   }
+  }
   @if (isRamadanMonth) {
   <app-ramadan-loader />
   }
@@ -79,6 +81,8 @@
   </ngx-spinner>
   <router-outlet></router-outlet>
 </div>
+@if (!productsService.isSpecialProduct()) {
 <app-footer></app-footer>
+}
 <app-alert></app-alert>
 <app-notification></app-notification>

@@ -30,6 +30,7 @@ import { LanguageService } from './core/services/lang/language.service';
 import { AlertComponent } from './shared/alert/alert.component';
 import { NotificationComponent } from './shared/components/notification/notification.component';
 import { RamadanLoaderComponent } from '@shared/components/ramadan-loader/ramadan-loader.component';
+import { ProductsService } from './pages/shopping/res/products.service';
 
 @Component({
   selector: 'app-root',
@@ -59,6 +60,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private isBrowser = isPlatformBrowser(this.platformId);
   private _languageService = inject(LanguageService);
   private renderer = inject(Renderer2);
+  productsService = inject(ProductsService);
   private langSubscription!: Subscription;
   private routerSubscription!: Subscription;
   isNationalDay = isNationalDay;
@@ -108,6 +110,10 @@ export class AppComponent implements OnInit, OnDestroy {
         // Reset flag on navigation
         this.metaTagsUpdated = false;
         this.setMetaTags(data);
+        const currentUrl = this.router.url;
+        if (!currentUrl.includes('/product-details/')) {
+          this.productsService.setIsSpecialProduct(false);
+        }
       });
   }
 
