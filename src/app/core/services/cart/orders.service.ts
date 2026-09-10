@@ -161,17 +161,25 @@ export class OrdersService {
    */
   submitSpecialOrder(orderData: {
     name: string;
-    email: string;
+    city: string;
     phone: string;
-    address: string;
+    email: string;
+    doctor_name: string;
+    hospital_name: string;
+    doctor_code: string;
+    address?: string;
     product_id: number | string;
     quantity: number;
   }): Observable<any> {
     const formData = new FormData();
     formData.append('name', orderData.name);
-    formData.append('email', orderData.email);
+    formData.append('city', orderData.city);
     formData.append('phone', orderData.phone);
-    formData.append('address', orderData.address);
+    formData.append('email', orderData.email);
+    formData.append('doctor_name', orderData.doctor_name);
+    formData.append('hospital_name', orderData.hospital_name);
+    formData.append('doctor_code', orderData.doctor_code);
+    formData.append('address', orderData.address || orderData.city);
     formData.append('product_id', orderData.product_id.toString());
     formData.append('quantity', orderData.quantity.toString());
 

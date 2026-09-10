@@ -94,15 +94,63 @@
             </p>
           </div>
 
-          <!-- Address -->
-          <div class="md:col-span-2">
+          <!-- Email & City -->
+          @if (order.email) {
+          <div>
             <span class="text-xs text-gray-500 block mb-1">
-              {{ "thank_you.delivery_address" | translate }}
+              {{ "thank_you.email" | translate }}
             </span>
-            <p class="text-sm text-gray-800 leading-relaxed">
-              {{ order.address }}
+            <p class="text-sm font-medium text-gray-900">
+              {{ order.email }}
             </p>
           </div>
+          }
+
+          @if (order.city || order.address) {
+          <div>
+            <span class="text-xs text-gray-500 block mb-1">
+              {{ (order.city ? "thank_you.city" : "thank_you.delivery_address") | translate }}
+            </span>
+            <p class="text-sm font-medium text-gray-900">
+              {{ order.city || order.address }}
+            </p>
+          </div>
+          }
+
+          <!-- Doctor Name & Hospital Name -->
+          @if (order.doctor_name) {
+          <div>
+            <span class="text-xs text-gray-500 block mb-1">
+              {{ "thank_you.doctor_name" | translate }}
+            </span>
+            <p class="text-sm font-medium text-gray-900">
+              {{ order.doctor_name }}
+            </p>
+          </div>
+          }
+
+          @if (order.hospital_name) {
+          <div>
+            <span class="text-xs text-gray-500 block mb-1">
+              {{ "thank_you.hospital_name" | translate }}
+            </span>
+            <p class="text-sm font-medium text-gray-900">
+              {{ order.hospital_name }}
+            </p>
+          </div>
+          }
+
+          <!-- Doctor Code -->
+          @if (order.doctor_code) {
+          <div class="md:col-span-2">
+            <span class="text-xs text-gray-500 block mb-1">
+              {{ "thank_you.doctor_code" | translate }}
+            </span>
+            <p class="text-sm font-medium text-gray-900">
+              {{ order.doctor_code }}
+            </p>
+          </div>
+          }
         </div>
       </div>
       }

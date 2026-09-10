@@ -303,7 +303,6 @@
             },
             "phone": {
               "pattern": "رقم الهاتف يجب أن يكون 05XXXXXXXX",
-
               "required": "رقم الهاتف مطلوب"
             },
             "postalCode": {
@@ -407,7 +406,6 @@
     "cart_cleared": "تم مسح سلة التسوق بنجاح",
     "description": "عرض وإدارة منتجات سلة التسوق الخاصة بك",
     "discount_applied_second_item": "🎉 تم تطبيق الخصم! القطعة الثانية خصم {{discount}}%",
-
     "full_price_single_item": "قطعة واحدة بالسعر الكامل",
     "empty": {
       "message": "يبدو أنك لم تضف أي عناصر إلى سلة التسوق الخاصة بك حتى الآن",
@@ -520,7 +518,6 @@
       "COD": "سيتم إضافة 20 {{currency}} عند اختيار الدفع عند الاستلام",
       "COD-fees": " +20 {{currency}} رسوم إضافية للدفع عند الاستلام: ",
       "COD-track": "رسوم الدفع عند الاستلام",
-
       "methods": {
         "cash_on_delivery": "الدفع عند الاستلام",
         "credit_card": "بطاقة ائتمان",
@@ -584,7 +581,7 @@
       "your-msg": "رسالتك"
     },
     "heading": "اتصل بنا",
-    "contact-image-alt":"اتصل بنا"
+    "contact-image-alt": "اتصل بنا"
   },
   "deleted-address": "مسح العنوان",
   "follow_your profile and register your data": "profile.header.subtitle",
@@ -641,12 +638,12 @@
       "who_we_are": {
         "title": "من نحن"
       },
-      "privacy":{
-        "title":"سياسة الخصوصية"
+      "privacy": {
+        "title": "سياسة الخصوصية"
       }
     },
-    "skin":{
-      "title":"العناية بالبشرة"
+    "skin": {
+      "title": "العناية بالبشرة"
     }
   },
   "form": {
@@ -1319,7 +1316,7 @@
     "contact-us": "اتصل بنا"
   },
   "special_order": {
-    "button": "سجل طلبك",
+    "button": "اسال عن",
     "modal_title": "سجل طلبك",
     "modal_subtitle": "يرجى ملء البيانات التالية لتسجيل طلبك وسنتواصل معك قريباً لتأكيد التفاصيل",
     "product_label": "المنتج المطلوب",
@@ -1327,38 +1324,62 @@
     "quantity": "الكمية",
     "fields": {
       "name": {
-        "label": "الاسم بالكامل",
-        "placeholder": "أدخل اسمك بالكامل"
+        "label": "الاسم",
+        "placeholder": "أدخل الاسم"
       },
-      "email": {
-        "label": "البريد الإلكتروني",
-        "placeholder": "example@domain.com"
+      "city": {
+        "label": "المدينة",
+        "placeholder": "أدخل المدينة"
       },
       "phone": {
-        "label": "رقم الهاتف",
+        "label": "رقم الجوال",
         "placeholder": "05xxxxxxxx"
       },
-      "address": {
-        "label": "العنوان بالتفصيل",
-        "placeholder": "المدينة، الحي، اسم الشارع، رقم المبنى"
+      "email": {
+        "label": "الإيميل",
+        "placeholder": "example@domain.com"
+      },
+      "doctor_name": {
+        "label": "اسم الطبيب",
+        "placeholder": "أدخل اسم الطبيب"
+      },
+      "hospital_name": {
+        "label": "اسم المستشفي",
+        "placeholder": "أدخل اسم المستشفي"
+      },
+      "doctor_code": {
+        "label": "كود الطبيب",
+        "placeholder": "أدخل كود الطبيب"
       }
     },
     "validation": {
       "name": {
-        "required": "الاسم بالكامل مطلوب",
-        "minlength": "الاسم يجب ألا يقل عن 3 أحرف"
+        "required": "الاسم مطلوب",
+        "minlength": "الاسم يجب ألا يقل عن 3 أحرف",
+        "pattern": "الاسم يجب ألا يحتوي على أرقام"
       },
-      "email": {
-        "required": "البريد الإلكتروني مطلوب",
-        "invalid": "يرجى إدخال بريد إلكتروني صحيح"
+      "city": {
+        "required": "المدينة مطلوبة",
+        "minlength": "المدينة يجب ألا تقل عن حرفين"
       },
       "phone": {
-        "required": "رقم الهاتف مطلوب",
-        "pattern": "يجب أن يبدأ رقم الهاتف بـ 05 ويتكون من 10 أرقام"
+        "required": "رقم الجوال مطلوب",
+        "pattern": "يجب أن يبدأ رقم الجوال بـ 05 ويتكون من 10 أرقام"
       },
-      "address": {
-        "required": "العنوان بالتفصيل مطلوب",
-        "minlength": "العنوان يجب ألا يقل عن 5 أحرف"
+      "email": {
+        "required": "الإيميل مطلوب",
+        "invalid": "يرجى إدخال بريد إلكتروني صحيح"
+      },
+      "doctor_name": {
+        "required": "اسم الطبيب مطلوب",
+        "minlength": "اسم الطبيب يجب ألا يقل عن 3 أحرف"
+      },
+      "hospital_name": {
+        "required": "اسم المستشفي مطلوب",
+        "minlength": "اسم المستشفي يجب ألا يقل عن حرفين"
+      },
+      "doctor_code": {
+        "required": "كود الطبيب مطلوب"
       }
     },
     "submit_button": "تأكيد تسجيل الطلب",
@@ -1383,6 +1404,11 @@
     "quantity": "الكمية المطلوبة",
     "customer_name": "اسم العميل",
     "phone": "رقم الجوال",
+    "email": "الإيميل",
+    "city": "المدينة",
+    "doctor_name": "اسم الطبيب",
+    "hospital_name": "اسم المستشفي",
+    "doctor_code": "كود الطبيب",
     "delivery_address": "عنوان التوصيل",
     "timeline": {
       "title": "ماذا بعد تسجيل طلبك؟",

@@ -22,9 +22,13 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 export interface ISpecialOrderFormData {
   name: string;
-  email: string;
+  city: string;
   phone: string;
-  address: string;
+  email: string;
+  doctor_name: string;
+  hospital_name: string;
+  doctor_code: string;
+  address?: string;
   product_id: number | string;
   quantity: number;
 }
@@ -92,6 +96,22 @@ export class SpecialOrderModalComponent implements OnInit, OnChanges {
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(100),
+          Validators.pattern(/^[^0-9\u0660-\u0669]+$/),
+        ],
+      ],
+      city: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(100),
+        ],
+      ],
+      phone: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^05[0-9]{8}$'),
         ],
       ],
       email: [
@@ -102,24 +122,111 @@ export class SpecialOrderModalComponent implements OnInit, OnChanges {
           Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/),
         ],
       ],
-      phone: [
+      doctor_name: [
         '',
         [
           Validators.required,
-          Validators.pattern('^05[0-9]{8}$'),
+          Validators.minLength(3),
+          Validators.maxLength(100),
         ],
       ],
-      address: [
+      hospital_name: [
         '',
         [
           Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(255),
+          Validators.minLength(2),
+          Validators.maxLength(100),
+        ],
+      ],
+      doctor_code: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(1),
+          Validators.maxLength(50),
         ],
       ],
     });
 
     this.currentQuantity.set(Math.max(1, Number(this.quantity) || 1));
+  }
+
+  /**
+   * Prevent typing numeric digits into the name input
+   */
+  onNameKeyPress(event: KeyboardEvent): boolean {
+    if (
+      ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Enter'].includes(
+        event.key
+      ) ||
+      event.ctrlKey ||
+      event.metaKey
+    ) {
+      return true;
+    }
+    // Block any digits (0-9 and Arabic-Indic ٠-٩)
+    if (/[0-9\u0660-\u0669]/.test(event.key)) {
+      event.preventDefault();
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * Strip any numbers from name input (including copy-paste)
+   */
+  onNameInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input) return;
+
+    // Remove 0-9 and Arabic-Indic digits ٠-٩
+    const cleaned = input.value.replace(/[0-9\u0660-\u0669]/g, '');
+    if (input.value !== cleaned) {
+      input.value = cleaned;
+    }
+    this.orderForm.get('name')?.setValue(cleaned);
+  }
+
+  /**
+   * Prevent typing any non-digit keys into phone input
+   */
+  onPhoneKeyPress(event: KeyboardEvent): boolean {
+    if (
+      ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Enter'].includes(
+        event.key
+      ) ||
+      event.ctrlKey ||
+      event.metaKey
+    ) {
+      return true;
+    }
+    if (!/^[0-9]$/.test(event.key)) {
+      event.preventDefault();
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * Strip any non-digit characters from phone input (including copy-paste)
+   */
+  onPhoneInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input) return;
+
+    // Convert Arabic/Eastern digits to western digits if pasted
+    const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+    let val = input.value;
+    for (let i = 0; i < 10; i++) {
+      val = val.replace(new RegExp(arabicDigits[i], 'g'), i.toString());
+    }
+
+    // Only allow numbers, max 10 digits
+    const cleaned = val.replace(/\D/g, '').slice(0, 10);
+    if (input.value !== cleaned) {
+      input.value = cleaned;
+    }
+    this.orderForm.get('phone')?.setValue(cleaned);
   }
 
   /**
@@ -143,7 +250,8 @@ export class SpecialOrderModalComponent implements OnInit, OnChanges {
           this.orderForm.patchValue({ email: userData.email });
         }
         if (!this.orderForm.get('phone')?.value && userData.phone) {
-          this.orderForm.patchValue({ phone: userData.phone });
+          const cleanedPhone = (userData.phone || '').replace(/\D/g, '').slice(0, 10);
+          this.orderForm.patchValue({ phone: cleanedPhone });
         }
       }
     }
@@ -166,6 +274,10 @@ export class SpecialOrderModalComponent implements OnInit, OnChanges {
 
     if (control.hasError('required')) {
       return this._translateService.instant(`special_order.validation.${fieldName}.required`);
+    }
+
+    if (fieldName === 'name' && control.hasError('pattern')) {
+      return this._translateService.instant('special_order.validation.name.pattern');
     }
 
     if (fieldName === 'email' && (control.hasError('email') || control.hasError('pattern'))) {
@@ -219,9 +331,13 @@ export class SpecialOrderModalComponent implements OnInit, OnChanges {
 
     const payload: ISpecialOrderFormData = {
       name: (formRaw.name || '').trim(),
-      email: (formRaw.email || '').trim(),
+      city: (formRaw.city || '').trim(),
       phone: (formRaw.phone || '').trim(),
-      address: (formRaw.address || '').trim(),
+      email: (formRaw.email || '').trim(),
+      doctor_name: (formRaw.doctor_name || '').trim(),
+      hospital_name: (formRaw.hospital_name || '').trim(),
+      doctor_code: (formRaw.doctor_code || '').trim(),
+      address: (formRaw.city || '').trim(),
       product_id: this.productId,
       quantity: finalQuantity,
     };

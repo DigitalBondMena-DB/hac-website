@@ -3,9 +3,13 @@ import { Injectable, PLATFORM_ID, inject, signal } from '@angular/core';
 
 export interface IThankYouOrderData {
   name: string;
-  email: string;
+  city?: string;
   phone: string;
-  address: string;
+  email: string;
+  doctor_name?: string;
+  hospital_name?: string;
+  doctor_code?: string;
+  address?: string;
   product_id: number | string;
   quantity: number;
   product_name?: string;

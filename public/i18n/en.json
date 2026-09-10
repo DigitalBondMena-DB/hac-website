@@ -406,7 +406,6 @@
     "cart_cleared": "Cart cleared successfully",
     "description": "View and manage your shopping cart items",
     "discount_applied_second_item": "🎉 Discount applied! Second item is {{discount}}% off",
-
     "full_price_single_item": "Single item at full price",
     "empty": {
       "message": "Looks like you haven't added any items to your cart yet",
@@ -589,7 +588,7 @@
       "your-msg": "Your Message"
     },
     "heading": "Contact Us",
-    "contact-image-alt":"contact us"
+    "contact-image-alt": "contact us"
   },
   "deleted-address": "delete address",
   "footer": {
@@ -645,13 +644,12 @@
       "who_we_are": {
         "title": "about us"
       },
-      "privacy":{
-        "title":"Privacy Policy"
+      "privacy": {
+        "title": "Privacy Policy"
       }
     },
-    "skin":{
-      "title":"Skin Care"
-      
+    "skin": {
+      "title": "Skin Care"
     }
   },
   "form": {
@@ -1334,7 +1332,7 @@
     "contact-us": "Contact Us"
   },
   "special_order": {
-    "button": "Register Your Order",
+    "button": "Ask About",
     "modal_title": "Register Your Order",
     "modal_subtitle": "Please fill in the following details to register your order and our team will contact you shortly",
     "product_label": "Selected Product",
@@ -1342,38 +1340,62 @@
     "quantity": "Quantity",
     "fields": {
       "name": {
-        "label": "Full Name",
-        "placeholder": "Enter your full name"
+        "label": "Name",
+        "placeholder": "Enter your name"
       },
-      "email": {
-        "label": "Email Address",
-        "placeholder": "example@domain.com"
+      "city": {
+        "label": "City",
+        "placeholder": "Enter your city"
       },
       "phone": {
-        "label": "Phone Number",
+        "label": "Phone",
         "placeholder": "05xxxxxxxx"
       },
-      "address": {
-        "label": "Detailed Address",
-        "placeholder": "City, District, Street name, Building number"
+      "email": {
+        "label": "Email",
+        "placeholder": "example@domain.com"
+      },
+      "doctor_name": {
+        "label": "Doctor name",
+        "placeholder": "Enter doctor name"
+      },
+      "hospital_name": {
+        "label": "Hospital name",
+        "placeholder": "Enter hospital name"
+      },
+      "doctor_code": {
+        "label": "Doctor’s code",
+        "placeholder": "Enter doctor’s code"
       }
     },
     "validation": {
       "name": {
-        "required": "Full name is required",
-        "minlength": "Name must be at least 3 characters"
+        "required": "Name is required",
+        "minlength": "Name must be at least 3 characters",
+        "pattern": "Name must not contain numbers"
       },
-      "email": {
-        "required": "Email address is required",
-        "invalid": "Please enter a valid email address"
+      "city": {
+        "required": "City is required",
+        "minlength": "City must be at least 2 characters"
       },
       "phone": {
-        "required": "Phone number is required",
+        "required": "Phone is required",
         "pattern": "Phone number must start with 05 and contain 10 digits"
       },
-      "address": {
-        "required": "Detailed address is required",
-        "minlength": "Address must be at least 5 characters"
+      "email": {
+        "required": "Email is required",
+        "invalid": "Please enter a valid email address"
+      },
+      "doctor_name": {
+        "required": "Doctor name is required",
+        "minlength": "Doctor name must be at least 3 characters"
+      },
+      "hospital_name": {
+        "required": "Hospital name is required",
+        "minlength": "Hospital name must be at least 2 characters"
+      },
+      "doctor_code": {
+        "required": "Doctor’s code is required"
       }
     },
     "submit_button": "Confirm Order Registration",
@@ -1398,6 +1420,11 @@
     "quantity": "Quantity Requested",
     "customer_name": "Customer Name",
     "phone": "Phone Number",
+    "email": "Email",
+    "city": "City",
+    "doctor_name": "Doctor Name",
+    "hospital_name": "Hospital Name",
+    "doctor_code": "Doctor’s Code",
     "delivery_address": "Delivery Address",
     "timeline": {
       "title": "What Happens Next?",
