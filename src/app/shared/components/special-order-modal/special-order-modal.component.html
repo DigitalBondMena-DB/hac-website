@@ -30,7 +30,8 @@
     </div>
 
     <!-- Product Summary & Quantity Preview -->
-    <div class="my-4 p-3.5 bg-[#FAF7F4] rounded-[16px] border border-[#EFE9E2] flex items-center justify-between gap-3">
+    <div
+      class="my-4 p-3.5 bg-warm-tan/10 rounded-[16px] border border-[#EFE9E2] flex items-center justify-between gap-3">
       <div class="min-w-0 flex-1">
         <p class="text-xs text-gray-500">
           {{ "special_order.product_label" | translate }}
@@ -84,7 +85,7 @@
             [placeholder]="'special_order.fields.name.placeholder' | translate" [ngClass]="{
               'border-red-500 focus:border-red-500 ring-1 ring-red-500': isFieldInvalid('name')
             }"
-            class="bg-white border border-[#8D8D8D] rounded-[15px] px-4 py-2.5 w-full text-sm text-gray-900 focus:outline-none focus:border-[#CBAC8D] transition-colors" />
+            class="bg-white border border-[#8D8D8D] rounded-[15px] px-4 py-2.5 w-full text-sm text-gray-900 focus:outline-none focus:border-warm-tan transition-colors" />
           <div *ngIf="isFieldInvalid('name')" class="text-red-500 text-xs mt-1.5 flex items-center gap-1">
             <svg class="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd"
@@ -105,7 +106,7 @@
             [placeholder]="'special_order.fields.city.placeholder' | translate" [ngClass]="{
               'border-red-500 focus:border-red-500 ring-1 ring-red-500': isFieldInvalid('city')
             }"
-            class="bg-white border border-[#8D8D8D] rounded-[15px] px-4 py-2.5 w-full text-sm text-gray-900 focus:outline-none focus:border-[#CBAC8D] transition-colors" />
+            class="bg-white border border-[#8D8D8D] rounded-[15px] px-4 py-2.5 w-full text-sm text-gray-900 focus:outline-none focus:border-warm-tan transition-colors" />
           <div *ngIf="isFieldInvalid('city')" class="text-red-500 text-xs mt-1.5 flex items-center gap-1">
             <svg class="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd"
@@ -127,7 +128,7 @@
             [placeholder]="'special_order.fields.phone.placeholder' | translate" [ngClass]="{
               'border-red-500 focus:border-red-500 ring-1 ring-red-500': isFieldInvalid('phone')
             }"
-            class="bg-white border border-[#8D8D8D] rounded-[15px] px-4 py-2.5 w-full text-sm text-gray-900 focus:outline-none focus:border-[#CBAC8D] transition-colors rtl:text-right" />
+            class="bg-white border border-[#8D8D8D] rounded-[15px] px-4 py-2.5 w-full text-sm text-gray-900 focus:outline-none focus:border-warm-tan transition-colors rtl:text-right" />
           <div *ngIf="isFieldInvalid('phone')" class="text-red-500 text-xs mt-1.5 flex items-center gap-1">
             <svg class="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd"
@@ -148,7 +149,7 @@
             [placeholder]="'special_order.fields.email.placeholder' | translate" [ngClass]="{
               'border-red-500 focus:border-red-500 ring-1 ring-red-500': isFieldInvalid('email')
             }"
-            class="bg-white border border-[#8D8D8D] rounded-[15px] px-4 py-2.5 w-full text-sm text-gray-900 focus:outline-none focus:border-[#CBAC8D] transition-colors" />
+            class="bg-white border border-[#8D8D8D] rounded-[15px] px-4 py-2.5 w-full text-sm text-gray-900 focus:outline-none focus:border-warm-tan transition-colors" />
           <div *ngIf="isFieldInvalid('email')" class="text-red-500 text-xs mt-1.5 flex items-center gap-1">
             <svg class="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd"
@@ -169,7 +170,7 @@
             [placeholder]="'special_order.fields.doctor_name.placeholder' | translate" [ngClass]="{
               'border-red-500 focus:border-red-500 ring-1 ring-red-500': isFieldInvalid('doctor_name')
             }"
-            class="bg-white border border-[#8D8D8D] rounded-[15px] px-4 py-2.5 w-full text-sm text-gray-900 focus:outline-none focus:border-[#CBAC8D] transition-colors" />
+            class="bg-white border border-[#8D8D8D] rounded-[15px] px-4 py-2.5 w-full text-sm text-gray-900 focus:outline-none focus:border-warm-tan transition-colors" />
           <div *ngIf="isFieldInvalid('doctor_name')" class="text-red-500 text-xs mt-1.5 flex items-center gap-1">
             <svg class="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd"
@@ -190,7 +191,7 @@
             [placeholder]="'special_order.fields.hospital_name.placeholder' | translate" [ngClass]="{
               'border-red-500 focus:border-red-500 ring-1 ring-red-500': isFieldInvalid('hospital_name')
             }"
-            class="bg-white border border-[#8D8D8D] rounded-[15px] px-4 py-2.5 w-full text-sm text-gray-900 focus:outline-none focus:border-[#CBAC8D] transition-colors" />
+            class="bg-white border border-[#8D8D8D] rounded-[15px] px-4 py-2.5 w-full text-sm text-gray-900 focus:outline-none focus:border-warm-tan transition-colors" />
           <div *ngIf="isFieldInvalid('hospital_name')" class="text-red-500 text-xs mt-1.5 flex items-center gap-1">
             <svg class="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd"
@@ -211,7 +212,7 @@
             [placeholder]="'special_order.fields.doctor_code.placeholder' | translate" [ngClass]="{
               'border-red-500 focus:border-red-500 ring-1 ring-red-500': isFieldInvalid('doctor_code')
             }"
-            class="bg-white border border-[#8D8D8D] rounded-[15px] px-4 py-2.5 w-full text-sm text-gray-900 focus:outline-none focus:border-[#CBAC8D] transition-colors" />
+            class="bg-white border border-[#8D8D8D] rounded-[15px] px-4 py-2.5 w-full text-sm text-gray-900 focus:outline-none focus:border-warm-tan transition-colors" />
           <div *ngIf="isFieldInvalid('doctor_code')" class="text-red-500 text-xs mt-1.5 flex items-center gap-1">
             <svg class="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd"
@@ -231,9 +232,9 @@
         </button>
 
         <button type="submit" [disabled]="isSubmitting"
-          class="cursor-pointer w-full sm:w-auto px-8 py-2.5 rounded-[50px] bg-[#CBAC8D] hover:bg-[#b89b7d] text-white text-sm font-medium shadow-sm transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
+          class="cursor-pointer w-full sm:w-auto px-8 py-2.5 rounded-[50px] bg-warm-tan hover:bg-warm-tan/80 text-white text-sm font-medium shadow-sm transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
           <span *ngIf="isSubmitting"
-            class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+            class="inline-block w-4 h-4 border-2 border-white/10 border-t-transparent rounded-full animate-spin"></span>
           <span>
             {{
             isSubmitting

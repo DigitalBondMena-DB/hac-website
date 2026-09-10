@@ -3,14 +3,22 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: #cbac8d;
+  background-color: color-mix(in oklab, #1834A3 40%, transparent);
+
+}
+
+::ng-deep :root {
+  --color-warm-tan: #1834A3 !important;
 }
 
 /* Pulse badge animation */
 @keyframes softPulse {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.05);
   }

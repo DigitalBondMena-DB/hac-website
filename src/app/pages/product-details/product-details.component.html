@@ -1,435 +1,432 @@
-@if (userRoleAccess) {
-<app-articles-header [title]="productDetails | customTranslate : 'name'"
-  [subTitle]="'shopping.header.subtitle' | translate" [showRotateImage]="true" [marginBottom]="'9'"
-  @fadeIn></app-articles-header>
-}
-
-<section @fadeIn>
+<article [class.special-product]="isSpecialProduct()">
   @if (userRoleAccess) {
+  <app-articles-header [title]="productDetails | customTranslate : 'name'"
+    [subTitle]="'shopping.header.subtitle' | translate" [showRotateImage]="true" [marginBottom]="'9'"
+    @fadeIn></app-articles-header>
+  }
 
-  <div class="container mx-auto overflow-hidden">
-    @if (isLoading()) {
-    <app-product-details-skeleton />
-    } @else {
-    <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 mt-10 rtl:flex-row-reverse">
-      <div class="product-images">
-        <div class="carousel-wrapper overflow-hidden rounded-lg mb-4" [class.rtl-carousel]="isRtlMode()">
-          <owl-carousel-o [options]="mainCarouselOptions" #mainCarousel>
-            @for (image of processedImages(); track image.id) {
-            <ng-template carouselSlide [id]="'slide_' + image.id">
-              <img loading="lazy" [appImageUrl]="image.url" [imageEndpoint]="''" [alt]="image.alt"
-                class="w-full h-auto object-cover" />
-            </ng-template>
-            }
-          </owl-carousel-o>
-        </div>
+  <section @fadeIn>
+    @if (userRoleAccess) {
 
-        <!-- Thumbnail Gallery - Only show when there are additional images -->
-        @if (processedImages().length > 1) {
-        <div class="thumbnail-gallery mt-4" [class.rtl-carousel]="isRtlMode()">
-          <owl-carousel-o [options]="thumbnailOptions" #thumbnailCarousel>
-            @for (image of processedImages(); track image.id; let i = $index) {
-            <ng-template carouselSlide [id]="'thumb_' + image.id">
-              <div [class.thumbnail-active]="activeIndex() === i" (click)="setActiveIndex(i)"
-                class="thumbnail-item cursor-pointer p-1 border-[1px] border-transparent rounded-[15px] overflow-hidden">
+    <div class="container mx-auto overflow-hidden">
+      @if (isLoading()) {
+      <app-product-details-skeleton />
+      } @else {
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 mt-10 rtl:flex-row-reverse">
+        <div class="product-images">
+          <div class="carousel-wrapper overflow-hidden rounded-lg mb-4" [class.rtl-carousel]="isRtlMode()">
+            <owl-carousel-o [options]="mainCarouselOptions" #mainCarousel>
+              @for (image of processedImages(); track image.id) {
+              <ng-template carouselSlide [id]="'slide_' + image.id">
                 <img loading="lazy" [appImageUrl]="image.url" [imageEndpoint]="''" [alt]="image.alt"
-                  class="w-full h-full object-cover" />
-              </div>
-            </ng-template>
-            }
-          </owl-carousel-o>
-        </div>
-        }
-      </div>
-
-      <!-- Right Side: Product Details -->
-      <div class="product-info rtl:text-right ltr:text-left">
-        <!-- Global Discount Message -->
-        <!-- @if(getGlobalDiscountMessage() && discountPercentage > 0) {
-        <div class="mb-4 px-4 my-2">
-          <div
-            class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg text-sm transition-all duration-300 flex items-center gap-2"
-          >
-            <span class="text-green-600">🎉</span>
-            <span>{{ getGlobalDiscountMessage() }}</span>
-          </div>
-        </div>
-        }
-         -->
-        <!-- Product Title -->
-
-        <h4 class="text-[16px] text-[#333] mb-[23px]">
-          {{ productDetails.category | customTranslate : "name" }}
-        </h4>
-        <!-- Stock Status  -->
-        <div class="mb-[23px] flex gap-4 items-center">
-          <h2 class="text-[23px] text-black font-medium">
-            {{ productDetails | customTranslate : "name" }}
-          </h2>
-          <div class="text-[#040404] rounded-full border-[1px] border-[#A48374] px-[16px] py-[2px]">
-            <p class="text-[16px]">
-              @if (productDetails.stock_status) {
-              {{ "in_stock" | translate }}
-              } @else {
-              {{ "out_of_stock" | translate }}
+                  class="w-full h-auto object-cover" />
+              </ng-template>
               }
-            </p>
+            </owl-carousel-o>
           </div>
+
+          <!-- Thumbnail Gallery - Only show when there are additional images -->
+          @if (processedImages().length > 1) {
+          <div class="thumbnail-gallery mt-4" [class.rtl-carousel]="isRtlMode()">
+            <owl-carousel-o [options]="thumbnailOptions" #thumbnailCarousel>
+              @for (image of processedImages(); track image.id; let i = $index) {
+              <ng-template carouselSlide [id]="'thumb_' + image.id">
+                <div [class.thumbnail-active]="activeIndex() === i" (click)="setActiveIndex(i)"
+                  class="thumbnail-item cursor-pointer p-1 border-[1px] border-transparent rounded-[15px] overflow-hidden">
+                  <img loading="lazy" [appImageUrl]="image.url" [imageEndpoint]="''" [alt]="image.alt"
+                    class="w-full h-full object-cover" />
+                </div>
+              </ng-template>
+              }
+            </owl-carousel-o>
+          </div>
+          }
         </div>
 
-        <!-- Product Price -->
-        <div class="price-container flex items-center gap-4 mb-6">
+        <!-- Right Side: Product Details -->
+        <div class="product-info rtl:text-right ltr:text-left">
+          <!-- Global Discount Message -->
+          <!-- @if(getGlobalDiscountMessage() && discountPercentage > 0) {
+          <div class="mb-4 px-4 my-2">
+            <div
+              class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg text-sm transition-all duration-300 flex items-center gap-2"
+            >
+              <span class="text-green-600">🎉</span>
+              <span>{{ getGlobalDiscountMessage() }}</span>
+            </div>
+          </div>
+          }
+           -->
+          <!-- Product Title -->
+
+          <h4 class="text-[16px] text-[#333] mb-[23px]">
+            {{ productDetails.category | customTranslate : "name" }}
+          </h4>
+          <!-- Stock Status  -->
+          <div class="mb-[23px] flex gap-4 items-center">
+            <h2 class="text-[23px] text-black font-medium">
+              {{ productDetails | customTranslate : "name" }}
+            </h2>
+            <div class="text-[#040404] rounded-full border-[1px] border-warm-tan px-[16px] py-[2px]">
+              <p class="text-[16px]">
+                @if (productDetails.stock_status) {
+                {{ "in_stock" | translate }}
+                } @else {
+                {{ "out_of_stock" | translate }}
+                }
+              </p>
+            </div>
+          </div>
+
+          <!-- Product Price -->
+          <div class="price-container flex items-center gap-4 mb-6">
+            @if (productDetails.choices && productDetails.choices.length > 0) {
+            <p class="flex items-center justify-between text-lg font-bold">
+              <span> {{ activeChoicePrice() }} </span>
+              <span class="icon-saudi_riyal"></span>
+            </p>
+            } @else if (productDetails.sale_price) {
+            <div class="flex items-cetner justify-center gap-x-[26px] mb-[30px] text-price-size">
+              <p class="flex items-center justify-between text-warm-tan font-medium">
+                <span> {{ productDetails.price_after_sale }} </span>
+                <span class="icon-saudi_riyal"></span>
+              </p>
+              <p class="flex items-center justify-between text-[#333] line-through">
+                <span> {{ productDetails.price }} </span>
+                <span class="icon-saudi_riyal"></span>
+              </p>
+            </div>
+            }@else {
+            <p class="flex items-center justify-between text-[#A48374] text-price-size font-medium">
+              <span>{{ productDetails.price }}</span>
+              <span class="icon-saudi_riyal"></span>
+            </p>
+            }
+          </div>
+
+          <!-- Product Description -->
+          <div class="text-[#333] text-description-size mb-[30px] leading-relaxed"
+            [innerHTML]="productDetails | customTranslate : 'small_descritpion'"></div>
+
+          @if(productDetails.size){
+
+          <p class="text-[#000] mb-10 font-medium">
+            {{ "product_details.size" | translate }} :
+            <span class="font-bold">{{ productDetails.size }}</span>
+          </p>
+          }
+
+          <!-- Size Selector -->
           @if (productDetails.choices && productDetails.choices.length > 0) {
-          <p class="flex items-center justify-between text-lg font-bold">
-            <span> {{ activeChoicePrice() }} </span>
-            <span class="icon-saudi_riyal"></span>
-          </p>
-          } @else if (productDetails.sale_price) {
-          <div class="flex items-cetner justify-center gap-x-[26px] mb-[30px] text-price-size">
-            <p class="flex items-center justify-between text-[#A48374] font-medium">
-              <span> {{ productDetails.price_after_sale }} </span>
-              <span class="icon-saudi_riyal"></span>
-            </p>
-            <p class="flex items-center justify-between text-[#333] line-through">
-              <span> {{ productDetails.price }} </span>
-              <span class="icon-saudi_riyal"></span>
-            </p>
-          </div>
-          }@else {
-          <p class="flex items-center justify-between text-[#A48374] text-price-size font-medium">
-            <span>{{ productDetails.price }}</span>
-            <span class="icon-saudi_riyal"></span>
-          </p>
-          }
-        </div>
-
-        <!-- Product Description -->
-        <div class="text-[#333] text-description-size mb-[30px] leading-relaxed"
-          [innerHTML]="productDetails | customTranslate : 'small_descritpion'"></div>
-
-        @if(productDetails.size){
-
-        <p class="text-[#000] mb-10 font-medium">
-          {{ "product_details.size" | translate }} :
-          <span class="font-bold">{{ productDetails.size }}</span>
-        </p>
-        }
-
-        <!-- Size Selector -->
-        @if (productDetails.choices && productDetails.choices.length > 0) {
-        <div class="mb-15">
-          <h3 class="text-lg font-semibold mb-3">الحجم</h3>
-          <div class="flex flex-wrap gap-3">
-            @for(choice of productDetails.choices; track choice.id) {
-            <button (click)="setSelectedSizeFromChoice(choice)" [class.bg-[#CBAC8D]]="isChoiceActive(choice)"
-              [class.text-white]="isChoiceActive(choice)" [class.border-[#A48374]]="isChoiceActive(choice)"
-              class="text-category-size text-[#040404] py-[2px] px-[16px] font-normal rounded-full border shodow-[0px 4px 4px 0px rgba(0, 0, 0, 0.25)]">
-              {{ getChoiceName(choice) }}
-            </button>
-            }
-          </div>
-        </div>
-        }
-
-        <!-- Quantity Selector and Add to Cart -->
-        <div class="flex flex-wrap gap-x-4 items-center mb-[30px] gap-y-5 sm:gap-y-2">
-          <!-- Quantity Selector -->
-          <div class="quantity-selector flex items-center gap-x-[12px] border border-[#8D8D8D] rounded-full">
-            <button (click)="decrementQuantity()" class="cursor-pointer px-3 py-2 text-[#000]"
-              [disabled]="isAddingToCart()" aria-label="Decrease quantity">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-            </button>
-            <span class="px-4 py-[8px]">{{ quantity() }}</span>
-            <button (click)="incrementQuantity()" class="cursor-pointer px-3 py-2 text-[#000]"
-              [disabled]="isAddingToCart()" aria-label="Increase quantity">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-            </button>
-          </div>
-
-          @if (isSpecialProduct()) {
-          <!-- Register Your Order Button for Special Product -->
-          <button type="button" (click)="openSpecialOrderModal()"
-            class="flex-grow-1 sm:flex-grow-0 cursor-pointer bg-[#CBAC8D] hover:bg-[#b89b7d] text-white px-[32px] py-[10px] rounded-full transition-all duration-200 flex items-center justify-center gap-2 font-medium shadow-sm hover:shadow"
-            aria-label="Register your order">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="18" height="18">
-              <path fill="#fff"
-                d="M320 64C326.6 64 332.9 66.7 337.4 71.5L481.4 223.5L481.9 224L560 224C577.7 224 592 238.3 592 256C592 270.5 582.4 282.7 569.2 286.7L523.1 493.9C516.6 523.2 490.6 544 460.6 544L179.3 544C149.3 544 123.3 523.2 116.8 493.9L70.8 286.7C57.6 282.8 48 270.5 48 256C48 238.3 62.3 224 80 224L158.1 224L158.6 223.5L302.6 71.5C307.1 66.7 313.4 64 320 64zM320 122.9L224.2 224L415.8 224L320 122.9zM240 328C240 314.7 229.3 304 216 304C202.7 304 192 314.7 192 328L192 440C192 453.3 202.7 464 216 464C229.3 464 240 453.3 240 440L240 328zM320 304C306.7 304 296 314.7 296 328L296 440C296 453.3 306.7 464 320 464C333.3 464 344 453.3 344 440L344 328C344 314.7 333.3 304 320 304zM448 328C448 314.7 437.3 304 424 304C410.7 304 400 314.7 400 328L400 440C400 453.3 410.7 464 424 464C437.3 464 448 453.3 448 440L448 328z" />
-            </svg>
-            <span>{{ "special_order.button" | translate }}</span>
-            <span>{{productDetails | customTranslate : "name" }}</span>
-          </button>
-          } @else {
-          <!-- Add to Cart Button -->
-          <button (click)="isInCart() ? updateCartQuantity() : addToCart()"
-            [disabled]="isAddingToCart() || !productDetails.stock_status"
-            class="flex-grow-1 sm:flex-grow-0 cursor-pointer bg-[#CBAC8D] text-white px-[23px] py-[10px] rounded-full hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
-            [class.opacity-70]="
-              isAddingToCart() || !productDetails.stock_status
-            " [class.cursor-not-allowed]="
-              isAddingToCart() || !productDetails.stock_status
-            " [attr.aria-label]="isInCart() ? 'Update cart' : 'Add to cart'">
-            @if (isAddingToCart()) {
-            <span
-              class="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-            <span class="ml-2">
-              {{
-              isInCart()
-              ? ("shared.updating" | translate)
-              : ("shared.adding" | translate)
-              }}
-            </span>
-            } @else if (isInCart()) {
-
-            {{ "shared.update_cart" | translate }}
-            } @else {
-            {{ "shared.add_to_cart_shooping" | translate }}
-            }
-          </button>
-          <!-- Buy now  -->
-          <button (click)="buyNow()" [disabled]="isAddingToCart() || !productDetails.stock_status"
-            class="w-[80%] sm:w-fit cursor-pointer bg-[#111111] text-white px-[47px] py-[10px] rounded-full hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
-            [class.opacity-70]="
-              isAddingToCart() || !productDetails.stock_status
-            " [class.cursor-not-allowed]="
-              isAddingToCart() || !productDetails.stock_status
-            " [attr.aria-label]="isInCart() ? 'Update cart' : 'Add to cart'">
-            @if (isAddingToCart()) {
-            <span
-              class="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-            <span class="ml-2">{{ "shared.processing" | translate }}</span>
-            } @else {
-            {{ "shared.buy_now" | translate }}
-            }
-          </button>
-          <!-- Wishlist Button -->
-          <button type="button"
-            class="cursor-pointer flex items-center justify-center w-[30px] h-[30px] rounded-full transition-colors duration-200"
-            [disabled]="isAddingToWishlist()" (click)="isInWishlist() ? removeFromWishlist() : addToWishlist()"
-            [attr.aria-label]="
-              isInWishlist() ? 'Remove from wishlist' : 'Add to wishlist'
-            ">
-            <span class="sr-only">Add to wishlist</span>
-            @if (isAddingToWishlist()) {
-            <span class="animate-spin">
-              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M12 6v6l4 2"></path>
-              </svg>
-            </span>
-            } @else {
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="currentColor"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              [style.fill]="isInWishlist() ? '#ef4444' : 'none'" [style.stroke]="isInWishlist() ? '#ef4444' : '#000'">
-              <path
-                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-              </path>
-            </svg>
-            }
-          </button>
-          }
-
-        </div>
-
-        <!-- Social Share -->
-        <div class="mt-2 flex items-center gap-2 mb-4">
-          <span class="text-black font-bold">{{ "share" | translate }}:</span>
-          <div class="social-icons flex gap-2" role="group" aria-label="Social media sharing options">
-            <a href="javascript:void(0)" (click)="shareOnFacebook()"
-              class="text-gray-500 hover:text-[#CBAC8D] p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
-              [attr.aria-label]="'Share on Facebook'">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 320 512"
-                class="w-4 h-4" aria-hidden="true">
-                <path
-                  d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" />
-              </svg>
-              <span class="sr-only">Share on Facebook</span>
-            </a>
-            <a href="javascript:void(0)" (click)="shareOnTwitter()"
-              class="text-gray-500 hover:text-[#CBAC8D] p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
-              [attr.aria-label]="'Share on Twitter'">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 512 512"
-                class="w-4 h-4" aria-hidden="true">
-                <path
-                  d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z" />
-              </svg>
-              <span class="sr-only">Share on Twitter</span>
-            </a>
-            <a href="javascript:void(0)" (click)="shareOnWhatsApp()"
-              class="text-gray-500 hover:text-[#CBAC8D] p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
-              [attr.aria-label]="'Share on WhatsApp'">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 448 512"
-                class="w-4 h-4" aria-hidden="true">
-                <path
-                  d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" />
-              </svg>
-              <span class="sr-only">Share on WhatsApp</span>
-            </a>
-          </div>
-        </div>
-        <!-- Tamara Widget -->
-        @if ((productDetails && getCurrentProductPriceForTamara() > 0) && !isSpecialProduct()) {
-        <app-tamara-widget [amount]="getCurrentProductPriceForTamara()" />
-        }
-      </div>
-    </div>
-
-    <!-- Product Description NavTaps -->
-    <div class="my-16 product-details">
-      <div>
-        <nav class="flex flex-wrap justify-center sm:flex-nowrap gap-4 sm:gap-6 md:gap-x-10 lg:gap-x-[112px]">
-          @for (tab of productTabs; track tab.id; let i = $index) {
-          <button (click)="setActiveTab(i)" [ngClass]="{
-              'underline': activeTab() === i,
-              'border-[#CBAC8D]': activeTab() === i,
-              'text-[#CBAC8D]': activeTab() === i,
-              'border-transparent': activeTab() !== i,
-              'text-gray-500': activeTab() !== i,
-              'hover:text-gray-700': activeTab() !== i,
-              'hover:border-gray-300': activeTab() !== i,
-            }" class="text-sm sm:text-price-size font-medium cursor-pointer whitespace-nowrap px-2 py-1">
-            {{ tab.title | translate }}
-          </button>
-          }
-        </nav>
-      </div>
-
-      <div class="mt-8 overflow-hidden mb-15">
-        <!-- description -->
-        @if (activeTab() === 0) {
-        <div @fadeSlideInOut class="max-w-none text-[#171717] leading-relaxed px-2 sm:px-4">
-          @if (_translateService.currentLang == 'ar') {
-          <div [innerHTML]="productDetails | customTranslate : 'ar_description'"></div>
-          } @else if (_translateService.currentLang == 'en') {
-          <div [innerHTML]="productDetails | customTranslate : 'en_description'"></div>
-          }
-        </div>
-        }
-
-        <!-- how_to_use -->
-        @if (activeTab() === 1) {
-        <div @fadeSlideInOut class="prose max-w-none px-2 sm:px-4">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- <div class="bg-gray-50 p-6 rounded-lg shadow-sm"> -->
-            <div class="text-[#171717] mb-4">
-              @if (_translateService.currentLang == 'ar') {
-              <div [innerHTML]="productDetails | customTranslate : 'ar_how_to_use'"></div>
-              } @else if (_translateService.currentLang == 'en') {
-              <div [innerHTML]="productDetails | customTranslate : 'en_how_to_use'"></div>
-              }
-              <!--
-              <app-safe-html
-                [content]="productDetails | customTranslate : 'how_to_use'"
-              ></app-safe-html> -->
-            </div>
-          </div>
-        </div>
-        }
-
-        <!-- ingredient -->
-        @if (activeTab() === 2) {
-        <div @fadeSlideInOut class="prose max-w-none px-2 sm:px-4">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="text-[#171717] mb-4">
-              <!-- <app-safe-html
-                [content]="productDetails | customTranslate : 'ingredient'"
-              ></app-safe-html> -->
-
-              @if (_translateService.currentLang == 'ar') {
-              <div [innerHTML]="productDetails | customTranslate : 'ar_ingredient'"></div>
-              } @else if (_translateService.currentLang == 'en') {
-              <div [innerHTML]="productDetails | customTranslate : 'en_ingredient'"></div>
+          <div class="mb-15">
+            <h3 class="text-lg font-semibold mb-3">الحجم</h3>
+            <div class="flex flex-wrap gap-3">
+              @for(choice of productDetails.choices; track choice.id) {
+              <button (click)="setSelectedSizeFromChoice(choice)" [class.bg-warm-tan]="isChoiceActive(choice)"
+                [class.text-white]="isChoiceActive(choice)" [class.border-[#A48374]]="isChoiceActive(choice)"
+                class="text-category-size text-[#040404] py-[2px] px-[16px] font-normal rounded-full border shodow-[0px 4px 4px 0px rgba(0, 0, 0, 0.25)]">
+                {{ getChoiceName(choice) }}
+              </button>
               }
             </div>
           </div>
+          }
+
+          <!-- Quantity Selector and Add to Cart -->
+          <div class="flex flex-wrap gap-x-4 items-center mb-[30px] gap-y-5 sm:gap-y-2">
+            <!-- Quantity Selector -->
+            <div class="quantity-selector flex items-center gap-x-[12px] border border-[#8D8D8D] rounded-full">
+              <button (click)="decrementQuantity()" class="cursor-pointer px-3 py-2 text-[#000]"
+                [disabled]="isAddingToCart()" aria-label="Decrease quantity">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </button>
+              <span class="px-4 py-[8px]">{{ quantity() }}</span>
+              <button (click)="incrementQuantity()" class="cursor-pointer px-3 py-2 text-[#000]"
+                [disabled]="isAddingToCart()" aria-label="Increase quantity">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </button>
+            </div>
+
+            @if (isSpecialProduct()) {
+            <!-- Register Your Order Button for Special Product -->
+            <button type="button" (click)="openSpecialOrderModal()"
+              class="flex-grow-1 sm:flex-grow-0 cursor-pointer bg-warm-tan hover:bg-warm-tan/80 text-white px-[32px] py-[10px] rounded-full transition-all duration-200 flex items-center justify-center gap-2 font-medium shadow-sm hover:shadow"
+              aria-label="Register your order">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="18" height="18">
+                <path fill="#fff"
+                  d="M320 64C326.6 64 332.9 66.7 337.4 71.5L481.4 223.5L481.9 224L560 224C577.7 224 592 238.3 592 256C592 270.5 582.4 282.7 569.2 286.7L523.1 493.9C516.6 523.2 490.6 544 460.6 544L179.3 544C149.3 544 123.3 523.2 116.8 493.9L70.8 286.7C57.6 282.8 48 270.5 48 256C48 238.3 62.3 224 80 224L158.1 224L158.6 223.5L302.6 71.5C307.1 66.7 313.4 64 320 64zM320 122.9L224.2 224L415.8 224L320 122.9zM240 328C240 314.7 229.3 304 216 304C202.7 304 192 314.7 192 328L192 440C192 453.3 202.7 464 216 464C229.3 464 240 453.3 240 440L240 328zM320 304C306.7 304 296 314.7 296 328L296 440C296 453.3 306.7 464 320 464C333.3 464 344 453.3 344 440L344 328C344 314.7 333.3 304 320 304zM448 328C448 314.7 437.3 304 424 304C410.7 304 400 314.7 400 328L400 440C400 453.3 410.7 464 424 464C437.3 464 448 453.3 448 440L448 328z" />
+              </svg>
+              <span>{{ "special_order.button" | translate }}</span>
+              <span>{{productDetails | customTranslate : "name" }}</span>
+            </button>
+            } @else {
+            <!-- Add to Cart Button -->
+            <button (click)="isInCart() ? updateCartQuantity() : addToCart()"
+              [disabled]="isAddingToCart() || !productDetails.stock_status"
+              class="flex-grow-1 sm:flex-grow-0 cursor-pointer bg-warm-tan text-white px-[23px] py-[10px] rounded-full hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+              [class.opacity-70]="
+                isAddingToCart() || !productDetails.stock_status
+              " [class.cursor-not-allowed]="
+                isAddingToCart() || !productDetails.stock_status
+              " [attr.aria-label]="isInCart() ? 'Update cart' : 'Add to cart'">
+              @if (isAddingToCart()) {
+              <span
+                class="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+              <span class="ml-2">
+                {{
+                isInCart()
+                ? ("shared.updating" | translate)
+                : ("shared.adding" | translate)
+                }}
+              </span>
+              } @else if (isInCart()) {
+
+              {{ "shared.update_cart" | translate }}
+              } @else {
+              {{ "shared.add_to_cart_shooping" | translate }}
+              }
+            </button>
+            <!-- Buy now  -->
+            <button (click)="buyNow()" [disabled]="isAddingToCart() || !productDetails.stock_status"
+              class="w-[80%] sm:w-fit cursor-pointer bg-[#111111] text-white px-[47px] py-[10px] rounded-full hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+              [class.opacity-70]="
+                isAddingToCart() || !productDetails.stock_status
+              " [class.cursor-not-allowed]="
+                isAddingToCart() || !productDetails.stock_status
+              " [attr.aria-label]="isInCart() ? 'Update cart' : 'Add to cart'">
+              @if (isAddingToCart()) {
+              <span
+                class="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+              <span class="ml-2">{{ "shared.processing" | translate }}</span>
+              } @else {
+              {{ "shared.buy_now" | translate }}
+              }
+            </button>
+            <!-- Wishlist Button -->
+            <button type="button"
+              class="cursor-pointer flex items-center justify-center w-[30px] h-[30px] rounded-full transition-colors duration-200"
+              [disabled]="isAddingToWishlist()" (click)="isInWishlist() ? removeFromWishlist() : addToWishlist()"
+              [attr.aria-label]="
+                isInWishlist() ? 'Remove from wishlist' : 'Add to wishlist'
+              ">
+              <span class="sr-only">Add to wishlist</span>
+              @if (isAddingToWishlist()) {
+              <span class="animate-spin">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 6v6l4 2"></path>
+                </svg>
+              </span>
+              } @else {
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="currentColor"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                [style.fill]="isInWishlist() ? '#ef4444' : 'none'" [style.stroke]="isInWishlist() ? '#ef4444' : '#000'">
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                </path>
+              </svg>
+              }
+            </button>
+            }
+
+          </div>
+
+          <!-- Social Share -->
+          <div class="mt-2 flex items-center gap-2 mb-4">
+            <span class="text-black font-bold">{{ "share" | translate }}:</span>
+            <div class="social-icons flex gap-2" role="group" aria-label="Social media sharing options">
+              <a href="javascript:void(0)" (click)="shareOnFacebook()"
+                class="text-gray-500 hover:text-warm-tan p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+                [attr.aria-label]="'Share on Facebook'">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 320 512"
+                  class="w-4 h-4" aria-hidden="true">
+                  <path
+                    d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" />
+                </svg>
+                <span class="sr-only">Share on Facebook</span>
+              </a>
+              <a href="javascript:void(0)" (click)="shareOnTwitter()"
+                class="text-gray-500 hover:text-warm-tan p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+                [attr.aria-label]="'Share on Twitter'">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 512 512"
+                  class="w-4 h-4" aria-hidden="true">
+                  <path
+                    d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z" />
+                </svg>
+                <span class="sr-only">Share on Twitter</span>
+              </a>
+              <a href="javascript:void(0)" (click)="shareOnWhatsApp()"
+                class="text-gray-500 hover:text-warm-tan p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+                [attr.aria-label]="'Share on WhatsApp'">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 448 512"
+                  class="w-4 h-4" aria-hidden="true">
+                  <path
+                    d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" />
+                </svg>
+                <span class="sr-only">Share on WhatsApp</span>
+              </a>
+            </div>
+          </div>
+          <!-- Tamara Widget -->
+          @if ((productDetails && getCurrentProductPriceForTamara() > 0) && !isSpecialProduct()) {
+          <app-tamara-widget [amount]="getCurrentProductPriceForTamara()" />
+          }
         </div>
-        }
+      </div>
 
-        <!-- more information -->
-        @if (activeTab() === 3) {
-        <div @fadeSlideInOut class="prose max-w-none px-2 sm:px-4">
-          <div class="text-[#171717]">
-            <!-- <app-safe-html
-              [content]="productDetails | customTranslate : 'more_information'"
-            ></app-safe-html> -->
+      <!-- Product Description NavTaps -->
+      <div class="my-16 product-details">
+        <div>
+          <nav class="flex flex-wrap justify-center sm:flex-nowrap gap-4 sm:gap-6 md:gap-x-10 lg:gap-x-[112px]">
+            @for (tab of productTabs; track tab.id; let i = $index) {
+            <button (click)="setActiveTab(i)" [ngClass]="{
+                'border-warm-tan text-warm-tan underline': activeTab() === i,
+                'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab() !== i,
+              }" class="text-sm sm:text-price-size font-medium cursor-pointer whitespace-nowrap px-2 py-1">
+              {{ tab.title | translate }}
+            </button>
+            }
+          </nav>
+        </div>
 
+        <div class="mt-8 overflow-hidden mb-15">
+          <!-- description -->
+          @if (activeTab() === 0) {
+          <div @fadeSlideInOut class="max-w-none text-[#171717] leading-relaxed px-2 sm:px-4">
             @if (_translateService.currentLang == 'ar') {
-            <div [innerHTML]="
-                productDetails | customTranslate : 'ar_more_information'
-              "></div>
+            <div [innerHTML]="productDetails | customTranslate : 'ar_description'"></div>
             } @else if (_translateService.currentLang == 'en') {
-            <div [innerHTML]="
-                productDetails | customTranslate : 'en_more_information'
-              "></div>
+            <div [innerHTML]="productDetails | customTranslate : 'en_description'"></div>
             }
           </div>
+          }
+
+          <!-- how_to_use -->
+          @if (activeTab() === 1) {
+          <div @fadeSlideInOut class="prose max-w-none px-2 sm:px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- <div class="bg-gray-50 p-6 rounded-lg shadow-sm"> -->
+              <div class="text-[#171717] mb-4">
+                @if (_translateService.currentLang == 'ar') {
+                <div [innerHTML]="productDetails | customTranslate : 'ar_how_to_use'"></div>
+                } @else if (_translateService.currentLang == 'en') {
+                <div [innerHTML]="productDetails | customTranslate : 'en_how_to_use'"></div>
+                }
+                <!--
+                <app-safe-html
+                  [content]="productDetails | customTranslate : 'how_to_use'"
+                ></app-safe-html> -->
+              </div>
+            </div>
+          </div>
+          }
+
+          <!-- ingredient -->
+          @if (activeTab() === 2) {
+          <div @fadeSlideInOut class="prose max-w-none px-2 sm:px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="text-[#171717] mb-4">
+                <!-- <app-safe-html
+                  [content]="productDetails | customTranslate : 'ingredient'"
+                ></app-safe-html> -->
+
+                @if (_translateService.currentLang == 'ar') {
+                <div [innerHTML]="productDetails | customTranslate : 'ar_ingredient'"></div>
+                } @else if (_translateService.currentLang == 'en') {
+                <div [innerHTML]="productDetails | customTranslate : 'en_ingredient'"></div>
+                }
+              </div>
+            </div>
+          </div>
+          }
+
+          <!-- more information -->
+          @if (activeTab() === 3) {
+          <div @fadeSlideInOut class="prose max-w-none px-2 sm:px-4">
+            <div class="text-[#171717]">
+              <!-- <app-safe-html
+                [content]="productDetails | customTranslate : 'more_information'"
+              ></app-safe-html> -->
+
+              @if (_translateService.currentLang == 'ar') {
+              <div [innerHTML]="
+                  productDetails | customTranslate : 'ar_more_information'
+                "></div>
+              } @else if (_translateService.currentLang == 'en') {
+              <div [innerHTML]="
+                  productDetails | customTranslate : 'en_more_information'
+                "></div>
+              }
+            </div>
+          </div>
+          }
         </div>
+      </div>
+      }
+      @if(!isSpecialProduct()) {
+      <div class="mb-6 text-center">
+        <p class="text-black text-base sm:text-lg md:text-price-size mb-3 sm:mb-6">
+          {{ "related-products.title" | translate }}
+        </p>
+
+        <h2 class="text-xl sm:text-2xl md:text-start-size font-semibold mb-6 sm:mb-9">
+          {{ "related-products.explore" | translate }}
+
+          <span class="text-muted-rose">
+            {{ "related-products.title" | translate }}
+          </span>
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-15">
+        @for (product of relatedProducts; track product.id) {
+
+        <app-shared-best-seller [productData]="product"></app-shared-best-seller>
+
         }
       </div>
-    </div>
-    }
-    @if(!isSpecialProduct()) {
-    <div class="mb-6 text-center">
-      <p class="text-black text-base sm:text-lg md:text-price-size mb-3 sm:mb-6">
-        {{ "related-products.title" | translate }}
-      </p>
-
-      <h2 class="text-xl sm:text-2xl md:text-start-size font-semibold mb-6 sm:mb-9">
-        {{ "related-products.explore" | translate }}
-
-        <span class="text-muted-rose">
-          {{ "related-products.title" | translate }}
-        </span>
-      </h2>
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-15">
-      @for (product of relatedProducts; track product.id) {
-
-      <app-shared-best-seller [productData]="product"></app-shared-best-seller>
-
       }
     </div>
-    }
-  </div>
-  } @else {
-  <div class="container mx-auto overflow-hidden">
-    <div class="flex flex-col items-center justify-center h-screen py-16 px-4">
-      <div class="bg-white shadow-lg rounded-lg p-8 max-w-md w-full text-center border border-gray-100">
-        <div class="mb-6">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mx-auto text-[#CBAC8D]" fill="none"
-            viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        </div>
-        <h1 class="text-2xl font-bold text-gray-800 mb-4">
-          {{ "product-not-found.title" | translate }}
-        </h1>
-        <p class="text-gray-600 mb-6">
-          {{ "product-not-found.message" | translate }}
-        </p>
-        <div class="flex flex-col space-y-3">
-          <button (click)="goToShop()"
-            class="cursor-pointer bg-[#CBAC8D] hover:bg-[#b79a7d] text-white font-medium py-2 px-4 rounded-md transition duration-300 ease-in-out">
-            {{ "product-not-found.continue-shopping" | translate }}
-          </button>
+    } @else {
+    <div class="container mx-auto overflow-hidden">
+      <div class="flex flex-col items-center justify-center h-screen py-16 px-4">
+        <div class="bg-white shadow-lg rounded-lg p-8 max-w-md w-full text-center border border-gray-100">
+          <div class="mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mx-auto text-warm-tan" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h1 class="text-2xl font-bold text-gray-800 mb-4">
+            {{ "product-not-found.title" | translate }}
+          </h1>
+          <p class="text-gray-600 mb-6">
+            {{ "product-not-found.message" | translate }}
+          </p>
+          <div class="flex flex-col space-y-3">
+            <button (click)="goToShop()"
+              class="cursor-pointer bg-warm-tan hover:bg-[#b79a7d] text-white font-medium py-2 px-4 rounded-md transition duration-300 ease-in-out">
+              {{ "product-not-found.continue-shopping" | translate }}
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  }
-</section>
+    }
+  </section>
 
-<!-- Special Product Order Modal -->
-@if (productDetails && isSpecialProduct()) {
-<app-special-order-modal [isOpen]="isSpecialOrderModalOpen()" [productId]="productDetails.id" [quantity]="quantity()"
-  [productName]="productDetails | customTranslate : 'name'" [isSubmitting]="isSubmittingSpecialOrder()"
-  (close)="closeSpecialOrderModal()" (formSubmit)="handleSpecialOrderSubmit($event)" />
-}
+  <!-- Special Product Order Modal -->
+  @if (productDetails && isSpecialProduct()) {
+  <app-special-order-modal [isOpen]="isSpecialOrderModalOpen()" [productId]="productDetails.id" [quantity]="quantity()"
+    [productName]="productDetails | customTranslate : 'name'" [isSubmitting]="isSubmittingSpecialOrder()"
+    (close)="closeSpecialOrderModal()" (formSubmit)="handleSpecialOrderSubmit($event)" />
+  }
+</article>

@@ -3,6 +3,7 @@
     opacity: 0;
     transform: translateY(calc(100% + 10px));
   }
+
   to {
     opacity: 1;
     transform: translateY(100%);
@@ -11,10 +12,12 @@
 
 /* Skeleton loader animation */
 @keyframes pulse {
+
   0%,
   100% {
     opacity: 0.6;
   }
+
   50% {
     opacity: 0.3;
   }
@@ -42,6 +45,7 @@ nav {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -51,6 +55,7 @@ nav {
   from {
     opacity: 1;
   }
+
   to {
     opacity: 0;
   }
@@ -60,6 +65,7 @@ nav {
   from {
     transform: translateX(-100%);
   }
+
   to {
     transform: translateX(0);
   }
@@ -69,6 +75,7 @@ nav {
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(-100%);
   }
@@ -78,6 +85,7 @@ nav {
   from {
     transform: translateX(100%);
   }
+
   to {
     transform: translateX(0);
   }
@@ -87,6 +95,7 @@ nav {
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(100%);
   }
@@ -99,11 +108,13 @@ nav {
 }
 
 @media (min-width: 1279px) {
+
   /* show arrow */
   .show-arrow:hover::after {
     transform: translate(50%, 90%) scale(1);
     opacity: 1;
   }
+
   .show-arrow::after {
     content: "";
     position: absolute;
@@ -112,7 +123,7 @@ nav {
     transform: translate(50%, 100%) scale(0.8);
     opacity: 0;
     border: 8px solid;
-    border-color: var(--color-muted-rose) transparent transparent transparent;
+    border-color: var(--color-warm-tan) transparent transparent transparent;
     transition: transform 0.3s ease, opacity 0.3s ease;
     pointer-events: none;
   }
@@ -132,17 +143,20 @@ nav {
 /* Enhanced mobile menu animations */
 .mobile-menu-container .fixed {
   transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-  transform: translateX(-100%); /* Default position for LTR */
+  transform: translateX(-100%);
+  /* Default position for LTR */
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
 .mobile-menu-container.hidden .fixed {
-  visibility: hidden; /* Ensure menu is completely hidden when container is hidden */
+  visibility: hidden;
+  /* Ensure menu is completely hidden when container is hidden */
 }
 
 /* Specific RTL/LTR positioning with transitions */
 :host-context([dir="rtl"]) .mobile-menu-container .fixed {
-  transform: translateX(100%); /* Default position for RTL */
+  transform: translateX(100%);
+  /* Default position for RTL */
 }
 
 /* Apply translate-x-0 when menu is open, with smooth animation */

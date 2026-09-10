@@ -4,5 +4,5 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background-color: #cbac8d;
+  background-color: var(--color-warm-tan);
 }

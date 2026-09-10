@@ -113,11 +113,13 @@
 
 /* Fix for RTL layout */
 :host-context([dir="rtl"]) ::ng-deep .owl-prev i:before {
-  content: "\f054"; /* fa-chevron-right */
+  content: "\f054";
+  /* fa-chevron-right */
 }
 
 :host-context([dir="rtl"]) ::ng-deep .owl-next i:before {
-  content: "\f053"; /* fa-chevron-left */
+  content: "\f053";
+  /* fa-chevron-left */
 }
 
 /* Add Font Awesome */
@@ -170,11 +172,13 @@ section::before {
 
 /* Additional RTL fix for main carousel */
 ::ng-deep [dir="rtl"] .owl-carousel .owl-nav .owl-prev i::before {
-  content: "\f054"; /* fa-chevron-right */
+  content: "\f054";
+  /* fa-chevron-right */
 }
 
 ::ng-deep [dir="rtl"] .owl-carousel .owl-nav .owl-next i::before {
-  content: "\f053"; /* fa-chevron-left */
+  content: "\f053";
+  /* fa-chevron-left */
 }
 
 /* RTL styles for main carousel */
@@ -205,6 +209,7 @@ section::before {
 
 /* Owl Carousel Navigation Styling */
 ::ng-deep .owl-nav {
+
   button.owl-prev,
   button.owl-next {
     display: flex;
@@ -250,6 +255,7 @@ section::before {
 /* Responsive adjustments for the carousel */
 @media (max-width: 768px) {
   ::ng-deep .owl-nav {
+
     button.owl-prev,
     button.owl-next {
       width: 35px;
@@ -325,12 +331,14 @@ section::before {
   font-size: 2em;
   font-weight: bold;
 }
+
 .product-details ::ng-deep hr {
   height: 1px;
   border: none;
   background-color: #000;
   margin: 30px 0;
 }
+
 .product-details ::ng-deep h2 {
   font-size: 1.5em;
   font-weight: bold;
@@ -364,6 +372,11 @@ section::before {
 .product-details ::ng-deep h6 {
   margin: 1em 0 0.5em;
 }
+
 .product-details ::ng-deep li {
   list-style: disc;
+}
+
+::ng-deep :root:has(.special-product) {
+  --color-warm-tan: #1834A3 !important;
 }
