@@ -1,5 +1,5 @@
 <div class="container mx-auto mt-3 mb-{{ marginBottom }}">
-  <div class="header p-9 text-center rounded-2xl relative" [style.background-image]="bannerImage
+  <div class="header p-9 text-center rounded-2xl relative" [class.py-14]="isSpecial" [style.background-image]="bannerImage
     ? 'url(' + bannerImage + ')'
     : 'url(/images/news/4.webp)'" role="banner">
     <h1 id="{{ headingId }}" class="text-title-size font-bold text-white mb-3 capitalize">

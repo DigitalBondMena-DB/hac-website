@@ -1,8 +1,9 @@
 <article [class.special-product]="isSpecialProduct()">
   @if (userRoleAccess) {
   <app-articles-header [title]="productDetails | customTranslate : 'name'"
-    [bannerImage]="imageBaseUrl + productDetails.banner_image" [subTitle]="'shopping.header.subtitle' | translate"
-    [showRotateImage]="true" [marginBottom]="'9'" @fadeIn></app-articles-header>
+    [bannerImage]="imageBaseUrl + productDetails.banner_image" [isSpecial]="isSpecialProduct()"
+    [subTitle]="'shopping.header.subtitle' | translate" [showRotateImage]="true" [marginBottom]="'9'"
+    @fadeIn></app-articles-header>
   }
 
   <section @fadeIn>

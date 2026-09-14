@@ -15,4 +15,5 @@ export class ArticlesHeaderComponent {
   @Input({ required: true }) showRotateImage: boolean = false;
   @Input({ required: true }) marginBottom: string = '';
   @Input() headingId: string = 'section-title';
+  @Input() isSpecial: boolean = false;
 }
