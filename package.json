@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "node dist/HAC-ECO/server/main.js",
-    "build": "ng build",
+    "build": "ng build && node -e \"const fs=require('fs'); if(fs.existsSync('dist/HAC-ECO/browser/index.csr.html')) fs.copyFileSync('dist/HAC-ECO/browser/index.csr.html', 'dist/HAC-ECO/browser/index.html');\"",
     "postbuild": "node -e \"const fs=require('fs'); if(fs.existsSync('dist/HAC-ECO/browser/index.csr.html')) fs.copyFileSync('dist/HAC-ECO/browser/index.csr.html', 'dist/HAC-ECO/browser/index.html');\"",
     "build:ssr": "ng build && ng run HAC-ECO:server",
     "watch": "ng build --watch --configuration development",
