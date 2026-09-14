@@ -38,7 +38,8 @@
       } @else {
       <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 mt-10 rtl:flex-row-reverse">
         <div class="product-images">
-          <div class="carousel-wrapper overflow-hidden rounded-lg mb-4" [class.rtl-carousel]="isRtlMode()">
+          <div class="carousel-wrapper overflow-hidden rounded-lg mb-4"
+            [class]="isSpecialProduct() ? 'border border-warm-tan' : ''" [class.rtl-carousel]="isRtlMode()">
             <owl-carousel-o [options]="mainCarouselOptions" #mainCarousel>
               @for (image of processedImages(); track image.id) {
               <ng-template carouselSlide [id]="'slide_' + image.id">
@@ -68,7 +69,7 @@
         </div>
 
         <!-- Right Side: Product Details -->
-        <div class="product-info rtl:text-right ltr:text-left">
+        <div class="product-info rtl:text-right ltr:text-left flex flex-col justify-between">
           <!-- Global Discount Message -->
           <!-- @if(getGlobalDiscountMessage() && discountPercentage > 0) {
           <div class="mb-4 px-4 my-2">
@@ -136,7 +137,7 @@
 
           @if(productDetails.size){
 
-          <p class="text-[#000] mb-10 font-medium">
+          <p class="text-[#000] mb-10 font-medium ">
             {{ "product_details.size" | translate }} :
             <span class="font-bold">{{ productDetails.size }}</span>
           </p>
@@ -159,7 +160,7 @@
           }
 
           <!-- Quantity Selector and Add to Cart -->
-          <div class="flex flex-wrap gap-x-4 items-center mb-[30px] gap-y-5 sm:gap-y-2">
+          <div class="flex flex-wrap gap-x-4 items-center mb-[30px] lg:mb-0 mt-auto gap-y-5 sm:gap-y-2">
             <!-- Quantity Selector -->
             <div class="quantity-selector flex items-center gap-x-[12px] border border-[#8D8D8D] rounded-full">
               <button (click)="decrementQuantity()" class="cursor-pointer px-3 py-2 text-[#000]"

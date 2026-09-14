@@ -383,6 +383,10 @@ section::before {
   --color-warm-tan: #1834A3 !important;
 }
 
+::ng-deep body:has(.special-product) {
+  padding-top: 10px;
+}
+
 /* Special Product Grounded Tabs Card */
 .special-tabs-card {
   position: relative;
