@@ -10,7 +10,6 @@ import {
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {
   provideRouter,
-  withHashLocation,
   withInMemoryScrolling,
   withViewTransitions,
 } from '@angular/router';
@@ -35,8 +34,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(
       routes,
       withInMemoryScrolling({ scrollPositionRestoration: 'top' }),
-      withViewTransitions({ skipInitialTransition: true }),
-      withHashLocation()
+      withViewTransitions({ skipInitialTransition: true })
     ),
     provideClientHydration(withEventReplay()),
     importProvidersFrom(
