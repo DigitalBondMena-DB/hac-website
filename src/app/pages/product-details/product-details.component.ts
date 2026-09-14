@@ -59,6 +59,7 @@ import { SharedBestSellerComponent } from '../home/components/best-seller/compon
 import { IAllProduct } from '../shopping/res/products.interface';
 import { ProductsService } from '../shopping/res/products.service';
 import { IProduct } from './res/productDetails.interface';
+import { API_CONFIG } from '@core/services/conf/api.config';
 
 @Component({
   selector: 'app-product-details',
@@ -195,6 +196,7 @@ import { IProduct } from './res/productDetails.interface';
 })
 export class ProductDetailsComponent
   implements AfterViewInit, OnInit, OnDestroy {
+  readonly imageBaseUrl = API_CONFIG.BASE_URL_IMAGE;
   @HostBinding('class.rtl') get isRtl() {
     return this.isRtlMode();
   }
