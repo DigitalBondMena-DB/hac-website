@@ -11,6 +11,7 @@ export interface IThankYouOrderData {
   doctor_code?: string;
   address?: string;
   product_id: number | string;
+  product_slug?: string;
   quantity: number;
   product_name?: string;
   submitted_at?: string;

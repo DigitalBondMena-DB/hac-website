@@ -265,6 +265,8 @@ export const routes: Routes = [
         data: {
           title: 'pages.thankyou.title',
           description: 'pages.thankyou.description',
+          hideHeaderFooter: true,
+          robots: 'noindex, nofollow',
         },
       },
 

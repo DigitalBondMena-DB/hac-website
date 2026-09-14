@@ -4,8 +4,9 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Meta } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { LanguageService } from '@core/services/lang/language.service';
 import { ThankYouStateService } from '@core/services/thank-you/thank-you-state.service';
@@ -37,11 +38,22 @@ export class ThankYouComponent implements OnInit, OnDestroy {
   private _thankYouState = inject(ThankYouStateService);
   private _languageService = inject(LanguageService);
   private _router = inject(Router);
+  private _location = inject(Location);
+  private _meta = inject(Meta);
 
   orderData = this._thankYouState.orderData;
   currentLang = 'ar';
 
   ngOnInit(): void {
+    this._meta.updateTag({
+      name: 'robots',
+      content: 'noindex, nofollow',
+    });
+    this._meta.updateTag({
+      name: 'googlebot',
+      content: 'noindex, nofollow',
+    });
+
     this._languageService
       .getLanguage()
       .pipe(take(1))
@@ -51,20 +63,19 @@ export class ThankYouComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Navigate back to shopping page
+   * Return to the product that the user came from
    */
-  continueShopping(): void {
-    this._router.navigate(['/', this.currentLang, 'shopping']);
-  }
-
-  /**
-   * Navigate back to home page
-   */
-  goHome(): void {
-    this._router.navigate(['/', this.currentLang]);
+  backToProduct(): void {
+    const slug = this.orderData()?.product_slug;
+    if (slug) {
+      this._router.navigate(['/', this.currentLang, 'product-details', slug]);
+    } else {
+      this._location.back();
+    }
   }
 
   ngOnDestroy(): void {
     this._thankYouState.clearSubmittedOrder();
   }
 }
+

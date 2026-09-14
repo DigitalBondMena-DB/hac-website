@@ -1,6 +1,6 @@
 <article [class.special-product]="isSpecialProduct()">
   @if (userRoleAccess) {
-  <app-articles-header [title]="productDetails | customTranslate : 'name'"
+  <app-articles-header [title]="productDetails | customTranslate : 'name'" [bannerImage]="productDetails.banner_image"
     [subTitle]="'shopping.header.subtitle' | translate" [showRotateImage]="true" [marginBottom]="'9'"
     @fadeIn></app-articles-header>
   }
@@ -287,13 +287,14 @@
       </div>
 
       <!-- Product Description NavTaps -->
+      @if (visibleTabs.length > 0) {
       <div class="my-16 product-details">
         <div>
           <nav class="flex flex-wrap justify-center sm:flex-nowrap gap-4 sm:gap-6 md:gap-x-10 lg:gap-x-[112px]">
-            @for (tab of productTabs; track tab.id; let i = $index) {
-            <button (click)="setActiveTab(i)" [ngClass]="{
-                'border-warm-tan text-warm-tan underline': activeTab() === i,
-                'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab() !== i,
+            @for (tab of visibleTabs; track tab.id) {
+            <button (click)="setActiveTab(tab.id)" [ngClass]="{
+                'border-warm-tan text-warm-tan underline': currentActiveTab === tab.id,
+                'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': currentActiveTab !== tab.id,
               }" class="text-sm sm:text-price-size font-medium cursor-pointer whitespace-nowrap px-2 py-1">
               {{ tab.title | translate }}
             </button>
@@ -303,77 +304,45 @@
 
         <div class="mt-8 overflow-hidden mb-15">
           <!-- description -->
-          @if (activeTab() === 0) {
+          @if (currentActiveTab === 'description') {
           <div @fadeSlideInOut class="max-w-none text-[#171717] leading-relaxed px-2 sm:px-4">
-            @if (_translateService.currentLang == 'ar') {
-            <div [innerHTML]="productDetails | customTranslate : 'ar_description'"></div>
-            } @else if (_translateService.currentLang == 'en') {
-            <div [innerHTML]="productDetails | customTranslate : 'en_description'"></div>
-            }
+            <div [innerHTML]="getTabContent('description')"></div>
           </div>
           }
 
           <!-- how_to_use -->
-          @if (activeTab() === 1) {
+          @if (currentActiveTab === 'how_to_use') {
           <div @fadeSlideInOut class="prose max-w-none px-2 sm:px-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <!-- <div class="bg-gray-50 p-6 rounded-lg shadow-sm"> -->
               <div class="text-[#171717] mb-4">
-                @if (_translateService.currentLang == 'ar') {
-                <div [innerHTML]="productDetails | customTranslate : 'ar_how_to_use'"></div>
-                } @else if (_translateService.currentLang == 'en') {
-                <div [innerHTML]="productDetails | customTranslate : 'en_how_to_use'"></div>
-                }
-                <!--
-                <app-safe-html
-                  [content]="productDetails | customTranslate : 'how_to_use'"
-                ></app-safe-html> -->
+                <div [innerHTML]="getTabContent('how_to_use')"></div>
               </div>
             </div>
           </div>
           }
 
           <!-- ingredient -->
-          @if (activeTab() === 2) {
+          @if (currentActiveTab === 'ingredient') {
           <div @fadeSlideInOut class="prose max-w-none px-2 sm:px-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div class="text-[#171717] mb-4">
-                <!-- <app-safe-html
-                  [content]="productDetails | customTranslate : 'ingredient'"
-                ></app-safe-html> -->
-
-                @if (_translateService.currentLang == 'ar') {
-                <div [innerHTML]="productDetails | customTranslate : 'ar_ingredient'"></div>
-                } @else if (_translateService.currentLang == 'en') {
-                <div [innerHTML]="productDetails | customTranslate : 'en_ingredient'"></div>
-                }
+                <div [innerHTML]="getTabContent('ingredient')"></div>
               </div>
             </div>
           </div>
           }
 
           <!-- more information -->
-          @if (activeTab() === 3) {
+          @if (currentActiveTab === 'more_information') {
           <div @fadeSlideInOut class="prose max-w-none px-2 sm:px-4">
             <div class="text-[#171717]">
-              <!-- <app-safe-html
-                [content]="productDetails | customTranslate : 'more_information'"
-              ></app-safe-html> -->
-
-              @if (_translateService.currentLang == 'ar') {
-              <div [innerHTML]="
-                  productDetails | customTranslate : 'ar_more_information'
-                "></div>
-              } @else if (_translateService.currentLang == 'en') {
-              <div [innerHTML]="
-                  productDetails | customTranslate : 'en_more_information'
-                "></div>
-              }
+              <div [innerHTML]="getTabContent('more_information')"></div>
             </div>
           </div>
           }
         </div>
       </div>
+      }
       }
       @if(!isSpecialProduct()) {
       <div class="mb-6 text-center">

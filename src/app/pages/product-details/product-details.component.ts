@@ -298,8 +298,144 @@ export class ProductDetailsComponent
     { id: 'more_information', title: 'product_details.tabs.more_information' },
   ];
 
-  // Active tab index
-  activeTab = signal(0);
+  // Active tab identifier
+  activeTab = signal<string>('description');
+
+  /**
+   * Check if a given string contains actual visible content (not falsy, null, or empty HTML)
+   */
+  isValidContent(content: any): boolean {
+    if (!content || typeof content !== 'string') return false;
+
+    const trimmed = content.trim();
+    if (!trimmed || trimmed === 'null' || trimmed === 'undefined') return false;
+
+    // Strip HTML tags and common HTML whitespace entities to check if real text exists
+    const stripped = trimmed
+      .replace(/<[^>]*>/g, '')
+      .replace(/&nbsp;/gi, '')
+      .replace(/&#160;/gi, '')
+      .trim();
+
+    if (stripped.length > 0) {
+      return true;
+    }
+
+    // Check if media tags (images, videos, iframes, tables) exist even without text
+    return /<(img|iframe|video|audio|svg|table)/i.test(trimmed);
+  }
+
+  /**
+   * Get the localized content for a tab, with fallback between Arabic and English
+   */
+  getTabContent(tabId: string): string {
+    if (!this.productDetails) return '';
+    const isArabic = this._translateService.currentLang === 'ar';
+
+    let primary = '';
+    let fallback = '';
+
+    switch (tabId) {
+      case 'description':
+        primary = isArabic
+          ? this.productDetails.ar_description || ''
+          : this.productDetails.en_description || '';
+        fallback = isArabic
+          ? this.productDetails.en_description || ''
+          : this.productDetails.ar_description || '';
+        break;
+      case 'how_to_use':
+        primary = isArabic
+          ? this.productDetails.ar_how_to_use || ''
+          : this.productDetails.en_how_to_use || '';
+        fallback = isArabic
+          ? this.productDetails.en_how_to_use || ''
+          : this.productDetails.ar_how_to_use || '';
+        break;
+      case 'ingredient':
+        primary = isArabic
+          ? this.productDetails.ar_ingredient || ''
+          : this.productDetails.en_ingredient || '';
+        fallback = isArabic
+          ? this.productDetails.en_ingredient || ''
+          : this.productDetails.ar_ingredient || '';
+        break;
+      case 'more_information':
+        primary = isArabic
+          ? this.productDetails.ar_more_information || ''
+          : this.productDetails.en_more_information || '';
+        fallback = isArabic
+          ? this.productDetails.en_more_information || ''
+          : this.productDetails.ar_more_information || '';
+        break;
+    }
+
+    if (!this.isSpecialProduct()) {
+      return primary;
+    }
+
+    if (this.isValidContent(primary)) {
+      return primary;
+    }
+    if (this.isValidContent(fallback)) {
+      return fallback;
+    }
+    return '';
+  }
+
+  /**
+   * Check if a tab has valid non-empty content
+   */
+  hasTabContent(tabId: string): boolean {
+    if (!this.productDetails) return false;
+    const isArabic = this._translateService.currentLang === 'ar';
+    let primary = '';
+    let fallback = '';
+
+    switch (tabId) {
+      case 'description':
+        primary = isArabic ? this.productDetails.ar_description || '' : this.productDetails.en_description || '';
+        fallback = isArabic ? this.productDetails.en_description || '' : this.productDetails.ar_description || '';
+        break;
+      case 'how_to_use':
+        primary = isArabic ? this.productDetails.ar_how_to_use || '' : this.productDetails.en_how_to_use || '';
+        fallback = isArabic ? this.productDetails.en_how_to_use || '' : this.productDetails.ar_how_to_use || '';
+        break;
+      case 'ingredient':
+        primary = isArabic ? this.productDetails.ar_ingredient || '' : this.productDetails.en_ingredient || '';
+        fallback = isArabic ? this.productDetails.en_ingredient || '' : this.productDetails.ar_ingredient || '';
+        break;
+      case 'more_information':
+        primary = isArabic ? this.productDetails.ar_more_information || '' : this.productDetails.en_more_information || '';
+        fallback = isArabic ? this.productDetails.en_more_information || '' : this.productDetails.ar_more_information || '';
+        break;
+    }
+
+    return this.isValidContent(primary) || this.isValidContent(fallback);
+  }
+
+  /**
+   * Returns only the tabs that have valid data for special products, or all tabs for normal products
+   */
+  get visibleTabs(): Array<{ id: string; title: string }> {
+    if (!this.productDetails) return [];
+    if (!this.isSpecialProduct()) {
+      return this.productTabs;
+    }
+    return this.productTabs.filter((tab) => this.hasTabContent(tab.id));
+  }
+
+  /**
+   * Returns the current active tab ID, ensuring it is one of the visible tabs
+   */
+  get currentActiveTab(): string {
+    const tabs = this.visibleTabs;
+    if (!tabs.length) return '';
+    if (tabs.some((t) => t.id === this.activeTab())) {
+      return this.activeTab();
+    }
+    return tabs[0].id;
+  }
 
   /* Cart */
   isAddingToCart = signal(false);
@@ -512,6 +648,7 @@ export class ProductDetailsComponent
           this.activeIndex.set(0);
           this.selectedSize.set('');
           this.selectedChoice.set(null);
+          this.activeTab.set(this.visibleTabs[0]?.id || 'description');
 
           // Check wishlist and cart status for the new product
           if (this._authService.isAuthenticated() && this.userId) {
@@ -1251,8 +1388,8 @@ export class ProductDetailsComponent
   }
 
   // Set active tab
-  setActiveTab(index: number): void {
-    this.activeTab.set(index);
+  setActiveTab(tabId: string): void {
+    this.activeTab.set(tabId);
   }
 
   /**
@@ -1477,6 +1614,24 @@ export class ProductDetailsComponent
 
     // Remove existing meta tags before updating
     this.removeMetaTags();
+
+    // Robots Meta Tag: noindex, nofollow for special products
+    if (this.isSpecialProduct()) {
+      this._metaService.updateTag({
+        name: 'robots',
+        content: 'noindex, nofollow',
+      });
+      this._metaService.updateTag({
+        name: 'googlebot',
+        content: 'noindex, nofollow',
+      });
+    } else {
+      this._metaService.updateTag({
+        name: 'robots',
+        content: 'index, follow',
+      });
+      this._metaService.removeTag("name='googlebot'");
+    }
 
     // Update Page Title & Meta Description
     if (title) {
@@ -1864,9 +2019,19 @@ export class ProductDetailsComponent
           this.productDetails?.en_name ||
           '';
 
+        const productSlug =
+          (this.isRTL()
+            ? this.productDetails?.ar_slug
+            : this.productDetails?.en_slug) ||
+          this.productDetails?.ar_slug ||
+          this.productDetails?.en_slug ||
+          this._route.snapshot.paramMap.get('slug') ||
+          '';
+
         this._thankYouState.setSubmittedOrder({
           ...orderData,
           product_name: productName,
+          product_slug: productSlug,
           submitted_at: new Date().toISOString(),
         });
 

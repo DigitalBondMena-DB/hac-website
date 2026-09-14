@@ -13,6 +13,8 @@ import {
   OnInit,
   PLATFORM_ID,
   Renderer2,
+  computed,
+  signal,
 } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import {
@@ -70,12 +72,19 @@ export class AppComponent implements OnInit, OnDestroy {
   isRamadanMonth = isRamadanMonth;
   currentLang$ = this._languageService.getLanguage();
 
+  isThankYouPage = signal<boolean>(false);
+
+  shouldShowNavbarAndFooter = computed(() => {
+    return !this.productsService.isSpecialProduct() && !this.isThankYouPage();
+  });
+
   constructor(@Inject(DOCUMENT) private document: Document) {
     this.translate.addLangs(['ar', 'en']);
     this.translate.setDefaultLang('ar');
   }
 
   ngOnInit(): void {
+    this.checkIfThankYouPage(this.router.url);
     // Initialize meta title/description on first load
     this.updateMetaTags();
     this.addSchema();
@@ -111,10 +120,29 @@ export class AppComponent implements OnInit, OnDestroy {
         this.metaTagsUpdated = false;
         this.setMetaTags(data);
         const currentUrl = this.router.url;
+        this.checkIfThankYouPage(currentUrl, data);
         if (!currentUrl.includes('/product-details/')) {
           this.productsService.setIsSpecialProduct(false);
         }
       });
+  }
+
+  private checkIfThankYouPage(url?: string, data?: any): void {
+    if (data?.['hideHeaderFooter']) {
+      this.isThankYouPage.set(true);
+      return;
+    }
+    const currentUrl = url || this.router.url || '';
+    const hash =
+      this.isBrowser && typeof window !== 'undefined'
+        ? window.location.hash
+        : '';
+    const isThankYou =
+      currentUrl.includes('/thankYou') ||
+      currentUrl.includes('/thank-you') ||
+      hash.includes('/thankYou') ||
+      hash.includes('/thank-you');
+    this.isThankYouPage.set(isThankYou);
   }
 
   private updateMetaTags() {
@@ -138,6 +166,30 @@ export class AppComponent implements OnInit, OnDestroy {
       currentUrl.includes('/product-details/') || currentUrl.includes('/blog/');
 
     const currentLang = this.translate.currentLang;
+
+    // Handle robots meta tag
+    const isThankYou =
+      this.isThankYouPage() ||
+      currentUrl.includes('/thankYou') ||
+      currentUrl.includes('/thank-you') ||
+      data?.['robots'] === 'noindex, nofollow';
+
+    if (isThankYou) {
+      this.meta.updateTag({
+        name: 'robots',
+        content: 'noindex, nofollow',
+      });
+      this.meta.updateTag({
+        name: 'googlebot',
+        content: 'noindex, nofollow',
+      });
+    } else if (!isDynamicMetaPage) {
+      this.meta.updateTag({
+        name: 'robots',
+        content: 'index, follow',
+      });
+      this.meta.removeTag("name='googlebot'");
+    }
 
     // Only update title and description meta tags for non-dynamic pages
     if (!isDynamicMetaPage) {

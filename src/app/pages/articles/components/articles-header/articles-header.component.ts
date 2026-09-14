@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 export class ArticlesHeaderComponent {
   @Input({ required: true }) title: string = '';
   @Input({ required: true }) subTitle: string = '';
+  @Input() bannerImage: string = '';
   @Input({ required: true }) showRotateImage: boolean = false;
   @Input({ required: true }) marginBottom: string = '';
   @Input() headingId: string = 'section-title';

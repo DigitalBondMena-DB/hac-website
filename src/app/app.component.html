@@ -1,5 +1,5 @@
 <div [class.national-day-pattern]="isNationalDay">
-  @if (!productsService.isSpecialProduct()) {
+  @if (shouldShowNavbarAndFooter()) {
   @defer (on timer(1000)) {
   <app-navbar></app-navbar>
   }
@@ -81,7 +81,7 @@
   </ngx-spinner>
   <router-outlet></router-outlet>
 </div>
-@if (!productsService.isSpecialProduct()) {
+@if (shouldShowNavbarAndFooter()) {
 <app-footer></app-footer>
 }
 <app-alert></app-alert>

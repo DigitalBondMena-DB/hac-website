@@ -1411,11 +1411,11 @@
     }
   },
   "thank_you": {
-    "title": "Thank You! Your Order Has Been Placed Successfully",
-    "subtitle": "We are delighted to serve you. Your order details have been received and our team will contact you shortly to confirm delivery details.",
-    "status_badge": "Order Under Review & Processing",
+    "title": "Thank You! Your Request Has Been Placed Successfully",
+    "subtitle": "We are delighted to serve you. Your request details have been received and our team will contact you shortly to confirm delivery details.",
+    "status_badge": "Request Under Review & Processing",
     "response_time": "You will be contacted during business hours",
-    "order_details_title": "Order Summary Details",
+    "order_details_title": "Request Summary Details",
     "product_name": "Product Name",
     "quantity": "Quantity Requested",
     "customer_name": "Customer Name",
@@ -1428,14 +1428,15 @@
     "delivery_address": "Delivery Address",
     "timeline": {
       "title": "What Happens Next?",
-      "step1_title": "Order Received",
-      "step1_desc": "Your order has been registered in our system and assigned to a customer service specialist.",
+      "step1_title": "Request Received",
+      "step1_desc": "Your request has been registered in our system and assigned to a customer service specialist.",
       "step2_title": "Confirmation Call",
       "step2_desc": "We will reach out via phone or WhatsApp to verify delivery details and timing.",
       "step3_title": "Preparation & Delivery",
       "step3_desc": "Your product will be carefully packed and delivered straight to your doorstep promptly."
     },
     "continue_shopping": "Continue Shopping",
-    "back_to_home": "Back to Home"
+    "back_to_home": "Back to Home",
+    "back_to_product": "Back to Product"
   }
 }
