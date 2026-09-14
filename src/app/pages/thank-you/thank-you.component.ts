@@ -5,12 +5,12 @@ import {
   trigger,
 } from '@angular/animations';
 import { CommonModule, Location } from '@angular/common';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { LanguageService } from '@core/services/lang/language.service';
 import { ThankYouStateService } from '@core/services/thank-you/thank-you-state.service';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { take } from 'rxjs';
 
 @Component({
@@ -34,15 +34,19 @@ import { take } from 'rxjs';
     ]),
   ],
 })
-export class ThankYouComponent implements OnInit, OnDestroy {
+export class ThankYouComponent implements OnInit {
   private _thankYouState = inject(ThankYouStateService);
   private _languageService = inject(LanguageService);
+  private _translateService = inject(TranslateService);
   private _router = inject(Router);
   private _location = inject(Location);
   private _meta = inject(Meta);
 
   orderData = this._thankYouState.orderData;
-  currentLang = 'ar';
+
+  get currentLang(): string {
+    return this._translateService.currentLang || 'ar';
+  }
 
   ngOnInit(): void {
     this._meta.updateTag({
@@ -58,8 +62,20 @@ export class ThankYouComponent implements OnInit, OnDestroy {
       .getLanguage()
       .pipe(take(1))
       .subscribe((lang) => {
-        this.currentLang = lang || 'ar';
+        if (lang) {
+          this._translateService.use(lang);
+        }
       });
+  }
+
+  /**
+   * Switch language between Arabic and English on Thank You page
+   */
+  switchLanguage(lang: 'ar' | 'en'): void {
+    if (this.currentLang === lang) return;
+    this._router.navigate(['/', lang, 'thankYou']).then(() => {
+      this._translateService.use(lang);
+    });
   }
 
   /**
@@ -73,9 +89,6 @@ export class ThankYouComponent implements OnInit, OnDestroy {
       this._location.back();
     }
   }
-
-  ngOnDestroy(): void {
-    this._thankYouState.clearSubmittedOrder();
-  }
 }
+
 
