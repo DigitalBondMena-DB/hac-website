@@ -1975,6 +1975,39 @@ export class ProductDetailsComponent
   }
 
   /**
+   * Get current language ('ar' or 'en')
+   */
+  get currentLang(): string {
+    return (
+      this._translateService.currentLang ||
+      (this.isRtlMode() ? 'ar' : 'en')
+    );
+  }
+
+  /**
+   * Switch language between Arabic and English for special product
+   */
+  switchLanguage(lang: 'ar' | 'en'): void {
+    if (this.currentLang === lang) return;
+
+    const targetSlug =
+      lang === 'ar'
+        ? this.productDetails?.ar_slug
+        : this.productDetails?.en_slug;
+
+    const currentSlug = this._route.snapshot.paramMap.get('slug');
+    const slug = (targetSlug && targetSlug.trim()) ? targetSlug : currentSlug;
+
+    if (slug) {
+      this._router.navigate(['/', lang, 'product-details', slug]).then(() => {
+        this._translateService.use(lang);
+      });
+    } else {
+      this._languageService.changeLanguage(lang, this._router.url);
+    }
+  }
+
+  /**
    * Check if current product is a special product
    */
   isSpecialProduct(): boolean {

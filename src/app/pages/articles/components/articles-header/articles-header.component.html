@@ -1,6 +1,6 @@
 <div class="container mx-auto mt-3 mb-{{ marginBottom }}">
   <div class="header p-9 text-center rounded-2xl relative" [class.py-14]="isSpecial" [style.background-image]="bannerImage
-    ? 'url(' + bannerImage + ')'
+    ? 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(' + bannerImage + ')'
     : 'url(/images/news/4.webp)'" role="banner">
     <h1 id="{{ headingId }}" class="text-title-size font-bold text-white mb-3 capitalize">
       {{ title }}
@@ -11,7 +11,7 @@
     @if (showRotateImage) {
     <figure class="hidden md:block absolute right-[23px] top-[23px] w-[73px] h-[73px]">
       <img loading="lazy" width="73" height="73" class="max-w-[73px]" src="/images/common/rotate.webp"
-        alt="Rotating animation" fetchpriority="low" aria-hidden="true" />
+        alt="Rotating animation" fetchpriority="low" aria-hidden="true" [class]="isSpecial? 'invert': ''" />
     </figure>
     }
   </div>

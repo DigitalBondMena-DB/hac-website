@@ -1,4 +1,39 @@
 <article [class.special-product]="isSpecialProduct()">
+  <!-- Language Switcher for Special Product (Navbar is hidden for special products) -->
+  @if (isSpecialProduct() && userRoleAccess) {
+  <aside class="fixed top-4 end-4 sm:top-6 sm:end-6 z-50" aria-label="Language Switcher">
+    <div
+      class="flex items-center bg-white/95 backdrop-blur-md shadow-lg border border-gray-200/80 rounded-full p-1 gap-1 transition-all duration-300 hover:shadow-xl">
+      <button
+        type="button"
+        (click)="switchLanguage('ar')"
+        [class.bg-warm-tan]="currentLang === 'ar'"
+        [class.text-white]="currentLang === 'ar'"
+        [class.shadow-sm]="currentLang === 'ar'"
+        [class.text-gray-700]="currentLang !== 'ar'"
+        [class.hover:bg-gray-100]="currentLang !== 'ar'"
+        class="cursor-pointer flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200"
+        aria-label="العربية">
+        <span class="text-sm">🇸🇦</span>
+        <span>العربية</span>
+      </button>
+      <button
+        type="button"
+        (click)="switchLanguage('en')"
+        [class.bg-warm-tan]="currentLang === 'en'"
+        [class.text-white]="currentLang === 'en'"
+        [class.shadow-sm]="currentLang === 'en'"
+        [class.text-gray-700]="currentLang !== 'en'"
+        [class.hover:bg-gray-100]="currentLang !== 'en'"
+        class="cursor-pointer flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200"
+        aria-label="English">
+        <span class="text-sm">🇬🇧</span>
+        <span>English</span>
+      </button>
+    </div>
+  </aside>
+  }
+
   @if (userRoleAccess) {
   <app-articles-header [title]="productDetails | customTranslate : 'name'"
     [bannerImage]="imageBaseUrl + productDetails.banner_image" [isSpecial]="isSpecialProduct()"
@@ -314,7 +349,7 @@
           <!-- how_to_use -->
           @if (currentActiveTab === 'how_to_use') {
           <div @fadeSlideInOut class="prose max-w-none px-2 sm:px-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div [class.text-center]="isSpecialProduct()">
               <div class="text-[#171717] mb-4">
                 <div [innerHTML]="getTabContent('how_to_use')"></div>
               </div>
@@ -325,7 +360,7 @@
           <!-- ingredient -->
           @if (currentActiveTab === 'ingredient') {
           <div @fadeSlideInOut class="prose max-w-none px-2 sm:px-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div [class.text-center]="isSpecialProduct()">
               <div class="text-[#171717] mb-4">
                 <div [innerHTML]="getTabContent('ingredient')"></div>
               </div>
@@ -336,7 +371,7 @@
           <!-- more information -->
           @if (currentActiveTab === 'more_information') {
           <div @fadeSlideInOut class="prose max-w-none px-2 sm:px-4">
-            <div class="text-[#171717]">
+            <div class="text-[#171717]" [class.text-center]="isSpecialProduct()">
               <div [innerHTML]="getTabContent('more_information')"></div>
             </div>
           </div>
