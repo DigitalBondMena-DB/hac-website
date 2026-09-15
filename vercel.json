@@ -1,23 +1,16 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "server.mjs",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "dist/**",
-      "use": "@vercel/static"
-    }
-  ],
+  "outputDirectory": "dist/HAC-ECO/browser",
   "routes": [
-    {
-      "src": "/assets/(.*)",
-      "dest": "/dist/browser/assets/$1"
-    },
+    { "handle": "filesystem" },
     {
       "src": "/(.*)",
-      "dest": "/server.mjs"
+      "dest": "/api/index.mjs"
     }
-  ]
+  ],
+  "functions": {
+    "api/index.mjs": {
+      "includeFiles": "dist/HAC-ECO/**"
+    }
+  }
 }
