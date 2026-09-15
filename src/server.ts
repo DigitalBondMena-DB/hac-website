@@ -227,4 +227,4 @@ if (isMainModule(import.meta.url)) {
   });
 }
 
-export const reqHandler = createNodeRequestHandler(app);
+export default createNodeRequestHandler(app);
