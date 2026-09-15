@@ -82,7 +82,6 @@ export class OrdersComponent implements OnInit {
       )
       .subscribe({
         next: (response: IGetOrders) => {
-          console.log('all users orders ', response);
           this.loading.set(false);
           if (response && response.row) {
             this.orders.set(response);
@@ -130,7 +129,6 @@ export class OrdersComponent implements OnInit {
 
   getOrderStatusConfig(status: string): OrderStatusConfig {
     const statusLower = status.toLowerCase();
-    console.log('Status:', status, 'Lowercase:', statusLower);
 
     let config: OrderStatusConfig;
 
@@ -191,7 +189,6 @@ export class OrdersComponent implements OnInit {
         break;
     }
 
-    console.log('Config returned:', config);
     return config;
   }
 

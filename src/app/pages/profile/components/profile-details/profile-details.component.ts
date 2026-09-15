@@ -71,7 +71,6 @@ export class ProfileDetailsComponent implements OnInit {
         next: (response) => {
           this.loading.set(false);
           if (response && response.row) {
-            console.log(response);
             this.populateForm(response.row);
           }
         },
@@ -85,7 +84,6 @@ export class ProfileDetailsComponent implements OnInit {
 
   populateForm(userData: any): void {
     if (userData) {
-      console.log(userData);
       this.loginForm.patchValue({
         firstName: userData.name.split(' ')[0] || '',
         lastName: userData.name.split(' ')[1] || '',
@@ -98,7 +96,6 @@ export class ProfileDetailsComponent implements OnInit {
   submition(): void {
     if (this.loginForm.valid) {
       this.loading.set(true);
-      console.log(this.loginForm.value);
       const userData = {
         name: `${this.loginForm.value.firstName} ${this.loginForm.value.lastName}`,
         phone: this.loginForm.value.phone,

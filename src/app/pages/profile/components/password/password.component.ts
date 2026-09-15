@@ -66,7 +66,6 @@ export class PasswordComponent implements OnInit {
       .subscribe({
         next: (response) => {
           if (response && response.row) {
-            console.log(response.row);
             this.passwordForm.patchValue({
               name: response.row.name,
               phone: response.row.phone,
@@ -87,7 +86,6 @@ export class PasswordComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.passwordForm.value);
     if (this.passwordForm.valid) {
       this.isLoading = true;
       const finalData = {
@@ -101,7 +99,6 @@ export class PasswordComponent implements OnInit {
         .pipe(takeUntilDestroyed(this._destroyRef))
         .subscribe({
           next: (response) => {
-            console.log(response);
             this.isLoading = false;
             if (response.success) {
               // Show success notification (without buttons)

@@ -820,11 +820,6 @@ export class ProductDetailsComponent
   processProductImages(): void {
     const images: Array<{ id: number; url: string; alt: string }> = [];
 
-    console.log(
-      'this.productDetails.additional_images.length',
-      this.productDetails.additional_images
-    );
-
     // Try to process actual additional images if they exist
     if (
       this.productDetails &&
@@ -848,9 +843,6 @@ export class ProductDetailsComponent
         console.error('Error processing additional images:', error);
       }
     }
-
-    console.log('Final processed images:', images);
-
     this.processedImages.set(images);
   }
 

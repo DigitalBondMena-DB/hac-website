@@ -235,7 +235,6 @@ export class SharedBestSellerComponent implements OnInit {
 
   private addNewItemToCart(): void {
     if (!this.productData?.id) return;
-    console.log('productData', this.productData.id);
     const formData = new FormData();
     formData.append('product_id', this.productData.id.toString());
     formData.append('quantity', '1');
@@ -490,7 +489,6 @@ export class SharedBestSellerComponent implements OnInit {
         'alerts.cart.add_success.title'
       );
       this._authService.cartCountSignal.set(cart.length);
-      console.log('cartCountSignal', this._authService.cartCountSignal());
     } else {
       // If product is already in cart, just reset loading state
       this.setCartLoading(false);
@@ -528,7 +526,6 @@ export class SharedBestSellerComponent implements OnInit {
           'alerts.cart.remove_success.title'
         );
         this._authService.cartCountSignal.set(updatedCart.length);
-        console.log('cartCountSignal', this._authService.cartCountSignal());
       },
       onCancel: () => {
         this.setCartLoading(false);

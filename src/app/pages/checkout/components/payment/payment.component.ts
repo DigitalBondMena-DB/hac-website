@@ -164,7 +164,6 @@ export class PaymentComponent implements OnInit {
 
   langIs: string = '';
   ngOnInit(): void {
-    console.log('ngOnInit');
     this.checkForFailedPayment();
 
     this.currentLang$.subscribe((lang) => {
@@ -210,9 +209,9 @@ export class PaymentComponent implements OnInit {
 
               this._notificationService.error(
                 errorMessages.title[currentLang as 'en' | 'ar'] ||
-                  errorMessages.title.en,
+                errorMessages.title.en,
                 errorMessages.message[currentLang as 'en' | 'ar'] ||
-                  errorMessages.message.en
+                errorMessages.message.en
               );
             });
 
@@ -265,9 +264,9 @@ export class PaymentComponent implements OnInit {
       this.selectedPaymentMethod() === PaymentMethod.ONLINE_PAYMENT_Apple_Pay ||
       this.selectedPaymentMethod() === PaymentMethod.ONLINE_PAYMENT_STC_Pay ||
       this.selectedPaymentMethod() ===
-        PaymentMethod.ONLINE_PAYMENT_Apple_Pay_Mada ||
+      PaymentMethod.ONLINE_PAYMENT_Apple_Pay_Mada ||
       this.selectedPaymentMethod() ===
-        PaymentMethod.ONLINE_PAYMENT_Google_Pay ||
+      PaymentMethod.ONLINE_PAYMENT_Google_Pay ||
       this.selectedPaymentMethod() === PaymentMethod.ONLINE_PAYMENT_TAMARA
     ) {
       this.redirectToPaymentGateway();
@@ -285,7 +284,6 @@ export class PaymentComponent implements OnInit {
       .subscribe({
         next: (response: any) => {
           this.isSubmitting.set(false);
-          console.log(response);
           // Navigate to track order page with order ID
           let currentLang = 'en';
           this._languageService.getLanguage().subscribe((lang) => {
@@ -510,8 +508,7 @@ export class PaymentComponent implements OnInit {
                     this._ordersService
                       .tamaraWebhook(tamaraData)
                       .pipe(takeUntilDestroyed(this._destroyRef))
-                      .subscribe((response) => {
-                        console.log('response', response);
+                      .subscribe(() => {
                         window.location.href = res.checkout_url;
                       });
                   } else {

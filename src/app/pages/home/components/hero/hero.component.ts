@@ -166,18 +166,5 @@ export class HeroComponent implements OnInit, OnDestroy, AfterViewInit {
     }, 100);
   }
 
-  private loadHeroSection(): void {
-    this.subscription.add(
-      this.homeService.getHomeData().subscribe({
-        next: (data: any) => {
-          console.log(data);
-          
-          this.heroSection = data.slider;
-        },
-        error: (error: unknown) => {
-          console.error('Error loading hero section:', error);
-        },
-      })
-    );
-  }
+
 }

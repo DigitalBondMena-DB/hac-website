@@ -138,9 +138,7 @@ export class WishlistComponent implements OnInit {
         // Check different possible response formats
         if (response && Array.isArray(response.wishs)) {
           this.wishlistItem = response.wishs;
-          console.log('Wishlist items loaded:', this.wishlistItem.length);
         } else {
-          console.log('No wishlist items found or unexpected response format');
           this.wishlistItem = [];
         }
         this.isLoading = false;

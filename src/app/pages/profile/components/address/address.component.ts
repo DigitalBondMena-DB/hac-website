@@ -76,7 +76,6 @@ export class AddressComponent implements OnInit {
           this.loading.set(false);
           if (response && response.row) {
             this.address = response.row.addresses;
-            console.log(response.row);
             this.populateForm(response.row);
           }
         },

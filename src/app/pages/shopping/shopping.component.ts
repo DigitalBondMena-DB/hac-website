@@ -494,12 +494,9 @@ export class ShoppingComponent implements OnInit, OnDestroy {
    * Maintains language-aware category slugs
    */
   toggleFilter(category: ICategory, event: any): void {
-    console.log(category);
-    console.log(event);
     const isChecked =
       event.checked !== undefined ? event.checked : event.target.checked;
     const currentFilters = this.selectedFilters();
-    console.log(currentFilters);
 
     const currentLang = this._translate.currentLang;
     const categorySlug =
@@ -538,9 +535,6 @@ export class ShoppingComponent implements OnInit, OnDestroy {
 
       // Don't clear subcategory IDs - allow multiple subcategory selection under same category
     } else {
-      // UNCHECKING A CATEGORY - Clear both category and its subcategories
-      console.log(isChecked);
-
       // Remove from UI filters
       this.selectedFilters.set(
         currentFilters.filter((item) => item !== categorySlug)

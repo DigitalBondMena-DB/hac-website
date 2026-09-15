@@ -47,7 +47,6 @@ export class ThankYouComponent implements OnInit {
   orderData = this._thankYouState.orderData;
   safeDriveFileUrl = computed(() => {
     const url = this.orderData()?.drive_file_url;
-    console.log(url, this.orderData());
 
     return url ? this._sanitizer.bypassSecurityTrustResourceUrl(url) : null;
   });

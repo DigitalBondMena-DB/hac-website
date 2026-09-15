@@ -8,14 +8,10 @@ import { IContactUsForm } from './contact-us.interface';
   providedIn: 'root',
 })
 export class ContactUsService {
-  constructor() {
-    console.log('from constructor');
-  }
   apiService = inject(ApiService);
   private http = inject(HttpClient);
 
   getContactUs() {
-    console.log('from origin fun');
     return this.apiService.get(API_CONFIG.STATIC_PAGES.CONTACT_US);
   }
 

@@ -107,7 +107,6 @@ export class TamaraWidgetComponent implements OnDestroy {
     script.defer = true;
 
     script.onload = () => {
-      console.log('Tamara Widget V2 script loaded successfully');
       this.isWidgetInitialized.set(true);
     };
 
@@ -131,7 +130,6 @@ export class TamaraWidgetComponent implements OnDestroy {
       (window as any).TamaraWidgetV2.refresh
     ) {
       (window as any).TamaraWidgetV2.refresh();
-      console.log('Tamara widget refreshed for language/country change');
     }
   }
 

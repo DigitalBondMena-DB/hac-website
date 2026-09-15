@@ -74,8 +74,6 @@ export class ProductsService {
 
     // Add stock status
     formData.append('stock_status', data.stock_status || '0');
-    console.log(data);
-    // Make the API call
     return this.apiService.post(
       `${API_CONFIG.PRODUCTS.GLOBAL_SEARCH}`,
       formData

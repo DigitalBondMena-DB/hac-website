@@ -441,7 +441,6 @@ export class CheckoutAddressComponent implements OnInit {
    * Get the currently selected address object
    */
   getSelectedAddress(): IAddress | null {
-    console.log(this.selectedAddressId());
     if (!this.selectedAddressId()) return null;
     const address = this.addresses().find(
       (addr) => addr.id === this.selectedAddressId()

@@ -138,10 +138,8 @@ export class HomeComponent implements OnInit {
 
   constructor() {
     effect(() => {
-      console.log(this.sliders());
       const data = this.homeDataSignal();
       if (data && !this.hasInitialData) {
-        console.log('Home data updated in signal');
         this.hasInitialData = true;
         this.isLoading.set(false);
       }
@@ -153,7 +151,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
     this.loadHomeData();
   }
 

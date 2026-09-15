@@ -54,7 +54,6 @@ export class TrackOrdersComponent implements OnInit {
       .pipe(
         switchMap((params) => {
           const pathOrderId = params.get('order-id');
-          console.log('Path order-id:', pathOrderId);
           this.orderId.set(pathOrderId);
 
           // Get query parameters - check both paymentId and PaymentId (case sensitive)
@@ -65,7 +64,6 @@ export class TrackOrdersComponent implements OnInit {
               const paymentStatus = queryParams.get('paymentStatus');
 
               if (queryOrderId) {
-                console.log('Query order-id:', queryOrderId);
                 this.orderId.set(queryOrderId);
               }
 

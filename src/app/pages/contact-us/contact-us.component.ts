@@ -175,7 +175,6 @@ export class ContactUsComponent implements OnInit {
     this.contactUsService.getContactUs().subscribe({
       next: (response: any) => {
         if (response) {
-          console.log(response);
           this.contactUs.set(response.contact);
         }
       },

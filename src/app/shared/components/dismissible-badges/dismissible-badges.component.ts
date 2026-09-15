@@ -15,6 +15,5 @@ export class DismissibleBadgesComponent {
     const badge = this.badges[index];
     this.badges.splice(index, 1);
     this.badgeRemoved.emit(badge); // Emit the badge value
-    console.log('remove badge', badge);
   }
 }

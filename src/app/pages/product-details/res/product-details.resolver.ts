@@ -39,9 +39,6 @@ export const productDetailsResolver: ResolveFn<IProductDetails | null> = (
   const currentLang = route.parent?.paramMap.get('lang'); // 'ar' or 'en'
   const slug = route.paramMap.get('slug');
 
-  console.log('not slug', slug);
-  console.log('not currentLang', currentLang);
-
   if (!slug || !currentLang) {
     // Default to Arabic if no language is provided
     const fallbackLang = currentLang || 'ar';
@@ -65,20 +62,12 @@ export const productDetailsResolver: ResolveFn<IProductDetails | null> = (
       const correctSlug =
         currentLang === 'ar' ? product.ar_slug : product.en_slug;
 
-      console.log(
-        `Current slug: ${slug}, Correct slug: ${correctSlug}, Language: ${currentLang}`
-      );
-
       // Only redirect if we have a correct slug and it's different from current
       if (correctSlug && correctSlug.trim() && slug !== correctSlug) {
-        console.log(
-          `Redirecting to correct slug: /${currentLang}/product-details/${correctSlug}`
-        );
         // Redirect to the correct slug
         router.navigate([`/${currentLang}/product-details/${correctSlug}`]);
         return of(null);
       }
-      console.log('productDetails', productDetails);
       // Everything is fine - return the product details
       return of(productDetails);
     }),
