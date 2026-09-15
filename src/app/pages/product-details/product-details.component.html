@@ -37,17 +37,19 @@
       <app-product-details-skeleton />
       } @else {
       <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 mt-10 rtl:flex-row-reverse">
-        <div class="product-images">
-          <div class="carousel-wrapper overflow-hidden rounded-lg mb-4 lg:mb-0"
+        <div class="product-images flex flex-col justify-between">
+          <div class="carousel-wrapper overflow-hidden rounded-lg mb-4 lg:mb-0 grow flex items-center justify-center"
             [class]="isSpecialProduct() ? 'border border-warm-tan' : ''" [class.rtl-carousel]="isRtlMode()">
-            <owl-carousel-o [options]="mainCarouselOptions" #mainCarousel>
-              @for (image of processedImages(); track image.id) {
-              <ng-template carouselSlide [id]="'slide_' + image.id">
-                <img loading="lazy" [appImageUrl]="image.url" [imageEndpoint]="''" [alt]="image.alt"
-                  class="w-full h-auto object-cover" />
-              </ng-template>
-              }
-            </owl-carousel-o>
+            <div class="w-full">
+              <owl-carousel-o [options]="mainCarouselOptions" #mainCarousel>
+                @for (image of processedImages(); track image.id) {
+                <ng-template carouselSlide [id]="'slide_' + image.id">
+                  <img loading="lazy" [appImageUrl]="image.url" [imageEndpoint]="''" [alt]="image.alt"
+                    class="w-full h-auto object-cover" />
+                </ng-template>
+                }
+              </owl-carousel-o>
+            </div>
           </div>
 
           <!-- Thumbnail Gallery - Only show when there are additional images -->

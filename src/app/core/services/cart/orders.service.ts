@@ -184,7 +184,7 @@ export class OrdersService {
     formData.append('product_id', orderData.product_id.toString());
     formData.append('quantity', orderData.quantity.toString());
     if (orderData.prescription) {
-      formData.append('prescription', orderData.prescription);
+      formData.append('file', orderData.prescription);
     }
 
     return this.api.post<any>(`${API_CONFIG.ORDERS.SPECIAL_ORDER}`, formData);
