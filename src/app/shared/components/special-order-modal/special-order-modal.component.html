@@ -193,6 +193,123 @@
             <span>{{ getErrorMessage("doctor_code") }}</span>
           </div>
         </div>
+
+        <!-- 8. Prescription (Optional, Max 3MB) -->
+        <div class="sm:col-span-2">
+          <div class="flex items-center justify-between mb-1.5">
+            <label for="special_order_prescription" class="block text-sm font-medium text-gray-700">
+              {{ "special_order.fields.prescription.label" | translate }}
+              <span class="text-gray-400 font-normal text-xs ltr:ml-1 rtl:mr-1">
+                {{ "special_order.fields.prescription.optional" | translate }}
+              </span>
+            </label>
+            <span class="text-xs text-gray-400">
+              {{ "special_order.fields.prescription.max_size_hint" | translate }}
+            </span>
+          </div>
+
+          <!-- Hidden Native Input -->
+          <input
+            #prescriptionInput
+            type="file"
+            id="special_order_prescription"
+            (change)="onFileSelected($event)"
+            accept=".pdf,application/pdf,image/jpeg,image/png,image/webp,image/jpg"
+            class="hidden"
+          />
+
+          <!-- Upload Drop/Click Box when no file is selected -->
+          <div
+            *ngIf="!selectedPrescriptionFile"
+            (click)="prescriptionInput.click()"
+            (dragover)="onDragOver($event)"
+            (dragleave)="onDragLeave($event)"
+            (drop)="onFileDropped($event)"
+            [ngClass]="{
+              'border-warm-tan bg-warm-tan/5': isDragging,
+              'border-red-500 bg-red-50/20': prescriptionError,
+              'border-[#8D8D8D]/40 bg-[#FAFAF8] hover:border-warm-tan hover:bg-warm-tan/5': !isDragging && !prescriptionError
+            }"
+            class="border-2 border-dashed rounded-[16px] p-4 text-center cursor-pointer transition-all duration-200 flex flex-col items-center justify-center gap-1.5"
+          >
+            <div class="w-10 h-10 rounded-full bg-warm-tan/10 text-warm-tan flex items-center justify-center">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+              </svg>
+            </div>
+            <p class="text-sm text-gray-700">
+              <span class="text-warm-tan font-semibold underline">{{ "special_order.fields.prescription.choose_file" | translate }}</span>
+              <span class="text-gray-500"> {{ "special_order.fields.prescription.or_drag" | translate }}</span>
+            </p>
+            <p class="text-xs text-gray-400">
+              {{ "special_order.fields.prescription.hint" | translate }}
+            </p>
+          </div>
+
+          <!-- File Display Card when file is selected -->
+          <div
+            *ngIf="selectedPrescriptionFile"
+            class="flex items-center justify-between p-3 bg-[#FBF9F6] border border-warm-tan/30 rounded-[16px] gap-3"
+          >
+            <div class="flex items-center gap-3 min-w-0">
+              <!-- File Icon -->
+              <div class="w-10 h-10 rounded-xl bg-warm-tan/15 text-warm-tan flex items-center justify-center shrink-0">
+                <svg *ngIf="isPdfFile" class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd"
+                    d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
+                    clip-rule="evenodd" />
+                </svg>
+                <svg *ngIf="!isPdfFile" class="w-5 h-5 text-warm-tan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+
+              <!-- File Details -->
+              <div class="min-w-0">
+                <p class="text-sm font-medium text-gray-800 truncate" [title]="selectedPrescriptionFile.name">
+                  {{ selectedPrescriptionFile.name }}
+                </p>
+                <p class="text-xs text-gray-400">
+                  {{ getFormattedFileSize(selectedPrescriptionFile.size) }}
+                </p>
+              </div>
+            </div>
+
+            <!-- Change & Delete Actions -->
+            <div class="flex items-center gap-1.5 shrink-0">
+              <button
+                type="button"
+                (click)="prescriptionInput.click()"
+                class="cursor-pointer text-xs font-medium text-warm-tan hover:text-warm-tan/80 hover:bg-warm-tan/10 px-2.5 py-1.5 rounded-lg transition-colors"
+              >
+                {{ "special_order.fields.prescription.change_file" | translate }}
+              </button>
+              <button
+                type="button"
+                (click)="removePrescriptionFile()"
+                class="cursor-pointer text-gray-400 hover:text-red-500 hover:bg-red-50 p-1.5 rounded-lg transition-colors"
+                [attr.aria-label]="'special_order.fields.prescription.remove_file' | translate"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Error message -->
+          <div *ngIf="prescriptionError" class="text-red-500 text-xs mt-1.5 flex items-center gap-1">
+            <svg class="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd"
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                clip-rule="evenodd" />
+            </svg>
+            <span>{{ prescriptionError }}</span>
+          </div>
+        </div>
       </div>
 
       <!-- Actions -->

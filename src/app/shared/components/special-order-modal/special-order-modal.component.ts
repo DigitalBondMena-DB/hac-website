@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
+  ElementRef,
   EventEmitter,
   HostListener,
   Input,
@@ -8,6 +9,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  ViewChild,
   inject,
   signal,
 } from '@angular/core';
@@ -31,6 +33,7 @@ export interface ISpecialOrderFormData {
   address?: string;
   product_id: number | string;
   quantity: number;
+  prescription?: File | null;
 }
 
 @Component({
@@ -49,7 +52,23 @@ export class SpecialOrderModalComponent implements OnInit, OnChanges {
   @Output() close = new EventEmitter<void>();
   @Output() formSubmit = new EventEmitter<ISpecialOrderFormData>();
 
+  @ViewChild('prescriptionInput') prescriptionInputRef?: ElementRef<HTMLInputElement>;
+
   orderForm!: FormGroup;
+
+  selectedPrescriptionFile: File | null = null;
+  prescriptionError: string | null = null;
+  isDragging = false;
+
+  readonly MAX_FILE_SIZE = 3 * 1024 * 1024; // 3MB
+  readonly ALLOWED_FILE_TYPES = [
+    'application/pdf',
+    'image/jpeg',
+    'image/jpg',
+    'image/png',
+    'image/webp',
+  ];
+  readonly ALLOWED_EXTENSIONS = ['.pdf', '.jpg', '.jpeg', '.png', '.webp'];
 
   private _fb = inject(FormBuilder);
   private _authService = inject(AuthService);
@@ -289,10 +308,129 @@ export class SpecialOrderModalComponent implements OnInit, OnChanges {
   }
 
   /**
+   * Determine whether selected file is a PDF
+   */
+  get isPdfFile(): boolean {
+    if (!this.selectedPrescriptionFile) return false;
+    const type = (this.selectedPrescriptionFile.type || '').toLowerCase();
+    const name = (this.selectedPrescriptionFile.name || '').toLowerCase();
+    return type === 'application/pdf' || name.endsWith('.pdf');
+  }
+
+  /**
+   * Format bytes to human readable size (KB/MB)
+   */
+  getFormattedFileSize(bytes: number): string {
+    if (!bytes || bytes === 0) return '0 B';
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return (bytes / Math.pow(k, i)).toFixed(i > 0 ? 1 : 0) + ' ' + sizes[i];
+  }
+
+  /**
+   * Handle file selection from native file input
+   */
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.handleFile(input.files[0]);
+    }
+  }
+
+  /**
+   * Handle drag over zone
+   */
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = true;
+  }
+
+  /**
+   * Handle drag leave zone
+   */
+  onDragLeave(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = false;
+  }
+
+  /**
+   * Handle dropped file
+   */
+  onFileDropped(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = false;
+
+    if (event.dataTransfer?.files && event.dataTransfer.files.length > 0) {
+      this.handleFile(event.dataTransfer.files[0]);
+    }
+  }
+
+  /**
+   * Validate and set selected prescription file
+   */
+  handleFile(file: File): void {
+    this.prescriptionError = null;
+
+    // Validate size (max 3MB)
+    if (file.size > this.MAX_FILE_SIZE) {
+      this.prescriptionError = this._translateService.instant(
+        'special_order.validation.prescription.maxsize'
+      );
+      this.clearFileInput();
+      this.selectedPrescriptionFile = null;
+      return;
+    }
+
+    // Validate file type (PDF or image)
+    const fileType = (file.type || '').toLowerCase();
+    const fileName = (file.name || '').toLowerCase();
+    const isAllowedType =
+      this.ALLOWED_FILE_TYPES.includes(fileType) ||
+      this.ALLOWED_EXTENSIONS.some((ext) => fileName.endsWith(ext));
+
+    if (!isAllowedType) {
+      this.prescriptionError = this._translateService.instant(
+        'special_order.validation.prescription.invalid_type'
+      );
+      this.clearFileInput();
+      this.selectedPrescriptionFile = null;
+      return;
+    }
+
+    this.selectedPrescriptionFile = file;
+  }
+
+  /**
+   * Remove selected prescription file
+   */
+  removePrescriptionFile(): void {
+    this.selectedPrescriptionFile = null;
+    this.prescriptionError = null;
+    this.clearFileInput();
+  }
+
+  /**
+   * Clear file input element value
+   */
+  clearFileInput(): void {
+    if (this.prescriptionInputRef?.nativeElement) {
+      this.prescriptionInputRef.nativeElement.value = '';
+    }
+  }
+
+  /**
    * Submit the special order
    */
   submitOrder(): void {
     if (this.isSubmitting) return;
+
+    if (this.prescriptionError) {
+      return;
+    }
 
     if (!this.orderForm || this.orderForm.invalid) {
       if (this.orderForm) {
@@ -316,6 +454,7 @@ export class SpecialOrderModalComponent implements OnInit, OnChanges {
       address: (formRaw.city || '').trim(),
       product_id: this.productId,
       quantity: 1,
+      prescription: this.selectedPrescriptionFile || undefined,
     };
 
     this.formSubmit.emit(payload);
@@ -329,6 +468,7 @@ export class SpecialOrderModalComponent implements OnInit, OnChanges {
       this.orderForm.reset();
       this.prefillUserData();
     }
+    this.removePrescriptionFile();
   }
 
   private resetFormValidationState(): void {
@@ -336,6 +476,7 @@ export class SpecialOrderModalComponent implements OnInit, OnChanges {
       this.orderForm.markAsPristine();
       this.orderForm.markAsUntouched();
     }
+    this.removePrescriptionFile();
   }
 
   /**

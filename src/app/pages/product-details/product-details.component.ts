@@ -2063,8 +2063,9 @@ export class ProductDetailsComponent
           this._route.snapshot.paramMap.get('slug') ||
           '';
 
+        const { prescription, ...orderDataClean } = orderData;
         this._thankYouState.setSubmittedOrder({
-          ...orderData,
+          ...orderDataClean,
           product_name: productName,
           product_slug: productSlug,
           submitted_at: new Date().toISOString(),

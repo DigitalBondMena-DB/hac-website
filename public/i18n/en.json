@@ -1366,6 +1366,16 @@
       "doctor_code": {
         "label": "Doctor’s code",
         "placeholder": "Enter doctor’s code"
+      },
+      "prescription": {
+        "label": "Add a prescription",
+        "optional": "(Optional)",
+        "choose_file": "Choose file",
+        "or_drag": "or drag and drop here",
+        "hint": "PDF or image up to 3MB",
+        "change_file": "Change",
+        "remove_file": "Remove file",
+        "max_size_hint": "Max 3MB"
       }
     },
     "validation": {
@@ -1396,6 +1406,10 @@
       },
       "doctor_code": {
         "required": "Doctor’s code is required"
+      },
+      "prescription": {
+        "maxsize": "File size must not exceed 3MB",
+        "invalid_type": "Only PDF or image files (JPG, PNG, WebP) are allowed"
       }
     },
     "submit_button": "Confirm",

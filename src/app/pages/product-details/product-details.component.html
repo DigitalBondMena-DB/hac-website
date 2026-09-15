@@ -88,11 +88,12 @@
             {{ productDetails.category | customTranslate : "name" }}
           </h4>
           <!-- Stock Status  -->
-          @if(!isSpecialProduct()) {
+
           <div class="mb-[23px] flex gap-4 items-center">
             <h2 class="text-[23px] text-black font-medium">
               {{ productDetails | customTranslate : "name" }}
             </h2>
+            @if (!isSpecialProduct()) {
             <div class="text-[#040404] rounded-full border-[1px] border-warm-tan px-[16px] py-[2px]">
               <p class="text-[16px]">
                 @if (productDetails.stock_status) {
@@ -102,8 +103,9 @@
                 }
               </p>
             </div>
+            }
           </div>
-          }
+
 
           <!-- Product Price -->
           @if(productDetails.price) {

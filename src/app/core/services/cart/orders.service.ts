@@ -170,6 +170,7 @@ export class OrdersService {
     address?: string;
     product_id: number | string;
     quantity: number;
+    prescription?: File | null;
   }): Observable<any> {
     const formData = new FormData();
     formData.append('name', orderData.name);
@@ -182,6 +183,9 @@ export class OrdersService {
     formData.append('address', orderData.address || orderData.city);
     formData.append('product_id', orderData.product_id.toString());
     formData.append('quantity', orderData.quantity.toString());
+    if (orderData.prescription) {
+      formData.append('prescription', orderData.prescription);
+    }
 
     return this.api.post<any>(`${API_CONFIG.ORDERS.SPECIAL_ORDER}`, formData);
   }

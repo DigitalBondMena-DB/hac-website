@@ -1,0 +1,11 @@
+[build]
+  command = "npm run build"
+  publish = "dist/HAC-ECO/browser"
+
+[[plugins]]
+  package = "@netlify/angular-runtime"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.csr.html"
+  status = 200

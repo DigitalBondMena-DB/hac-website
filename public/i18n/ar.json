@@ -1350,6 +1350,16 @@
       "doctor_code": {
         "label": "كود الطبيب",
         "placeholder": "أدخل كود الطبيب"
+      },
+      "prescription": {
+        "label": "إضافة وصفة طبية (روشتة)",
+        "optional": "(اختياري)",
+        "choose_file": "اختر ملفاً",
+        "or_drag": "أو اسحبه وأفلته هنا",
+        "hint": "ملفات PDF أو صور بحد أقصى 3 ميجابايت",
+        "change_file": "تغيير",
+        "remove_file": "حذف الملف",
+        "max_size_hint": "الحد الأقصى 3 ميجابايت"
       }
     },
     "validation": {
@@ -1380,6 +1390,10 @@
       },
       "doctor_code": {
         "required": "كود الطبيب مطلوب"
+      },
+      "prescription": {
+        "maxsize": "حجم ملف الوصفة الطبية يجب ألا يتجاوز 3 ميجابايت",
+        "invalid_type": "يسمح فقط بملفات الـ PDF أو الصور (JPG, PNG, WebP)"
       }
     },
     "submit_button": "تأكيد تسجيل الطلب",

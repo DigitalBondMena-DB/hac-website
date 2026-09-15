@@ -385,6 +385,7 @@ section::before {
 
 ::ng-deep body:has(.special-product) {
   padding-top: 10px;
+  padding-bottom: 40px;
 }
 
 /* Special Product Grounded Tabs Card */
