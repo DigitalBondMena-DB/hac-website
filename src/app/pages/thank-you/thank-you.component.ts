@@ -5,9 +5,10 @@ import {
   trigger,
 } from '@angular/animations';
 import { CommonModule, Location } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
-import { Meta } from '@angular/platform-browser';
+import { Component, computed, OnInit, inject } from '@angular/core';
+import { Meta, DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { SafeHtmlPipe } from '@core/pipes/safe-html.pipe';
 import { LanguageService } from '@core/services/lang/language.service';
 import { ThankYouStateService } from '@core/services/thank-you/thank-you-state.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -16,7 +17,7 @@ import { take } from 'rxjs';
 @Component({
   selector: 'app-thank-you',
   standalone: true,
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, SafeHtmlPipe],
   templateUrl: './thank-you.component.html',
   styleUrls: ['./thank-you.component.css'],
   animations: [
@@ -41,8 +42,15 @@ export class ThankYouComponent implements OnInit {
   private _router = inject(Router);
   private _location = inject(Location);
   private _meta = inject(Meta);
+  private _sanitizer = inject(DomSanitizer);
 
   orderData = this._thankYouState.orderData;
+  safeDriveFileUrl = computed(() => {
+    const url = this.orderData()?.drive_file_url;
+    console.log(url, this.orderData());
+
+    return url ? this._sanitizer.bypassSecurityTrustResourceUrl(url) : null;
+  });
 
   get currentLang(): string {
     return this._translateService.currentLang || 'ar';

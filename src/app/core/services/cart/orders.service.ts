@@ -186,7 +186,6 @@ export class OrdersService {
     if (orderData.prescription) {
       formData.append('file', orderData.prescription);
     }
-
     return this.api.post<any>(`${API_CONFIG.ORDERS.SPECIAL_ORDER}`, formData);
   }
 }

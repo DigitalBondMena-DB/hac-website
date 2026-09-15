@@ -52,7 +52,7 @@
 
 ::ng-deep .owl-prev:hover,
 ::ng-deep .owl-next:hover {
-  background-color: rgba(203, 172, 141, 0.9) !important;
+  background-color: color-mix(in srgb, var(--color-warm-tan), transparent 20%) !important;
   transform: scale(1.1);
 }
 

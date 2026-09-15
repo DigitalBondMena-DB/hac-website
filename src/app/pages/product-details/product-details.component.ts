@@ -2041,7 +2041,7 @@ export class ProductDetailsComponent
     this.isSubmittingSpecialOrder.set(true);
 
     this._ordersService.submitSpecialOrder(orderData).subscribe({
-      next: () => {
+      next: (res) => {
         this.isSubmittingSpecialOrder.set(false);
         this.isSpecialOrderModalOpen.set(false);
 
@@ -2063,13 +2063,7 @@ export class ProductDetailsComponent
           this._route.snapshot.paramMap.get('slug') ||
           '';
 
-        const { prescription, ...orderDataClean } = orderData;
-        this._thankYouState.setSubmittedOrder({
-          ...orderDataClean,
-          product_name: productName,
-          product_slug: productSlug,
-          submitted_at: new Date().toISOString(),
-        });
+        this._thankYouState.setSubmittedOrder(res.row);
 
         // Navigate to /thankYou page
         this._languageService

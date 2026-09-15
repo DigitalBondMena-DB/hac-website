@@ -15,6 +15,7 @@ export interface IThankYouOrderData {
   quantity: number;
   product_name?: string;
   submitted_at?: string;
+  drive_file_url?: string;
 }
 
 const STORAGE_KEY = 'hac_last_special_order';
