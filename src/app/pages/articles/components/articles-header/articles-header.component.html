@@ -5,9 +5,11 @@
     <h1 id="{{ headingId }}" class="text-title-size font-bold text-white mb-3 capitalize">
       {{ title }}
     </h1>
+    @if(!isSpecial) {
     <p class="text-white text-description-size">
       {{ subTitle }}
     </p>
+    }
     @if (showRotateImage) {
     <figure class="hidden md:block absolute right-[23px] top-[23px] w-[73px] h-[73px]">
       <img loading="lazy" width="73" height="73" class="max-w-[73px]" src="/images/common/rotate.webp"

@@ -43,7 +43,6 @@ export interface ISpecialOrderFormData {
 export class SpecialOrderModalComponent implements OnInit, OnChanges {
   @Input() isOpen = false;
   @Input() productId!: number | string;
-  @Input() quantity: number = 1;
   @Input() productName: string = '';
   @Input() isSubmitting: boolean = false;
 
@@ -51,7 +50,6 @@ export class SpecialOrderModalComponent implements OnInit, OnChanges {
   @Output() formSubmit = new EventEmitter<ISpecialOrderFormData>();
 
   orderForm!: FormGroup;
-  currentQuantity = signal<number>(1);
 
   private _fb = inject(FormBuilder);
   private _authService = inject(AuthService);
@@ -69,9 +67,6 @@ export class SpecialOrderModalComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['quantity'] && this.quantity) {
-      this.currentQuantity.set(Math.max(1, Number(this.quantity) || 1));
-    }
 
     if (changes['isOpen']) {
       if (this.isOpen) {
@@ -147,8 +142,6 @@ export class SpecialOrderModalComponent implements OnInit, OnChanges {
         ],
       ],
     });
-
-    this.currentQuantity.set(Math.max(1, Number(this.quantity) || 1));
   }
 
   /**
@@ -296,22 +289,6 @@ export class SpecialOrderModalComponent implements OnInit, OnChanges {
   }
 
   /**
-   * Increment current quantity
-   */
-  incrementQuantity(): void {
-    if (this.isSubmitting) return;
-    this.currentQuantity.update((q) => q + 1);
-  }
-
-  /**
-   * Decrement current quantity (min 1)
-   */
-  decrementQuantity(): void {
-    if (this.isSubmitting) return;
-    this.currentQuantity.update((q) => (q > 1 ? q - 1 : 1));
-  }
-
-  /**
    * Submit the special order
    */
   submitOrder(): void {
@@ -327,7 +304,6 @@ export class SpecialOrderModalComponent implements OnInit, OnChanges {
     }
 
     const formRaw = this.orderForm.value;
-    const finalQuantity = Math.max(1, this.currentQuantity() || 1);
 
     const payload: ISpecialOrderFormData = {
       name: (formRaw.name || '').trim(),
@@ -339,7 +315,7 @@ export class SpecialOrderModalComponent implements OnInit, OnChanges {
       doctor_code: (formRaw.doctor_code || '').trim(),
       address: (formRaw.city || '').trim(),
       product_id: this.productId,
-      quantity: finalQuantity,
+      quantity: 1,
     };
 
     this.formSubmit.emit(payload);

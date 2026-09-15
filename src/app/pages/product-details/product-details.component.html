@@ -38,7 +38,7 @@
       } @else {
       <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 mt-10 rtl:flex-row-reverse">
         <div class="product-images">
-          <div class="carousel-wrapper overflow-hidden rounded-lg mb-4"
+          <div class="carousel-wrapper overflow-hidden rounded-lg mb-4 lg:mb-0"
             [class]="isSpecialProduct() ? 'border border-warm-tan' : ''" [class.rtl-carousel]="isRtlMode()">
             <owl-carousel-o [options]="mainCarouselOptions" #mainCarousel>
               @for (image of processedImages(); track image.id) {
@@ -88,6 +88,7 @@
             {{ productDetails.category | customTranslate : "name" }}
           </h4>
           <!-- Stock Status  -->
+          @if(!isSpecialProduct()) {
           <div class="mb-[23px] flex gap-4 items-center">
             <h2 class="text-[23px] text-black font-medium">
               {{ productDetails | customTranslate : "name" }}
@@ -102,6 +103,7 @@
               </p>
             </div>
           </div>
+          }
 
           <!-- Product Price -->
           @if(productDetails.price) {
@@ -161,6 +163,7 @@
 
           <!-- Quantity Selector and Add to Cart -->
           <div class="flex flex-wrap gap-x-4 items-center mb-[30px] lg:mb-0 mt-auto gap-y-5 sm:gap-y-2">
+            @if (!isSpecialProduct()) {
             <!-- Quantity Selector -->
             <div class="quantity-selector flex items-center gap-x-[12px] border border-[#8D8D8D] rounded-full">
               <button (click)="decrementQuantity()" class="cursor-pointer px-3 py-2 text-[#000]"
@@ -180,6 +183,7 @@
                 </svg>
               </button>
             </div>
+            }
 
             @if (isSpecialProduct()) {
             <!-- Register Your Order Button for Special Product -->
@@ -313,81 +317,7 @@
 
       <!-- Product Description NavTabs -->
       @if (visibleTabs.length > 0) {
-      @if (isSpecialProduct()) {
-      <!-- Special Product Grounded & Elegant Tab Card Design -->
-      <div
-        class="special-tabs-card my-12 bg-gradient-to-b from-[#f8faff] to-[#ffffff] border border-[#dbe4f8] rounded-3xl p-5 sm:p-8 md:p-10 shadow-[0_10px_30px_rgba(24,52,163,0.06)] relative overflow-hidden">
-        <!-- Decorative ambient subtle glows -->
-        <div class="absolute -top-24 -right-24 w-48 h-48 bg-[#1834A3]/5 rounded-full blur-3xl pointer-events-none">
-        </div>
-        <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-[#1834A3]/5 rounded-full blur-3xl pointer-events-none">
-        </div>
-
-        <!-- Segmented Tab Header Bar -->
-        <div class="flex justify-center mb-8 relative z-10">
-          <nav
-            class="inline-flex flex-wrap sm:flex-nowrap items-center justify-center p-1.5 bg-[#edf2fb] border border-[#d5e0f5] rounded-2xl shadow-inner gap-1.5 max-w-full"
-            role="tablist">
-            @for (tab of visibleTabs; track tab.id) {
-            <button type="button" (click)="setActiveTab(tab.id)" role="tab"
-              [attr.aria-selected]="currentActiveTab === tab.id" [ngClass]="currentActiveTab === tab.id
-                  ? 'bg-[#1834A3] text-white shadow-md special-tab-active'
-                  : 'text-slate-600 hover:text-[#1834A3] hover:bg-white/70'"
-              class="cursor-pointer flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-xl text-sm sm:text-base font-semibold transition-all duration-300 whitespace-nowrap">
-
-
-
-              <span>{{ tab.title | translate }}</span>
-            </button>
-            }
-          </nav>
-        </div>
-
-        <!-- Grounded Content Box with clean typography and spacing -->
-        <div class="relative z-10 bg-white rounded-2xl p-6 sm:p-8 border border-[#e5ecf9] shadow-sm text-center">
-          <!-- description -->
-          @if (currentActiveTab === 'description') {
-          <div @fadeSlideInOut class="max-w-none text-[#1e293b] leading-relaxed text-sm sm:text-base">
-            <div [innerHTML]="getTabContent('description')"></div>
-          </div>
-          }
-
-          <!-- how_to_use -->
-          @if (currentActiveTab === 'how_to_use') {
-          <div @fadeSlideInOut class="prose max-w-none text-[#1e293b]">
-            <div class="text-center">
-              <div class="text-[#1e293b] leading-relaxed text-sm sm:text-base">
-                <div [innerHTML]="getTabContent('how_to_use')"></div>
-              </div>
-            </div>
-          </div>
-          }
-
-          <!-- ingredient -->
-          @if (currentActiveTab === 'ingredient') {
-          <div @fadeSlideInOut class="prose max-w-none text-[#1e293b]">
-            <div class="text-center">
-              <div class="text-[#1e293b] leading-relaxed text-sm sm:text-base">
-                <div [innerHTML]="getTabContent('ingredient')"></div>
-              </div>
-            </div>
-          </div>
-          }
-
-          <!-- more information -->
-          @if (currentActiveTab === 'more_information') {
-          <div @fadeSlideInOut class="prose max-w-none text-[#1e293b]">
-            <div class="text-center">
-              <div class="text-[#1e293b] leading-relaxed text-sm sm:text-base">
-                <div [innerHTML]="getTabContent('more_information')"></div>
-              </div>
-            </div>
-          </div>
-          }
-        </div>
-      </div>
-      } @else {
-      <!-- Regular Product Normal Nav and Tabs (Unchanged) -->
+      @if (!isSpecialProduct()) {
       <div class="my-16 product-details">
         <div>
           <nav class="flex flex-wrap justify-center sm:flex-nowrap gap-4 sm:gap-6 md:gap-x-10 lg:gap-x-[112px]">
@@ -443,6 +373,7 @@
         </div>
       </div>
       }
+
       }
       }
       @if(!isSpecialProduct()) {
@@ -499,7 +430,7 @@
 
   <!-- Special Product Order Modal -->
   @if (productDetails && isSpecialProduct()) {
-  <app-special-order-modal [isOpen]="isSpecialOrderModalOpen()" [productId]="productDetails.id" [quantity]="quantity()"
+  <app-special-order-modal [isOpen]="isSpecialOrderModalOpen()" [productId]="productDetails.id"
     [productName]="productDetails | customTranslate : 'name'" [isSubmitting]="isSubmittingSpecialOrder()"
     (close)="closeSpecialOrderModal()" (formSubmit)="handleSpecialOrderSubmit($event)" />
   }

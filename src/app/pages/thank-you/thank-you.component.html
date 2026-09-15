@@ -54,23 +54,14 @@
         </h3>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-[#FAF7F4]/40 p-5 rounded-[18px] border border-[#EFE9E2]">
-          <!-- Product & Quantity -->
-          <div>
+          <!-- Product -->
+          <div class="md:col-span-2">
             <span class="text-xs text-gray-500 block mb-1">
               {{ "thank_you.product_name" | translate }}
             </span>
             <p class="text-sm font-semibold text-gray-900 truncate">
               {{ order.product_name || ("special_order.special_product" | translate) }}
             </p>
-          </div>
-
-          <div>
-            <span class="text-xs text-gray-500 block mb-1">
-              {{ "thank_you.quantity" | translate }}
-            </span>
-            <span class="inline-block bg-[#1834A3]/20 text-[#1834A3] font-bold text-sm px-3 py-0.5 rounded-full">
-              {{ order.quantity }}
-            </span>
           </div>
 
           <!-- Customer Name & Phone -->
