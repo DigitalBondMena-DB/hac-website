@@ -1,6 +1,6 @@
 <div [class.national-day-pattern]="isNationalDay">
   @if (shouldShowNavbarAndFooter()) {
-  @defer (on timer(1000)) {
+  @defer (on idle) {
   <app-navbar></app-navbar>
   }
   @placeholder {
