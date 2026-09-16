@@ -79,7 +79,7 @@ export class ThankYouStateService {
         return false;
       }
     }
-    return false;
+    return true;
   }
 
   /**

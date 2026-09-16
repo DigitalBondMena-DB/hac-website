@@ -4,6 +4,7 @@ import {
   CommonModule,
   DOCUMENT,
   isPlatformBrowser,
+  Location,
 } from '@angular/common';
 import {
   Component,
@@ -15,6 +16,7 @@ import {
   Renderer2,
   computed,
   signal,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import {
@@ -52,6 +54,7 @@ import { ProductsService } from './pages/shopping/res/products.service';
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit, OnDestroy {
   private router = inject(Router);
@@ -62,19 +65,24 @@ export class AppComponent implements OnInit, OnDestroy {
   private isBrowser = isPlatformBrowser(this.platformId);
   private _languageService = inject(LanguageService);
   private renderer = inject(Renderer2);
+  private location = inject(Location);
   productsService = inject(ProductsService);
   private langSubscription!: Subscription;
   private routerSubscription!: Subscription;
-  isNationalDay = isNationalDay;
+  readonly isNationalDay = isNationalDay;
 
   // Flag to ensure meta tags are only updated once per navigation
-  private metaTagsUpdated = false;
-  isRamadanMonth = isRamadanMonth;
+  private metaTagsUpdated = signal(false);
+  readonly isRamadanMonth = isRamadanMonth;
   currentLang$ = this._languageService.getLanguage();
 
-  isThankYouPage = signal<boolean>(false);
+  isThankYouPage = signal<boolean>(
+    this.location.path(true).includes('thank-you') ||
+    this.location.path(true).includes('thankYou')
+  );
 
   shouldShowNavbarAndFooter = computed(() => {
+
     return !this.productsService.isSpecialProduct() && !this.isThankYouPage();
   });
 
@@ -91,7 +99,7 @@ export class AppComponent implements OnInit, OnDestroy {
     // Subscribe to language changes
     this.langSubscription = this.translate.onLangChange.subscribe(() => {
       // Reset flag when language changes
-      this.metaTagsUpdated = false;
+      this.metaTagsUpdated.set(false);
       this.addSchema();
       // Only update meta tags if not on a dynamic meta page
       const currentUrl = this.router.url;
@@ -117,13 +125,10 @@ export class AppComponent implements OnInit, OnDestroy {
       )
       .subscribe((data) => {
         // Reset flag on navigation
-        this.metaTagsUpdated = false;
+        this.metaTagsUpdated.set(false);
         this.setMetaTags(data);
         const currentUrl = this.router.url;
-        this.checkIfThankYouPage(currentUrl, data);
-        if (!currentUrl.includes('/product-details/')) {
-          this.productsService.setIsSpecialProduct(false);
-        }
+        this.checkIfThankYouPage(currentUrl, data)
       });
   }
 
@@ -133,15 +138,14 @@ export class AppComponent implements OnInit, OnDestroy {
       return;
     }
     const currentUrl = url || this.router.url || '';
-    const hash =
-      this.isBrowser && typeof window !== 'undefined'
-        ? window.location.hash
-        : '';
+    const fullPath = this.location.path(true);
+
     const isThankYou =
       currentUrl.includes('/thankYou') ||
       currentUrl.includes('/thank-you') ||
-      hash.includes('/thankYou') ||
-      hash.includes('/thank-you');
+      fullPath.includes('thankYou') ||
+      fullPath.includes('thank-you');
+
     this.isThankYouPage.set(isThankYou);
   }
 
@@ -158,7 +162,7 @@ export class AppComponent implements OnInit, OnDestroy {
    * Set meta tags for SEO and social sharing following the same pattern as other components
    */
   private setMetaTags(data: any) {
-    if (this.metaTagsUpdated) return;
+    if (this.metaTagsUpdated()) return;
 
     // Check if this is a page that handles its own dynamic meta tags
     const currentUrl = this.router.url;
@@ -288,7 +292,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.updateSEOLinks();
 
     // Mark meta tags as updated to prevent multiple updates
-    this.metaTagsUpdated = true;
+    this.metaTagsUpdated.set(true);
   }
 
   /**
@@ -543,6 +547,6 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     // Reset meta tags updated flag
-    this.metaTagsUpdated = false;
+    this.metaTagsUpdated.set(false);
   }
 }

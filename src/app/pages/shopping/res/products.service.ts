@@ -1,4 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
+import { Location } from '@angular/common';
 import { Globalsearch } from '@core/interfaces/globalsearch';
 import { AuthService } from '@core/services/auth/auth.service';
 import { API_CONFIG } from '@core/services/conf/api.config';
@@ -10,8 +11,9 @@ import { ApiService } from '@core/services/conf/api.service';
 export class ProductsService {
   apiService = inject(ApiService);
   authService = inject(AuthService);
+  private location = inject(Location);
 
-  isSpecialProduct = signal<boolean>(false);
+  isSpecialProduct = signal<boolean>(this.location.path().includes('/product-details/'));
 
   setIsSpecialProduct(value: boolean): void {
     this.isSpecialProduct.set(value);
