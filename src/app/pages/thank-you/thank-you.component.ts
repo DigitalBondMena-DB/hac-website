@@ -8,7 +8,6 @@ import { CommonModule, Location } from '@angular/common';
 import { Component, computed, OnInit, inject } from '@angular/core';
 import { Meta, DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { SafeHtmlPipe } from '@core/pipes/safe-html.pipe';
 import { LanguageService } from '@core/services/lang/language.service';
 import { ThankYouStateService } from '@core/services/thank-you/thank-you-state.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -17,7 +16,7 @@ import { take } from 'rxjs';
 @Component({
   selector: 'app-thank-you',
   standalone: true,
-  imports: [CommonModule, TranslateModule, SafeHtmlPipe],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './thank-you.component.html',
   styleUrls: ['./thank-you.component.css'],
   animations: [
